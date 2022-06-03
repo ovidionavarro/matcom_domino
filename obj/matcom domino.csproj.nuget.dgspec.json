@@ -1,0 +1,60 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/ovidio/datos/Escuela/git/matcom domino/matcom domino.csproj": {}
+  },
+  "projects": {
+    "/home/ovidio/datos/Escuela/git/matcom domino/matcom domino.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/ovidio/datos/Escuela/git/matcom domino/matcom domino.csproj",
+        "projectName": "matcom domino",
+        "projectPath": "/home/ovidio/datos/Escuela/git/matcom domino/matcom domino.csproj",
+        "packagesPath": "/home/ovidio/.nuget/packages/",
+        "outputPath": "/home/ovidio/datos/Escuela/git/matcom domino/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/ovidio/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.202/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
