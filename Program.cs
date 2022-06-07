@@ -50,6 +50,9 @@ namespace matcom_domino
             for(int i=0;i<Referee9.ConjuntodeFichas.ToList<IFichas<int>>().Count()-1;i++){
                System.Console.WriteLine("{0},{1}",c.ConjuntoCards.ToList<IFichas<int>>()[i].GetFace(1),c.ConjuntoCards.ToList<IFichas<int>>()[i].GetFace(2));
             } */
+            IPlayer<int>r=new PlayerRandomint9();
+            c.Jugadores.Add(r);
+            
             c.GeneratedCards();
             //List<IFichas<int>> wh=new List<IFichas<int>>();
             //c.temp[2].GetFace(1);

@@ -6,7 +6,7 @@ namespace matcom_domino
         //IEnumerable<IFichas<T>> HandCards {get;  set;}
         //cambie el repardor de fichas xq lo tenia puesto en la clase referee pero pienso k el jugador es el k tenga la funcion de coher la fichas
          //IEnumerable<IFichas<T>> HandCards ();  
-         List<IFichas<int>>ManoDeFichas{get;}  
+         List<IFichas<T>>ManoDeFichas{get;}  
          IFichas <T> SelectCard();
         
     }
