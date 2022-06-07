@@ -1,0 +1,15 @@
+/home/ovidio/datos/Escuela/git/matcom domino/bin/Debug/net6.0/matcom domino
+/home/ovidio/datos/Escuela/git/matcom domino/bin/Debug/net6.0/matcom domino.deps.json
+/home/ovidio/datos/Escuela/git/matcom domino/bin/Debug/net6.0/matcom domino.runtimeconfig.json
+/home/ovidio/datos/Escuela/git/matcom domino/bin/Debug/net6.0/matcom domino.dll
+/home/ovidio/datos/Escuela/git/matcom domino/bin/Debug/net6.0/matcom domino.pdb
+/home/ovidio/datos/Escuela/git/matcom domino/obj/Debug/net6.0/matcom domino.csproj.AssemblyReference.cache
+/home/ovidio/datos/Escuela/git/matcom domino/obj/Debug/net6.0/matcom domino.GeneratedMSBuildEditorConfig.editorconfig
+/home/ovidio/datos/Escuela/git/matcom domino/obj/Debug/net6.0/matcom domino.AssemblyInfoInputs.cache
+/home/ovidio/datos/Escuela/git/matcom domino/obj/Debug/net6.0/matcom domino.AssemblyInfo.cs
+/home/ovidio/datos/Escuela/git/matcom domino/obj/Debug/net6.0/matcom domino.csproj.CoreCompileInputs.cache
+/home/ovidio/datos/Escuela/git/matcom domino/obj/Debug/net6.0/matcom domino.dll
+/home/ovidio/datos/Escuela/git/matcom domino/obj/Debug/net6.0/refint/matcom domino.dll
+/home/ovidio/datos/Escuela/git/matcom domino/obj/Debug/net6.0/matcom domino.pdb
+/home/ovidio/datos/Escuela/git/matcom domino/obj/Debug/net6.0/matcom domino.genruntimeconfig.cache
+/home/ovidio/datos/Escuela/git/matcom domino/obj/Debug/net6.0/ref/matcom domino.dll

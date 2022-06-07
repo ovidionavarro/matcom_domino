@@ -4,7 +4,7 @@ namespace matcom_domino
     {
          //jugar la ficha ,balidar la jugada, ver fichas en la mesa
         void PlayCard(IFichas <T> a);
-        bool EsValido(IFichas<T> a);
+        bool EsValido(IFichas<T> a);//boliano
         void CardinTable();
 
     }
