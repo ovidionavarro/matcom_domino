@@ -16,9 +16,17 @@ namespace matcom_domino
     }
     public class PlayerRandomint9 : IPlayer<int>   //despues hay k hacerlo generico
     {
-        public PlayerRandomint9()
+        public IMesa<int> table
+        {
+            get;
+            set;
+        }
+
+        public PlayerRandomint9(IMesa<int> Table)
         {
             manoficha = new List<IFichas<int>>();
+            this.table = Table;
+
         }
 
         public List<IFichas<int>> ManoDeFichas
@@ -35,7 +43,12 @@ namespace matcom_domino
 
         public void Play(IFichas<int> ficha)
         {
-            
+            if (table.IsValido(ficha))
+            { 
+                manoficha.Remove(ficha);
+                table.CardinTable.Add(ficha);
+            }
+
         }
     }
 }
