@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "/home/ovidio/.nuget/packages/": {}
+    "/home/jose_cosu/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/ovidio/datos/Escuela/git/matcom domino/matcom domino.csproj",
+      "projectUniqueName": "/home/jose_cosu/Riders_Proyects/matcom_domino/matcom domino.csproj",
       "projectName": "matcom domino",
-      "projectPath": "/home/ovidio/datos/Escuela/git/matcom domino/matcom domino.csproj",
-      "packagesPath": "/home/ovidio/.nuget/packages/",
-      "outputPath": "/home/ovidio/datos/Escuela/git/matcom domino/obj/",
+      "projectPath": "/home/jose_cosu/Riders_Proyects/matcom_domino/matcom domino.csproj",
+      "packagesPath": "/home/jose_cosu/.nuget/packages/",
+      "outputPath": "/home/jose_cosu/Riders_Proyects/matcom_domino/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/ovidio/.nuget/NuGet/NuGet.Config"
+        "/home/jose_cosu/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -58,7 +58,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.202/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.300/RuntimeIdentifierGraph.json"
       }
     }
   }

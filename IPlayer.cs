@@ -10,9 +10,20 @@ namespace matcom_domino
          IFichas <T> SelectCard();
         
     }
-    public class PlayerRandomint9 : IPlayer<int>//despues hay k hacerlo generico
+    public class PlayerRandomint9 : IPlayer<int>   //despues hay k hacerlo generico
     {
-        public List<IFichas<int>>ManoDeFichas{get =>throw new NotImplementedException();}
+        public PlayerRandomint9()
+        {
+            manoficha = new List<IFichas<int>>();
+        }
+
+        public List<IFichas<int>> ManoDeFichas
+        {
+            get => this.manoficha;
+        }
+
+        private List<IFichas<int>> manoficha;
+        
         public IFichas<int> SelectCard()
         {
             throw new NotImplementedException();
