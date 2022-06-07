@@ -8,7 +8,11 @@ namespace matcom_domino
          //IEnumerable<IFichas<T>> HandCards ();  
          List<IFichas<T>>ManoDeFichas{get;}  
          IFichas <T> SelectCard();
-        
+         
+         
+
+         void Play(IFichas<T> ficha);
+
     }
     public class PlayerRandomint9 : IPlayer<int>   //despues hay k hacerlo generico
     {
@@ -28,9 +32,10 @@ namespace matcom_domino
         {
             throw new NotImplementedException();
         }
-        public void TipodeReparticion()
+
+        public void Play(IFichas<int> ficha)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
