@@ -8,10 +8,9 @@ namespace matcom_domino
         static void Main(string[] args)
         {
             Domino<int> c = new Referee9();
-            IPlayer<int> r = new PlayerRandomint9();
-            IPlayer<int> t = new PlayerRandomint9();
-
             IMesa<int> table = new Mesa();
+            IPlayer<int> r = new PlayerRandomint9(table);
+            IPlayer<int> t = new PlayerRandomint9(table);
 
             c.Jugadores.Add(r);
             c.Jugadores.Add(t);

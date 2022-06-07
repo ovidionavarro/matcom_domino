@@ -19,7 +19,6 @@ namespace matcom_domino
         public IMesa<int> table
         {
             get;
-            set;
         }
 
         public PlayerRandomint9(IMesa<int> Table)
