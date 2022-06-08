@@ -14,14 +14,14 @@ namespace matcom_domino
          void Play(IFichas<T> ficha);
 
     }
-    public class PlayerRandomint9 : IPlayer<int>   //despues hay k hacerlo generico
+    public class Player : IPlayer<int>   //despues hay k hacerlo generico
     {
         public IMesa<int> table
         {
             get;
         }
 
-        public PlayerRandomint9(IMesa<int> Table)
+        public Player(IMesa<int> Table)
         {
             manoficha = new List<IFichas<int>>();
             this.table = Table;

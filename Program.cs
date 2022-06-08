@@ -9,8 +9,8 @@ namespace matcom_domino
         {
             Domino<int> c = new Referee9();
             IMesa<int> table = new Mesa();
-            IPlayer<int> r = new PlayerRandomint9(table);
-            IPlayer<int> t = new PlayerRandomint9(table);
+            IPlayer<int> r = new Player(table);
+            IPlayer<int> t = new Player(table);
 
             c.Jugadores.Add(r);
             c.Jugadores.Add(t);
@@ -36,6 +36,14 @@ namespace matcom_domino
 
                 int m = int.Parse(Console.ReadLine()); 
                 r.Play(r.ManoDeFichas[m]);
+                Console.WriteLine("\nFichas en mesa");
+                
+                foreach (var a in t.ManoDeFichas)
+                {
+                    Console.WriteLine(a);
+                }
+                int l = int.Parse(Console.ReadLine());
+                t.Play(t.ManoDeFichas[l]);
                 
             }
         }
