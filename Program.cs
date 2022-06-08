@@ -8,10 +8,9 @@ namespace matcom_domino
         static void Main(string[] args)
         {
             Domino<int> c = new Referee9();
-            IPlayer<int> r = new PlayerRandomint9();
-            IPlayer<int> t = new PlayerRandomint9();
-
             IMesa<int> table = new Mesa();
+            IPlayer<int> r = new Player(table);
+            IPlayer<int> t = new Player(table);
 
             c.Jugadores.Add(r);
             c.Jugadores.Add(t);
@@ -20,15 +19,32 @@ namespace matcom_domino
 
             Console.WriteLine(c.ConjuntodeFichas.Count());
 
-            foreach (var a in c.ConjuntodeFichas)
-            {
-                Console.WriteLine(a);
-            }
+            
 
-            Console.WriteLine("Fichas player");
-            foreach (var k in r.ManoDeFichas)
+            while (true)
             {
-                Console.Write(k + ", ");
+                Console.WriteLine("Fichas player");
+                foreach (var k in r.ManoDeFichas)
+                {
+                    Console.Write(k + ", ");
+                }
+                Console.WriteLine("\nFichas en mesa");
+                foreach (var a in table.CardinTable)
+                {
+                    Console.WriteLine(a);
+                }
+
+                int m = int.Parse(Console.ReadLine()); 
+                r.Play(r.ManoDeFichas[m]);
+                Console.WriteLine("\nFichas en mesa");
+                
+                foreach (var a in t.ManoDeFichas)
+                {
+                    Console.WriteLine(a);
+                }
+                int l = int.Parse(Console.ReadLine());
+                t.Play(t.ManoDeFichas[l]);
+                
             }
         }
     }
