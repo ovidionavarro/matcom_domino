@@ -46,6 +46,7 @@ namespace matcom_domino
             { 
                 manoficha.Remove(ficha);
                 table.CardinTable.Add(ficha);
+                
             }
 
         }

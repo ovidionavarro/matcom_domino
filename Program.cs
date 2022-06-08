@@ -19,15 +19,24 @@ namespace matcom_domino
 
             Console.WriteLine(c.ConjuntodeFichas.Count());
 
-            foreach (var a in c.ConjuntodeFichas)
-            {
-                Console.WriteLine(a);
-            }
+            
 
-            Console.WriteLine("Fichas player");
-            foreach (var k in r.ManoDeFichas)
+            while (true)
             {
-                Console.Write(k + ", ");
+                Console.WriteLine("Fichas player");
+                foreach (var k in r.ManoDeFichas)
+                {
+                    Console.Write(k + ", ");
+                }
+                Console.WriteLine("\nFichas en mesa");
+                foreach (var a in table.CardinTable)
+                {
+                    Console.WriteLine(a);
+                }
+
+                int m = int.Parse(Console.ReadLine()); 
+                r.Play(r.ManoDeFichas[m]);
+                
             }
         }
     }
