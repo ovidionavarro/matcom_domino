@@ -37,12 +37,38 @@ namespace matcom_domino
 
         public void Play(IFichas<int> ficha) // Esto hay que arreglarlo... no puede ser un bool
         {
+
             if (table.IsValido(ficha))
             {
                 table.RecibirJugada(ficha);
                 manoficha.Remove(ficha);
-                table.CardinTable.Add(ficha);
+                table.CardinTable.Add(ficha);  
             }
+                
+            
+        }
+    }
+
+    class PlayerRandom : Player
+    {
+        public PlayerRandom(IMesa<int> table) : base(table)
+        {
+        }
+
+        public override void SelectCard()
+        {
+            List<IFichas<int>> fichasjugables = new List<IFichas<int>>();
+            Random r = new Random();
+            foreach (var ficha in ManoDeFichas)
+            {
+                if (table.IsValido(ficha))
+                {
+                    fichasjugables.Add(ficha);
+                    
+                }
+            }
+            Play(fichasjugables[(int)r.NextInt64(fichasjugables.Count)]);
+
         }
     }
 
@@ -54,7 +80,7 @@ namespace matcom_domino
 
         public int SumaFicha(IFichas<int> Ficha)
         {
-            int suma = Ficha.GetFace(1) + Ficha.GetFace(2);
+            int suma = Ficha.ValueFace(1) + Ficha.ValueFace(2);
             return suma;
         }
 
@@ -81,7 +107,7 @@ namespace matcom_domino
             {
                 if (table.IsValido(ficha))
                 {
-                    table.RecibirJugada(ficha);
+                   
                     Play(ficha);
                     break;
                 }

@@ -31,16 +31,16 @@ namespace matcom_domino
                 fichaJugable = ficha;
 
             else if (fichaJugable.GetFace(1) == ficha.GetFace(1))
-                fichaJugable = new Fichas9(ficha.GetFace(2), fichaJugable.GetFace(2));
+                fichaJugable = new Fichas9(fichaJugable.GetFace(2),ficha.GetFace(2));
 
             else if (fichaJugable.GetFace(2) == ficha.GetFace(2))
-                fichaJugable = new Fichas9(ficha.GetFace(1), fichaJugable.GetFace(1));
+                fichaJugable = new Fichas9(fichaJugable.GetFace(1),ficha.GetFace(1));
 
             else if (fichaJugable.GetFace(1) == ficha.GetFace(2))
-                fichaJugable = new Fichas9(ficha.GetFace(1), fichaJugable.GetFace(2));
+                fichaJugable = new Fichas9(fichaJugable.GetFace(2),ficha.GetFace(1));
 
             else if (fichaJugable.GetFace(2) == ficha.GetFace(1))
-                fichaJugable = new Fichas9(ficha.GetFace(2), fichaJugable.GetFace(1));
+                fichaJugable = new Fichas9(fichaJugable.GetFace(1),ficha.GetFace(2));
         }
 
         public bool IsValido(IFichas<int> a) // No actualizar ficha Jugable en esta comprobacion

@@ -9,15 +9,15 @@ namespace matcom_domino
         {
             // Inicializando Objetos del Juego
             Domino<int> c = new Referee9();
-            IMesa<int> table = new Mesa();
+            Mesa table = new Mesa();
             IPlayer<int> r = new Player(table);
             PlayerBotaGorda t = new PlayerBotaGorda(table);
             PlayerBotaGorda p = new PlayerBotaGorda(table);
-            Player yo = new Player(table);
+            IPlayer<int> pramd = new PlayerRandom(table);
             p.SortHand();
             
             //Agregando Jugadores al Juego
-            c.Jugadores.Add(yo);
+            c.Jugadores.Add(pramd);
             c.Jugadores.Add(r);
             c.Jugadores.Add(t);
             c.Jugadores.Add(p);
@@ -32,14 +32,13 @@ namespace matcom_domino
             
             while (true)
             {
-                foreach (var ficha in yo.ManoDeFichas)
+                foreach (var ficha in pramd.ManoDeFichas)
                 {
                     Console.Write(ficha+", ");
                 }
 
-                int q = int.Parse(Console.ReadLine());
-                
-                yo.Play(yo.ManoDeFichas[q]);
+                pramd.SelectCard();
+                Console.WriteLine("fichajugable: "+table.fichaJugable);
                 foreach (var ficha in table.CardinTable)
                 {
                     Console.Write(ficha+", ");
@@ -48,6 +47,7 @@ namespace matcom_domino
                 Console.WriteLine("Player 1 Jugo!");
                 p.SelectCard();
                 Console.WriteLine("Mesa");
+                Console.WriteLine("fichajugable: "+table.fichaJugable);
                 foreach (var ficha in table.CardinTable)
                 {
                     Console.Write(ficha+", ");
@@ -62,6 +62,7 @@ namespace matcom_domino
                 
                 Console.WriteLine("Player 2 Jugo!!");
                 t.SelectCard();
+                Console.WriteLine("fichajugable: "+table.fichaJugable);
                 Console.WriteLine("Mesa");
                 foreach (var ficha in table.CardinTable)
                 {
