@@ -7,7 +7,7 @@ namespace matcom_domino
         //cambie el repardor de fichas xq lo tenia puesto en la clase referee pero pienso k el jugador es el k tenga la funcion de coher la fichas
         
          List<IFichas<T>>ManoDeFichas{get;}  
-         IFichas <T> SelectCard();
+         void SelectCard();
          
          
 
@@ -35,7 +35,7 @@ namespace matcom_domino
 
         private List<IFichas<int>> manoficha;
         
-        public IFichas<int> SelectCard()
+        public virtual void SelectCard()
         {
             throw new NotImplementedException();
         }
@@ -50,5 +50,43 @@ namespace matcom_domino
             }
 
         }
+    }
+
+    class PlayerBotaGorda: Player
+    {
+        public PlayerBotaGorda(IMesa<int> table): base(table)
+        {
+        }
+
+        public int SumaFicha(IFichas<int> Ficha)
+        {
+            int suma = Ficha.GetFace(1) + Ficha.GetFace(2);
+            return suma;
+        }
+
+        public void SortHand()
+        {
+            for (int i = 0; i < ManoDeFichas.Count; i++)
+            {
+                for (int j = i+1; j < ManoDeFichas.Count; j++)
+                {
+                    if (SumaFicha(ManoDeFichas[i])<SumaFicha(ManoDeFichas[j]))
+                    {
+                        Fichas9 repuesto =  new Fichas9(ManoDeFichas[i].GetFace(1),ManoDeFichas[i].GetFace(2));
+                        ManoDeFichas[i] = ManoDeFichas[j];
+                        ManoDeFichas[j]=repuesto;
+                    }
+                }
+            }
+        }
+
+        public override void SelectCard()
+        {
+            foreach (var ficha in ManoDeFichas)
+            {
+                Play(ficha);
+            }
+        }
+
     }
 }

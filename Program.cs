@@ -11,41 +11,35 @@ namespace matcom_domino
             IMesa<int> table = new Mesa();
             IPlayer<int> r = new Player(table);
             IPlayer<int> t = new Player(table);
+            PlayerBotaGorda p = new PlayerBotaGorda(table);
+            p.SortHand();
 
             c.Jugadores.Add(r);
             c.Jugadores.Add(t);
+            c.Jugadores.Add(p);
             c.GeneratedCards();
             c.RepartirFichas();
 
-            Console.WriteLine(c.ConjuntodeFichas.Count());
-
-            
-
-            while (true)
+            foreach (var ficha in p.ManoDeFichas)
             {
-                Console.WriteLine("Fichas player");
-                foreach (var k in r.ManoDeFichas)
-                {
-                    Console.Write(k + ", ");
-                }
-                Console.WriteLine("\nFichas en mesa");
-                foreach (var a in table.CardinTable)
-                {
-                    Console.WriteLine(a);
-                }
-
-                int m = int.Parse(Console.ReadLine()); 
-                r.Play(r.ManoDeFichas[m]);
-                Console.WriteLine("\nFichas en mesa");
-                
-                foreach (var a in t.ManoDeFichas)
-                {
-                    Console.WriteLine(a);
-                }
-                int l = int.Parse(Console.ReadLine());
-                t.Play(t.ManoDeFichas[l]);
-                
+             Console.Write(ficha+", ");   
             }
+
+            Console.ReadLine();
+            
+            p.SortHand();
+            
+            Console.WriteLine("Se ordeno la mano");
+            foreach (var ficha in p.ManoDeFichas)
+            {
+                Console.Write(ficha+", ");   
+            }
+
+
+
+
+
+
         }
     }
 }
