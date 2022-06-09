@@ -3,29 +3,24 @@ namespace matcom_domino
     public interface IPlayer<T>
     {
         //mismo errror que con la lsita de la clase referee del inumeroable
-        
+
         //cambie el repardor de fichas xq lo tenia puesto en la clase referee pero pienso k el jugador es el k tenga la funcion de coher la fichas
-        
-         List<IFichas<T>>ManoDeFichas{get;}  
-         void SelectCard();
-         
-         
 
-         void Play(IFichas<T> ficha);
+        List<IFichas<T>> ManoDeFichas { get; }
+        void SelectCard();
 
+
+        void Play(IFichas<T> ficha);
     }
-    public class Player : IPlayer<int>   //despues hay k hacerlo generico
+
+    public class Player : IPlayer<int> //despues hay k hacerlo generico
     {
-        public IMesa<int> table
-        {
-            get;
-        }
+        public IMesa<int> table { get; }
 
         public Player(IMesa<int> Table)
         {
             manoficha = new List<IFichas<int>>();
             this.table = Table;
-
         }
 
         public List<IFichas<int>> ManoDeFichas
@@ -34,27 +29,25 @@ namespace matcom_domino
         }
 
         private List<IFichas<int>> manoficha;
-        
+
         public virtual void SelectCard()
         {
             throw new NotImplementedException();
         }
 
-        public void Play(IFichas<int> ficha)
+        public void Play(IFichas<int> ficha) // Esto hay que arreglarlo... no puede ser un bool
         {
             if (table.IsValido(ficha))
-            { 
+            {
                 manoficha.Remove(ficha);
                 table.CardinTable.Add(ficha);
-                
             }
-
         }
     }
 
-    class PlayerBotaGorda: Player
+    class PlayerBotaGorda : Player
     {
-        public PlayerBotaGorda(IMesa<int> table): base(table)
+        public PlayerBotaGorda(IMesa<int> table) : base(table)
         {
         }
 
@@ -68,13 +61,13 @@ namespace matcom_domino
         {
             for (int i = 0; i < ManoDeFichas.Count; i++)
             {
-                for (int j = i+1; j < ManoDeFichas.Count; j++)
+                for (int j = i + 1; j < ManoDeFichas.Count; j++)
                 {
-                    if (SumaFicha(ManoDeFichas[i])<SumaFicha(ManoDeFichas[j]))
+                    if (SumaFicha(ManoDeFichas[i]) < SumaFicha(ManoDeFichas[j]))
                     {
-                        Fichas9 repuesto =  new Fichas9(ManoDeFichas[i].GetFace(1),ManoDeFichas[i].GetFace(2));
+                        Fichas9 repuesto = new Fichas9(ManoDeFichas[i].GetFace(1), ManoDeFichas[i].GetFace(2));
                         ManoDeFichas[i] = ManoDeFichas[j];
-                        ManoDeFichas[j]=repuesto;
+                        ManoDeFichas[j] = repuesto;
                     }
                 }
             }
@@ -82,11 +75,20 @@ namespace matcom_domino
 
         public override void SelectCard()
         {
+            SortHand();
             foreach (var ficha in ManoDeFichas)
             {
-                Play(ficha);
+                if (table.IsValido(ficha))
+                {
+                    table.RecibirJugada(ficha);
+                    Play(ficha);
+                    break;
+                }
+                
+                // Imprime en consola cuando no puede jugar
+                if (ficha.Equals(ManoDeFichas[ManoDeFichas.Count - 1]))
+                    Console.WriteLine("Paso!!");
             }
         }
-
     }
 }

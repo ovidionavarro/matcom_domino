@@ -71,10 +71,6 @@ namespace matcom_domino
             }
         }
 
-
-        //public static List<IFichas<int>> ConjuntodeFichas=new List<IFichas<int>>();
-        //public IEnumerable<IFichas<int>> ConjuntoCards { get ; set; }
-
         public bool EndGame()
         {
             throw new NotImplementedException();
@@ -84,11 +80,6 @@ namespace matcom_domino
         {
             throw new NotImplementedException();
         }
-
-        /*public void TipodeReparticion()
-        {
-            throw new NotImplementedException();
-        }*/
 
         public void Wins()
         {
