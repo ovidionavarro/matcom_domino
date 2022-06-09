@@ -39,6 +39,7 @@ namespace matcom_domino
         {
             if (table.IsValido(ficha))
             {
+                table.RecibirJugada(ficha);
                 manoficha.Remove(ficha);
                 table.CardinTable.Add(ficha);
             }

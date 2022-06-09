@@ -3,11 +3,12 @@ namespace matcom_domino
     public interface IFichas<T>
     {
         T GetFace(int a);
-        int ValueFace(int a);
+        int ValueFace(T a);
 
     }
+    
 
-    public class Fichas9 : IFichas<int>//se puede implementar tambien con arrays
+    public class Fichas9 : IFichas<int> //se puede implementar tambien con arrays
     {
         public Fichas9(int a, int b)
         {
