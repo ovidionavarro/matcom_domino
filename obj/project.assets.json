@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/ovidio/datos/Escuela/git/matcom domino/matcom domino.csproj",
+      "projectUniqueName": "/home/ovidio/Desktop/proyecto/matcom_domino/matcom domino.csproj",
       "projectName": "matcom domino",
-      "projectPath": "/home/ovidio/datos/Escuela/git/matcom domino/matcom domino.csproj",
+      "projectPath": "/home/ovidio/Desktop/proyecto/matcom_domino/matcom domino.csproj",
       "packagesPath": "/home/ovidio/.nuget/packages/",
-      "outputPath": "/home/ovidio/datos/Escuela/git/matcom domino/obj/",
+      "outputPath": "/home/ovidio/Desktop/proyecto/matcom_domino/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/ovidio/.nuget/NuGet/NuGet.Config"

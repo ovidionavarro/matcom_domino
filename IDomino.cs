@@ -5,10 +5,11 @@ namespace matcom_domino
         //orden en el k se juega,como se reparten las fichas,cuando fializa
         //*no se le asigna valor a la fichas cuando se tranca xq eso lo hacen las fichas
         //error en crear uun campo conjunto de fichs ,nose me almacenan las fichas ahi
-
+        bool Tranke();
         void GeneratedCards();
         List<IFichas<T>> ConjuntodeFichas { get; }
         List<IPlayer<T>> Jugadores { get; }
+        IMesa<T> Table { get; }
         void AgregarJugador(IPlayer<T> a);
         void RepartirFichas();
         void GameOrden();
@@ -18,6 +19,7 @@ namespace matcom_domino
 
     public class Referee9 : Domino<int>
     {
+        public IMesa<int> Table { get; }
         public List<IFichas<int>> ConjuntodeFichas
         {
             get => this.conjuntodeFichas;
@@ -32,8 +34,9 @@ namespace matcom_domino
 
         private List<IPlayer<int>> jugadores;
 
-        public Referee9()
+        public Referee9(IMesa<int> Table)
         {
+            this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
             this.jugadores = new List<IPlayer<int>>();
         }
@@ -64,16 +67,62 @@ namespace matcom_domino
             {
                 for (int i = 0; i < this.jugadores.Count; i++)
                 {
-                    int k = (int)r.NextInt64(this.conjuntodeFichas.Count);
+                    int k = r.Next(this.conjuntodeFichas.Count);
                     this.jugadores[i].ManoDeFichas.Add(conjuntodeFichas[k]);
                     conjuntodeFichas.RemoveAt(k);
                 }
             }
         }
+        
+        public bool Tranke()
+        {
+            foreach (var player in jugadores)
+            {
+                foreach (var ficha in player.ManoDeFichas)
+                {
+                    if (Table.IsValido(ficha))
+                        return false;
+                }
+            }
 
+            return true;
+        }
+
+        int CalcManoJugador(IPlayer<int> player)
+        {
+            int Ptos = 0;
+            foreach (var ficha in player.ManoDeFichas)
+            {
+                Ptos += ficha.ValueFace(1) + ficha.ValueFace(2);
+            }
+
+            return Ptos;
+        }
+
+        public int[] CalcPtos()
+        {
+            int[] PtosPlayers = new int[jugadores.Count];
+            for (int i = 0; i < jugadores.Count; i++)
+            {
+                PtosPlayers[i] = CalcManoJugador(jugadores[i]);
+            }
+
+            return PtosPlayers;
+        }
+        
         public bool EndGame()
         {
-            throw new NotImplementedException();
+            if (Tranke())
+                return true;
+            foreach (var player in jugadores)
+            {
+                if (player.ManoDeFichas.Count==0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void GameOrden()
@@ -83,7 +132,11 @@ namespace matcom_domino
 
         public void Wins()
         {
-            throw new NotImplementedException();
+            if (EndGame())
+            {
+                int index = Array.IndexOf(CalcPtos(),CalcPtos().Min());
+                Console.WriteLine("El Ganador es: "+jugadores[index].name+" con "+CalcPtos().Min()+" Pts");
+            }
         }
     }
 }

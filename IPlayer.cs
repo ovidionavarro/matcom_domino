@@ -9,7 +9,7 @@ namespace matcom_domino
         List<IFichas<T>> ManoDeFichas { get; }
         void SelectCard();
 
-
+        string name { get; }
         void Play(IFichas<T> ficha);
     }
 
@@ -17,10 +17,17 @@ namespace matcom_domino
     {
         public IMesa<int> table { get; }
 
-        public Player(IMesa<int> Table)
+        public string name
+        {
+            get;
+            set;
+        }
+
+        public Player(IMesa<int> Table, string Name)
         {
             manoficha = new List<IFichas<int>>();
             this.table = Table;
+            this.name = Name;
         }
 
         public List<IFichas<int>> ManoDeFichas
@@ -51,7 +58,7 @@ namespace matcom_domino
 
     class PlayerRandom : Player
     {
-        public PlayerRandom(IMesa<int> table) : base(table)
+        public PlayerRandom(IMesa<int> table, string name) : base(table, name)
         {
         }
 
@@ -67,14 +74,23 @@ namespace matcom_domino
                     
                 }
             }
-            Play(fichasjugables[(int)r.NextInt64(fichasjugables.Count)]);
+
+            if (fichasjugables.Count>0)
+            {
+                Play(fichasjugables[r.Next(fichasjugables.Count)]);
+            }
+
+            else
+            {
+                Console.WriteLine("Paso!!");
+            }
 
         }
     }
 
     class PlayerBotaGorda : Player
     {
-        public PlayerBotaGorda(IMesa<int> table) : base(table)
+        public PlayerBotaGorda(IMesa<int> table, string name) : base(table, name)
         {
         }
 
@@ -116,6 +132,13 @@ namespace matcom_domino
                 if (ficha.Equals(ManoDeFichas[ManoDeFichas.Count - 1]))
                     Console.WriteLine("Paso!!");
             }
+        }
+    }
+
+    class PlayerIntelligent:Player
+    {
+        public PlayerIntelligent(IMesa<int> table, string name) : base(table, name)
+        {
         }
     }
 }
