@@ -1,16 +1,19 @@
 namespace matcom_domino
 {
-    public interface IFichas<T>
+    public interface IFichas
     {
-        T GetFace(int a);
-        int ValueFace(T a);
+        string GetFace(int a);
+        int ValueFace(int a);
+
+        List<TypeFace> Caras { get; }
 
     }
     
 
-    public class Fichas9 : IFichas<int> //se puede implementar tambien con arrays
+    public class Fichas : IFichas //se puede implementar tambien con arrays
     {
-        public Fichas9(int a, int b)
+        #region metods viejos
+        /*public Fichas9(int a, int b)
         {
             //ficha[0]=a;
             //ficha[1]=b;
@@ -45,6 +48,29 @@ namespace matcom_domino
                 return 0;
             }
 
+        }*/
+        #endregion
+        public Fichas(List<TypeFace>typeFaces)
+        {
+            this.caras = typeFaces;
         }
+
+        public int ValueFace(int a)
+        {
+            return this.Caras[a].Valor;
+        }
+
+
+        public string GetFace(int a)
+        {
+            return this.caras[a].Nombre;
+        }
+        public List<TypeFace> Caras
+        {
+            get => this.caras;
+        }
+       
+
+        private List<TypeFace> caras;
     }
 }

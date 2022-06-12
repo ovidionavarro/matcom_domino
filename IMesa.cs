@@ -1,31 +1,31 @@
 namespace matcom_domino
 {
-    public interface IMesa<T>
+    public interface IMesa
     {
         //jugar la ficha ,balidar la jugada, ver fichas en la mesa
-        bool IsValido(IFichas<T> a); //boliano
-        List<IFichas<T>> CardinTable { get; }
+        bool IsValido(IFichas a); //boliano
+        List<IFichas> CardinTable { get; }
 
-        void RecibirJugada(IFichas<T> ficha)
-        {
-        }
+        void RecibirJugada(IFichas ficha);
+
+
 
 
     }
 
 
-    public class Mesa : IMesa<int>
+    public class Mesa : IMesa
     {
-        private List<IFichas<int>> cardintable;
+        private List<IFichas> cardintable;
 
-        public IFichas<int> fichaJugable;
+        public Fichas fichaJugable;
 
         public Mesa()
         {
-            cardintable = new List<IFichas<int>>();
+            cardintable = new List<IFichas>();
         }
 
-        public void RecibirJugada(IFichas<int> ficha)
+        public void RecibirJugada(IFichas ficha)
         {
             if (cardintable.Count == 0)
                 fichaJugable = ficha;
@@ -43,7 +43,7 @@ namespace matcom_domino
                 fichaJugable = new Fichas9(fichaJugable.GetFace(1),ficha.GetFace(2));
         }
 
-        public bool IsValido(IFichas<int> a) // No actualizar ficha Jugable en esta comprobacion
+        public bool IsValido(IFichas a) // No actualizar ficha Jugable en esta comprobacion
         {
             if (cardintable.Count == 0)
                 return true;
@@ -63,7 +63,7 @@ namespace matcom_domino
             return false;
         }
 
-        public List<IFichas<int>> CardinTable
+        public List<IFichas> CardinTable
         {
             get => this.cardintable;
         }

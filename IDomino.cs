@@ -1,57 +1,50 @@
 namespace matcom_domino
 {
-    public interface Domino<T>
+    public interface Domino
     {
         //orden en el k se juega,como se reparten las fichas,cuando fializa
         //*no se le asigna valor a la fichas cuando se tranca xq eso lo hacen las fichas
         //error en crear uun campo conjunto de fichs ,nose me almacenan las fichas ahi
-        bool Tranke();
-        void GeneratedCards();
-        List<IFichas<T>> ConjuntodeFichas { get; }
-        List<IPlayer<T>> Jugadores { get; }
-        IMesa<T> Table { get; }
-        void AgregarJugador(IPlayer<T> a);
+
+        public bool Tranke();
+        void GeneratedCards(int cantdecaras);
+        List<Fichas> ConjuntodeFichas { get; }
+        List<IPlayer> Jugadores { get; }
+        IMesa Table { get; }
+        void AgregarJugador(IPlayer a);
         void RepartirFichas();
         void GameOrden();
         bool EndGame();
         void Wins();
     }
 
-    public class Referee9 : Domino<int>
+    public class Referee9 : Domino
     {
-        public IMesa<int> Table { get; }
-        public List<IFichas<int>> ConjuntodeFichas
+        public IMesa Table { get; }
+        public List<Fichas> ConjuntodeFichas
         {
             get => this.conjuntodeFichas;
         }
 
-        private List<IFichas<int>> conjuntodeFichas;
+        private List<Fichas> conjuntodeFichas;
 
-        public List<IPlayer<int>> Jugadores
+        public List<IPlayer> Jugadores
         {
             get => this.jugadores;
         }
 
-        private List<IPlayer<int>> jugadores;
+        private List<IPlayer> jugadores;
 
-        public Referee9(IMesa<int> Table)
+        public Referee9(IMesa Table)
         {
             this.Table = Table;
-            this.conjuntodeFichas = new List<IFichas<int>>();
-            this.jugadores = new List<IPlayer<int>>();
+            this.conjuntodeFichas = new List<IFichas>();
+            this.jugadores = new List<IPlayer>();
         }
 
-        public void GeneratedCards()
+        public void GeneratedCards(int cantdecaras)
         {
-            for (int i = 0; i <= 9; i++)
-            {
-                for (int j = i; j <= 9; j++)
-                {
-                    //ConjuntodeFichas.Add(new Fichas9(i,j));
-                    //a.Add(new Fichas9(i,j))
-                    this.conjuntodeFichas.Add(new Fichas9(i, j));
-                }
-            }
+            
         }
 
         public void AgregarJugador(IPlayer<int> a)
@@ -134,8 +127,8 @@ namespace matcom_domino
         {
             if (EndGame())
             {
-                int index = Array.IndexOf(CalcPtos(),CalcPtos().Min());
-                Console.WriteLine("El Ganador es: "+jugadores[index].name+" con "+CalcPtos().Min()+" Pts");
+                int index = Array.IndexOf(CalcPtos(),CalcPtos().Max());
+                Console.WriteLine("El Ganador es: "+jugadores[index].name+" con "+CalcPtos().Max()+" Pts");
             }
         }
     }

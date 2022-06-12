@@ -5,8 +5,12 @@ namespace matcom_domino
 {
     class Program
     {
+        #region MyRegion
+
+        
+
         //Muestra la Mesa 
-        public static void MostrarMesa(IMesa<int> Table)
+        /*public static void MostrarMesa(IMesa<int> Table)
         {
             Console.WriteLine("Fichas en mesa");
             foreach (var ficha in Table.CardinTable)
@@ -35,8 +39,8 @@ namespace matcom_domino
             Mesa table = new Mesa();
             Domino<int> c = new Referee9(table);
             IPlayer<int> P1 = new Player(table, "PlayerNormal1");
-            IPlayer<int> B1 = new PlayerBotaGorda(table, "PlayerBotaG1");
-            IPlayer<int> B2 = new PlayerBotaGorda(table,"PlayerBotaG2");
+            PlayerBotaGorda B1 = new PlayerBotaGorda(table, "PlayerBotaG1");
+            PlayerBotaGorda B2 = new PlayerBotaGorda(table,"PlayerBotaG2");
             IPlayer<int> R1 = new PlayerRandom(table,"PlayerRandom1");
 
 
@@ -74,6 +78,7 @@ namespace matcom_domino
                 c.Wins();
                 
             }
-        }
+        }*/
+        #endregion
     }
 }

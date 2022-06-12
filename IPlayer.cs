@@ -1,12 +1,12 @@
 namespace matcom_domino
 {
-    public interface IPlayer<T>
+    public interface IPlayer
     {
         //mismo errror que con la lsita de la clase referee del inumeroable
 
         //cambie el repardor de fichas xq lo tenia puesto en la clase referee pero pienso k el jugador es el k tenga la funcion de coher la fichas
 
-        List<IFichas<T>> ManoDeFichas { get; }
+        List<IFichas> ManoDeFichas { get; }
         void SelectCard();
 
         string name { get; }
