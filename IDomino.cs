@@ -127,8 +127,8 @@ namespace matcom_domino
         {
             if (EndGame())
             {
-                int index = Array.IndexOf(CalcPtos(),CalcPtos().Max());
-                Console.WriteLine("El Ganador es: "+jugadores[index].name+" con "+CalcPtos().Max()+" Pts");
+                int index = Array.IndexOf(CalcPtos(),CalcPtos().Min());
+                Console.WriteLine("El Ganador es: "+jugadores[index].name+" con "+CalcPtos().Min()+" Pts");
             }
         }
     }
