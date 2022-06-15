@@ -1,6 +1,6 @@
 namespace matcom_domino
 {
-    public interface Domino<T>
+    public interface IDomino<T>
     {
         //orden en el k se juega,como se reparten las fichas,cuando fializa
         //*no se le asigna valor a la fichas cuando se tranca xq eso lo hacen las fichas
@@ -18,7 +18,7 @@ namespace matcom_domino
         void Wins();
     }
 
-    public class Domino99 : Domino<int>
+    public class Domino99 : IDomino<int>
     {
         public IMesa<int> Table { get; }
         public List<IFichas<int>> ConjuntodeFichas
@@ -60,7 +60,7 @@ namespace matcom_domino
 
         public void RepartirFichas(int l)
         {
-            Random r = new Random();
+            Random r = new Random();    
 
             while (this.jugadores[this.jugadores.Count - 1].ManoDeFichas.Count != l)
             {

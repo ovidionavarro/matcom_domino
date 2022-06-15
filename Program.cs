@@ -33,7 +33,7 @@ namespace matcom_domino
             // Inicializando Objetos del Juego
             
             Mesa table = new Mesa();
-            Domino<int> c = new Domino99(table);
+            IDomino<int> c = new Domino99(table);
             IPlayer<int> P1 = new Player(table, "PlayerNormal1");
             PlayerBotaGorda B1 = new PlayerBotaGorda(table, "PlayerBotaG1");
             PlayerBotaGorda B2 = new PlayerBotaGorda(table,"PlayerBotaG2");
