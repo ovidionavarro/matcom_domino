@@ -1,3 +1,5 @@
+using System.Security.Cryptography.X509Certificates;
+
 namespace matcom_domino
 {
     public interface Domino<T>
@@ -18,8 +20,9 @@ namespace matcom_domino
         void Wins();
     }
 
-    public class Domino99 : Domino<int>
+    public class DominoClassic : Domino<int>
     {
+        
         public IMesa<int> Table { get; }
         public List<IFichas<int>> ConjuntodeFichas
         {
@@ -35,11 +38,13 @@ namespace matcom_domino
 
         private List<IPlayer<int>> jugadores;
 
-        public Domino99(IMesa<int> Table)
+        public DominoClassic(IMesa<int> Table,int cant )
         {
             this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
             this.jugadores = new List<IPlayer<int>>();
+            this.GeneratedCards(cant);
+
         }
 
         public void GeneratedCards(int k)
@@ -49,6 +54,7 @@ namespace matcom_domino
                 for (int j = i; j <= k; j++)
                 {
                     this.conjuntodeFichas.Add(new Fichas9(i, j));
+                    
                 }
             }
         }
@@ -58,8 +64,16 @@ namespace matcom_domino
             jugadores.Add(a);
         }
 
-        public void RepartirFichas(int l)
+        public virtual void  RepartirFichas(int l)
         {
+            if (l * jugadores.Count() > ConjuntodeFichas.Count())
+            {
+                throw new Exception("estas repartiendo mas fichas de las que hay");
+            }
+            else
+            {
+                
+            }
             Random r = new Random();
 
             while (this.jugadores[this.jugadores.Count - 1].ManoDeFichas.Count != l)
@@ -134,8 +148,16 @@ namespace matcom_domino
             if (EndGame())
             {
                 int index = Array.IndexOf(CalcPtos(),CalcPtos().Min());
-                Console.WriteLine("El Ganador es: "+jugadores[index].name+" con "+CalcPtos().Min()+" Pts");
+                  Console.WriteLine("El Ganador es: "+jugadores[index].name+" con "+CalcPtos().Min()+" Pts");
             }
         }
     }
+
+    class DominoRobaito : DominoClassic
+    {
+        public DominoRobaito(IMesa<int> Table,int cant ):base(Table,cant){}
+        
+        
+    }
+    
 }
