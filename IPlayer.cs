@@ -96,8 +96,7 @@ namespace matcom_domino
 
         public int SumaFicha(IFichas<int> Ficha)
         {
-            int suma = Ficha.ValueFace(1) + Ficha.ValueFace(2);
-            return suma;
+            return Ficha.FichaValue();
         }
 
         public void SortHand()

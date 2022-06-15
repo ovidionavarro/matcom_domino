@@ -5,6 +5,8 @@ namespace matcom_domino
         T GetFace(int a);
         int ValueFace(T a);
 
+        int FichaValue();
+
     }
     
 
@@ -17,6 +19,12 @@ namespace matcom_domino
             ficha = new Tuple<int, int>(a, b);
 
         }
+
+        public int FichaValue()
+        {
+            return ValueFace(1) + ValueFace(2);
+        }
+        
         //public int []ficha=new int [2];
         private Tuple<int, int> ficha;
 
