@@ -7,18 +7,18 @@ namespace matcom_domino
         //error en crear uun campo conjunto de fichs ,nose me almacenan las fichas ahi
 
         public bool Tranke();
-        void GeneratedCards();
+        void GeneratedCards(int k);
         List<IFichas<T>> ConjuntodeFichas { get; }
         List<IPlayer<T>> Jugadores { get; }
         IMesa<T> Table { get; }
         void AgregarJugador(IPlayer<T> a);
-        void RepartirFichas();
+        void RepartirFichas(int k);
         void GameOrden();
         bool EndGame();
         void Wins();
     }
 
-    public class Referee9 : Domino<int>
+    public class Domino99 : Domino<int>
     {
         public IMesa<int> Table { get; }
         public List<IFichas<int>> ConjuntodeFichas
@@ -35,21 +35,19 @@ namespace matcom_domino
 
         private List<IPlayer<int>> jugadores;
 
-        public Referee9(IMesa<int> Table)
+        public Domino99(IMesa<int> Table)
         {
             this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
             this.jugadores = new List<IPlayer<int>>();
         }
 
-        public void GeneratedCards()
+        public void GeneratedCards(int k)
         {
-            for (int i = 0; i <= 9; i++)
+            for (int i = 0; i <= k; i++)
             {
-                for (int j = i; j <= 9; j++)
+                for (int j = i; j <= k; j++)
                 {
-                    //ConjuntodeFichas.Add(new Fichas9(i,j));
-                    //a.Add(new Fichas9(i,j))
                     this.conjuntodeFichas.Add(new Fichas9(i, j));
                 }
             }
@@ -60,11 +58,11 @@ namespace matcom_domino
             jugadores.Add(a);
         }
 
-        public void RepartirFichas()
+        public void RepartirFichas(int l)
         {
             Random r = new Random();
 
-            while (this.jugadores[this.jugadores.Count - 1].ManoDeFichas.Count != 10)
+            while (this.jugadores[this.jugadores.Count - 1].ManoDeFichas.Count != l)
             {
                 for (int i = 0; i < this.jugadores.Count; i++)
                 {

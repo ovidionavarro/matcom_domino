@@ -33,7 +33,7 @@ namespace matcom_domino
             // Inicializando Objetos del Juego
             
             Mesa table = new Mesa();
-            Domino<int> c = new Referee9(table);
+            Domino<int> c = new Domino99(table);
             IPlayer<int> P1 = new Player(table, "PlayerNormal1");
             PlayerBotaGorda B1 = new PlayerBotaGorda(table, "PlayerBotaG1");
             PlayerBotaGorda B2 = new PlayerBotaGorda(table,"PlayerBotaG2");
@@ -46,10 +46,10 @@ namespace matcom_domino
             c.Jugadores.Add(R1);
 
             //Generando las Fichas del juego    
-            c.GeneratedCards();
+            c.GeneratedCards(9);
 
             // Repartiendo las fichas
-            c.RepartirFichas();
+            c.RepartirFichas(10);
 
 
             while (!c.EndGame())
