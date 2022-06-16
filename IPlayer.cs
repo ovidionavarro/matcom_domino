@@ -6,6 +6,7 @@ namespace matcom_domino
 
         //cambie el repardor de fichas xq lo tenia puesto en la clase referee pero pienso k el jugador es el k tenga la funcion de coher la fichas
 
+        bool Pasarse { get; }
         List<IFichas<T>> ManoDeFichas { get; }
         void SelectCard();
 
@@ -17,11 +18,7 @@ namespace matcom_domino
     {
         public IMesa<int> table { get; }
 
-        public string name
-        {
-            get;
-            set;
-        }
+        public string name { get; set; }
 
         public Player(IMesa<int> Table, string Name)
         {
@@ -42,17 +39,24 @@ namespace matcom_domino
             throw new NotImplementedException();
         }
 
+        public bool Pasarse
+        {
+            get => paso;
+            set { }
+        }
+
+        public bool paso = false;
+
         public void Play(IFichas<int> ficha) // Esto hay que arreglarlo... no puede ser un bool
         {
-
+            
             if (table.IsValido(ficha))
             {
+                this.paso = false;
                 table.RecibirJugada(ficha);
                 manoficha.Remove(ficha);
-                table.CardinTable.Add(ficha);  
+                table.CardinTable.Add(ficha);
             }
-                
-            
         }
     }
 
@@ -66,25 +70,24 @@ namespace matcom_domino
         {
             List<IFichas<int>> fichasjugables = new List<IFichas<int>>();
             Random r = new Random();
+
             foreach (var ficha in ManoDeFichas)
             {
                 if (table.IsValido(ficha))
                 {
                     fichasjugables.Add(ficha);
-                    
                 }
             }
 
-            if (fichasjugables.Count>0)
+            if (fichasjugables.Count > 0)
             {
                 Play(fichasjugables[r.Next(fichasjugables.Count)]);
             }
-
             else
             {
                 Console.WriteLine("Paso!!");
+                this.paso = true;
             }
-
         }
     }
 
@@ -118,18 +121,21 @@ namespace matcom_domino
         public override void SelectCard()
         {
             SortHand();
+
             foreach (var ficha in ManoDeFichas)
             {
                 if (table.IsValido(ficha))
                 {
-                   
                     Play(ficha);
                     break;
                 }
                 
-                // Imprime en consola cuando no puede jugar
-                if (ficha.Equals(ManoDeFichas[ManoDeFichas.Count - 1]))
+                // Si es la ultima ficha y no se jugo se pasa
+                if (ficha == ManoDeFichas[ManoDeFichas.Count - 1])
+                {
                     Console.WriteLine("Paso!!");
+                    paso = true;
+                }
             }
         }
     }

@@ -22,8 +22,8 @@ namespace matcom_domino
 
     public class DominoClassic : Domino<int>
     {
-        
         public IMesa<int> Table { get; }
+
         public List<IFichas<int>> ConjuntodeFichas
         {
             get => this.conjuntodeFichas;
@@ -38,13 +38,12 @@ namespace matcom_domino
 
         private List<IPlayer<int>> jugadores;
 
-        public DominoClassic(IMesa<int> Table,int cant )
+        public DominoClassic(IMesa<int> Table, int cant)
         {
             this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
             this.jugadores = new List<IPlayer<int>>();
             this.GeneratedCards(cant);
-
         }
 
         public void GeneratedCards(int k)
@@ -54,7 +53,6 @@ namespace matcom_domino
                 for (int j = i; j <= k; j++)
                 {
                     this.conjuntodeFichas.Add(new Fichas9(i, j));
-                    
                 }
             }
         }
@@ -64,16 +62,13 @@ namespace matcom_domino
             jugadores.Add(a);
         }
 
-        public virtual void  RepartirFichas(int l)
+        public virtual void RepartirFichas(int l)
         {
             if (l * jugadores.Count() > ConjuntodeFichas.Count())
             {
                 throw new Exception("estas repartiendo mas fichas de las que hay");
             }
-            else
-            {
-                
-            }
+
             Random r = new Random();
 
             while (this.jugadores[this.jugadores.Count - 1].ManoDeFichas.Count != l)
@@ -85,20 +80,6 @@ namespace matcom_domino
                     conjuntodeFichas.RemoveAt(k);
                 }
             }
-        }
-        
-        public bool Tranke()
-        {
-            foreach (var player in jugadores)
-            {
-                foreach (var ficha in player.ManoDeFichas)
-                {
-                    if (Table.IsValido(ficha))
-                        return false;
-                }
-            }
-
-            return true;
         }
 
         int CalcManoJugador(IPlayer<int> player)
@@ -122,15 +103,34 @@ namespace matcom_domino
 
             return PtosPlayers;
         }
-        
+
+        public bool Tranke()
+        {
+            foreach (var player in jugadores)
+            {
+                foreach (var ficha in player.ManoDeFichas)
+                {
+                    if (Table.IsValido(ficha))
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
         public bool EndGame()
         {
             if (Tranke())
+            {
+                Wins();
                 return true;
+            }
+
             foreach (var player in jugadores)
             {
-                if (player.ManoDeFichas.Count==0)
+                if (player.ManoDeFichas.Count == 0)
                 {
+                    Wins();
                     return true;
                 }
             }
@@ -138,26 +138,43 @@ namespace matcom_domino
             return false;
         }
 
-        public void GameOrden()
+        public virtual void GameOrden() //Aki cambiar el orden de la lista
         {
-            throw new NotImplementedException();
         }
 
         public void Wins()
         {
-            if (EndGame())
-            {
-                int index = Array.IndexOf(CalcPtos(),CalcPtos().Min());
-                  Console.WriteLine("El Ganador es: "+jugadores[index].name+" con "+CalcPtos().Min()+" Pts");
-            }
+            int index = Array.IndexOf(CalcPtos(), CalcPtos().Min());
+            Console.WriteLine("El Ganador es: " + jugadores[index].name + " con " + CalcPtos().Min() + " Pts");
         }
     }
 
     class DominoRobaito : DominoClassic
     {
-        public DominoRobaito(IMesa<int> Table,int cant ):base(Table,cant){}
-        
-        
+        public DominoRobaito(IMesa<int> Table, int cant) : base(Table, cant)
+        {
+        }
+
+        public void Robar(IPlayer<int> Player)
+        {
+            Random r = new Random();
+            while (Player.Pasarse)
+            {
+                if (ConjuntodeFichas.Count > 0)
+                {
+                    int index = r.Next(this.ConjuntodeFichas.Count);
+                    IFichas<int> ficha = this.ConjuntodeFichas[index];
+                    Player.ManoDeFichas.Add(ficha);
+                    ConjuntodeFichas.RemoveAt(index);
+                    Console.WriteLine("El Jugador {0} robo la ficha {1}", Player.name, ficha);
+                    Player.Play(ficha);
+                }
+                else
+                {
+                    Console.WriteLine("No quedan fichas para robar");
+                    break;
+                }
+            }
+        }
     }
-    
 }
