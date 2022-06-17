@@ -35,7 +35,7 @@ namespace matcom_domino
 
             Mesa table = new Mesa();
             DominoRobaito R = new DominoRobaito(table, 9);
-            Domino<int> c = new DominoClassic(table, 9);
+            //Domino<int> c = new DominoClassic(table, 9);
             IPlayer<int> P1 = new Player(table, "PlayerNormal1");
             PlayerBotaGorda B1 = new PlayerBotaGorda(table, "PlayerBotaG1");
             PlayerBotaGorda B2 = new PlayerBotaGorda(table, "PlayerBotaG2");
@@ -54,30 +54,35 @@ namespace matcom_domino
 
             while (!R.EndGame())
             {
-                MostrarMano(B1);
+                //MostrarMano(B1);
                 B1.SelectCard();
                 R.Robar(B1);
                 MostrarMesa(table);
-                Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
+                //Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
                 if (R.EndGame())
                     break;
 
-                Console.Read();
-                MostrarMano(B2);
+                //Console.Read();
+                //MostrarMano(B2);
                 B2.SelectCard();
                 R.Robar(B2);
                 MostrarMesa(table);
-                Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
+                //Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
                 if (R.EndGame())
                     break;
 
-                Console.Read();
-                MostrarMano(R1);
+                //Console.Read();
+                //MostrarMano(R1);
                 R1.SelectCard();
                 R.Robar(R1);
                 MostrarMesa(table);
-                Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
-                Console.Read();
+                //Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
+               // Console.Read();
+            }
+
+            foreach (var log in table.Log)
+            {
+                Console.WriteLine(log);
             }
         }
     }

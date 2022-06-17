@@ -12,7 +12,7 @@ namespace matcom_domino
         void GeneratedCards(int k);
         List<IFichas<T>> ConjuntodeFichas { get; }
         List<IPlayer<T>> Jugadores { get; }
-        IMesa<T> Table { get; }
+        //IMesa<T> Table { get; }
         void AgregarJugador(IPlayer<T> a);
         void RepartirFichas(int k);
         void GameOrden();
@@ -22,7 +22,7 @@ namespace matcom_domino
 
     public class DominoClassic : Domino<int>
     {
-        public IMesa<int> Table { get; }
+        public Mesa Table { get; }
 
         public List<IFichas<int>> ConjuntodeFichas
         {
@@ -38,7 +38,7 @@ namespace matcom_domino
 
         private List<IPlayer<int>> jugadores;
 
-        public DominoClassic(IMesa<int> Table, int cant)
+        public DominoClassic(Mesa Table, int cant)
         {
             this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
@@ -55,11 +55,13 @@ namespace matcom_domino
                     this.conjuntodeFichas.Add(new Fichas9(i, j));
                 }
             }
+            Table.Log.Add($"Se han generado todas las fichas hasta: {k}");
         }
 
         public void AgregarJugador(IPlayer<int> a)
         {
             jugadores.Add(a);
+            Table.Log.Add($"El jugador {a.name} se ha unido a la partida");
         }
 
         public virtual void RepartirFichas(int l)
@@ -80,6 +82,7 @@ namespace matcom_domino
                     conjuntodeFichas.RemoveAt(k);
                 }
             }
+            Table.Log.Add("Se han repartido todas las fichas a todos los jugadores");
         }
 
         int CalcManoJugador(IPlayer<int> player)
@@ -114,7 +117,7 @@ namespace matcom_domino
                         return false;
                 }
             }
-
+            
             return true;
         }
 
@@ -123,6 +126,7 @@ namespace matcom_domino
             if (Tranke())
             {
                 Wins();
+                Table.Log.Add("Se ha Trancado el juego ");
                 return true;
             }
 
@@ -144,14 +148,15 @@ namespace matcom_domino
 
         public void Wins()
         {
-            int index = Array.IndexOf(CalcPtos(), CalcPtos().Min());
-            Console.WriteLine("El Ganador es: " + jugadores[index].name + " con " + CalcPtos().Min() + " Pts");
+            int[] player_points = CalcPtos();
+            int index = Array.IndexOf(player_points, player_points.Min());
+            Table.Log.Add($"Ha ganado el jugador {jugadores[index].name} con {player_points.Min()} Pts");
         }
     }
 
     class DominoRobaito : DominoClassic
     {
-        public DominoRobaito(IMesa<int> Table, int cant) : base(Table, cant)
+        public DominoRobaito(Mesa Table, int cant) : base(Table, cant)
         {
         }
 
@@ -166,12 +171,12 @@ namespace matcom_domino
                     IFichas<int> ficha = this.ConjuntodeFichas[index];
                     Player.ManoDeFichas.Add(ficha);
                     ConjuntodeFichas.RemoveAt(index);
-                    Console.WriteLine("El Jugador {0} robo la ficha {1}", Player.name, ficha);
+                    Table.Log.Add($"EL Jugador {Player.name} robo la ficha {ficha}");
                     Player.Play(ficha);
                 }
                 else
                 {
-                    Console.WriteLine("No quedan fichas para robar");
+                    Table.Log.Add("Se han acabado las fichas para robar");
                     break;
                 }
             }

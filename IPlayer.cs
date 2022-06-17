@@ -16,11 +16,11 @@ namespace matcom_domino
 
     public class Player : IPlayer<int> //despues hay k hacerlo generico
     {
-        public IMesa<int> table { get; }
+        public Mesa table { get; }
 
         public string name { get; set; }
 
-        public Player(IMesa<int> Table, string Name)
+        public Player(Mesa Table, string Name)
         {
             manoficha = new List<IFichas<int>>();
             this.table = Table;
@@ -49,20 +49,21 @@ namespace matcom_domino
 
         public void Play(IFichas<int> ficha) // Esto hay que arreglarlo... no puede ser un bool
         {
-            
             if (table.IsValido(ficha))
             {
                 this.paso = false;
                 table.RecibirJugada(ficha);
                 manoficha.Remove(ficha);
                 table.CardinTable.Add(ficha);
+
+                table.Log.Add($"EL Jugador {name} ha jugado la ficha: {ficha}");
             }
         }
     }
 
     class PlayerRandom : Player
     {
-        public PlayerRandom(IMesa<int> table, string name) : base(table, name)
+        public PlayerRandom(Mesa table, string name) : base(table, name)
         {
         }
 
@@ -85,7 +86,7 @@ namespace matcom_domino
             }
             else
             {
-                Console.WriteLine("Paso!!");
+                table.Log.Add($"EL Jugador {name} no lleva: {table.fichaJugable}");
                 this.paso = true;
             }
         }
@@ -93,7 +94,7 @@ namespace matcom_domino
 
     class PlayerBotaGorda : Player
     {
-        public PlayerBotaGorda(IMesa<int> table, string name) : base(table, name)
+        public PlayerBotaGorda(Mesa table, string name) : base(table, name)
         {
         }
 
@@ -129,11 +130,11 @@ namespace matcom_domino
                     Play(ficha);
                     break;
                 }
-                
+
                 // Si es la ultima ficha y no se jugo se pasa
                 if (ficha == ManoDeFichas[ManoDeFichas.Count - 1])
                 {
-                    Console.WriteLine("Paso!!");
+                    table.Log.Add($"El Jugador {name} no lleva: {table.fichaJugable}");
                     paso = true;
                 }
             }
