@@ -11,7 +11,9 @@ namespace matcom_domino
         public bool Tranke();
         void GeneratedCards(int k);
         List<IFichas<T>> ConjuntodeFichas { get; }
+
         List<IPlayer<T>> Jugadores { get; }
+
         //IMesa<T> Table { get; }
         void AgregarJugador(IPlayer<T> a);
         void RepartirFichas(int k);
@@ -55,6 +57,7 @@ namespace matcom_domino
                     this.conjuntodeFichas.Add(new Fichas9(i, j));
                 }
             }
+
             Table.Log.Add($"Se han generado todas las fichas hasta: {k}");
         }
 
@@ -82,6 +85,7 @@ namespace matcom_domino
                     conjuntodeFichas.RemoveAt(k);
                 }
             }
+
             Table.Log.Add("Se han repartido todas las fichas a todos los jugadores");
         }
 
@@ -117,7 +121,7 @@ namespace matcom_domino
                         return false;
                 }
             }
-            
+
             return true;
         }
 
@@ -160,24 +164,30 @@ namespace matcom_domino
         {
         }
 
-        public void Robar(IPlayer<int> Player)
+        public void Robar(List<IPlayer<int>> PlayerList)
         {
-            Random r = new Random();
-            while (Player.Pasarse)
+            foreach (var Player in PlayerList)
             {
-                if (ConjuntodeFichas.Count > 0)
+                Random r = new Random();
+                while (Player.Pasarse && Player.in_turn )
                 {
-                    int index = r.Next(this.ConjuntodeFichas.Count);
-                    IFichas<int> ficha = this.ConjuntodeFichas[index];
-                    Player.ManoDeFichas.Add(ficha);
-                    ConjuntodeFichas.RemoveAt(index);
-                    Table.Log.Add($"EL Jugador {Player.name} robo la ficha {ficha}");
-                    Player.Play(ficha);
-                }
-                else
-                {
-                    Table.Log.Add("Se han acabado las fichas para robar");
-                    break;
+                    if (ConjuntodeFichas.Count > 0)
+                    {
+                        int index = r.Next(this.ConjuntodeFichas.Count);
+                        IFichas<int> ficha = this.ConjuntodeFichas[index];
+                        Player.ManoDeFichas.Add(ficha);
+                        ConjuntodeFichas.RemoveAt(index);
+                        Table.Log.Add($"EL Jugador {Player.name} robo la ficha {ficha}");
+                        Player.Play(ficha);
+                    }
+                    else
+                    {
+                        Table.Log.Add("Se han acabado las fichas para robar");
+                        int index = r.Next(this.ConjuntodeFichas.Count);
+
+
+                        break;
+                    }
                 }
             }
         }
