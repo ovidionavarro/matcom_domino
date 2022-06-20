@@ -9,7 +9,7 @@ namespace matcom_domino
         bool Pasarse { get; }
         List<IFichas<T>> ManoDeFichas { get; }
         void SelectCard();
-
+        public bool in_turn { get; set; }
         string name { get; }
         void Play(IFichas<T> ficha);
     }
@@ -18,6 +18,8 @@ namespace matcom_domino
     {
         public Mesa table { get; }
 
+        public bool in_turn { get; set; }
+
         public string name { get; set; }
 
         public Player(Mesa Table, string Name)
@@ -25,6 +27,7 @@ namespace matcom_domino
             manoficha = new List<IFichas<int>>();
             this.table = Table;
             this.name = Name;
+            this.in_turn = false;
         }
 
         public List<IFichas<int>> ManoDeFichas
@@ -49,6 +52,7 @@ namespace matcom_domino
 
         public void Play(IFichas<int> ficha) // Esto hay que arreglarlo... no puede ser un bool
         {
+            in_turn = true;
             if (table.IsValido(ficha))
             {
                 this.paso = false;
@@ -80,7 +84,8 @@ namespace matcom_domino
                     table.CardinTable.Add(ficha);
                     //table.CardinTable.Add(new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
                 }
-                
+
+                in_turn = false;
 
                 table.Log.Add($"EL Jugador {name} ha jugado la ficha: {ficha}");
             }
@@ -97,6 +102,7 @@ namespace matcom_domino
 
         public override void SelectCard()
         {
+            in_turn = true;
             List<IFichas<int>> fichasjugables = new List<IFichas<int>>();
             Random r = new Random();
 
@@ -150,7 +156,7 @@ namespace matcom_domino
         public override void SelectCard()
         {
             SortHand();
-
+            in_turn = true;
             foreach (var ficha in ManoDeFichas)
             {
                 if (table.IsValido(ficha))
