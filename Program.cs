@@ -34,8 +34,8 @@ namespace matcom_domino
             // Inicializando Objetos del Juego
 
             Mesa table = new Mesa();
-            DominoRobaito R = new DominoRobaito(table, 9);
-            //Domino<int> c = new DominoClassic(table, 9);
+            //DominoRobaito R = new DominoRobaito(table, 9);
+            Domino<int> c = new DominoClassic(table, 9);
             IPlayer<int> P1 = new Player(table, "PlayerNormal1");
             PlayerBotaGorda B1 = new PlayerBotaGorda(table, "PlayerBotaG1");
             PlayerBotaGorda B2 = new PlayerBotaGorda(table, "PlayerBotaG2");
@@ -44,46 +44,46 @@ namespace matcom_domino
 
             //Agregando Jugadores al Juego
             //c.Jugadores.Add(P1);
-            R.Jugadores.Add(B1);
-            R.Jugadores.Add(B2);
-            R.Jugadores.Add(R1);
+            c.Jugadores.Add(B1);
+            c.Jugadores.Add(B2);
+            c.Jugadores.Add(R1);
 
             // Repartiendo las fichas
-            R.RepartirFichas(10);
+            c.RepartirFichas(10);
 
 
-            while (!R.EndGame())
+            while (!c.EndGame())
             {
-                //MostrarMano(B1);
+                MostrarMano(B1);
                 B1.SelectCard();
-                R.Robar(B1);
+                //R.Robar(B1);
                 MostrarMesa(table);
-                //Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
-                if (R.EndGame())
+                Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
+                if (c.EndGame())
                     break;
 
                 //Console.Read();
-                //MostrarMano(B2);
+                MostrarMano(B2);
                 B2.SelectCard();
-                R.Robar(B2);
+                //R.Robar(B2);
                 MostrarMesa(table);
-                //Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
-                if (R.EndGame())
+                Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
+                if (c.EndGame())
                     break;
 
                 //Console.Read();
-                //MostrarMano(R1);
+                MostrarMano(R1);
                 R1.SelectCard();
-                R.Robar(R1);
+                //R.Robar(R1);
                 MostrarMesa(table);
-                //Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
+                Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
                // Console.Read();
             }
 
-            foreach (var log in table.Log)
+            /*foreach (var log in table.Log)
             {
                 Console.WriteLine(log);
-            }
+            }*/
         }
     }
 }

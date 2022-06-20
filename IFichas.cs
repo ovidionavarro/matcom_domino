@@ -4,8 +4,8 @@ namespace matcom_domino
     {
         T GetFace(int a);
         int ValueFace(T a);
-
         int FichaValue();
+        //void Reverse(IFichas<T> a);
 
     }
     
@@ -20,6 +20,7 @@ namespace matcom_domino
 
         }
 
+       
         public int FichaValue()
         {
             return ValueFace(1) + ValueFace(2);
