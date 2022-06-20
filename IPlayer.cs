@@ -9,7 +9,7 @@ namespace matcom_domino
         bool Pasarse { get; }
         List<IFichas<T>> ManoDeFichas { get; }
         void SelectCard();
-        bool in_turn { get; set; }
+
         string name { get; }
         void Play(IFichas<T> ficha);
     }
@@ -17,8 +17,6 @@ namespace matcom_domino
     public class Player : IPlayer<int> //despues hay k hacerlo generico
     {
         public Mesa table { get; }
-        
-        public bool in_turn { get; set; }
 
         public string name { get; set; }
 
@@ -27,7 +25,6 @@ namespace matcom_domino
             manoficha = new List<IFichas<int>>();
             this.table = Table;
             this.name = Name;
-            in_turn = false;
         }
 
         public List<IFichas<int>> ManoDeFichas
@@ -52,18 +49,41 @@ namespace matcom_domino
 
         public void Play(IFichas<int> ficha) // Esto hay que arreglarlo... no puede ser un bool
         {
-            in_turn = true;
             if (table.IsValido(ficha))
             {
                 this.paso = false;
                 table.RecibirJugada(ficha);
                 manoficha.Remove(ficha);
-                table.CardinTable.Add(ficha);
-                table.Log.Add($"EL Jugador {name} ha jugado la ficha: {ficha}");
                 
-            }
+                //table.CardinTable.Add(ficha);
+                if (table.CardinTable.Count() == 0)
+                {
+                    table.CardinTable.Add(ficha);
+                }
+                else if (table.fichaJugable.GetFace(1) == ficha.GetFace(1))
+                {
+                    table.CardinTable.Insert(0,ficha);
+                    //table.CardinTable.Insert(0,new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
+                }
+                else if (table.fichaJugable.GetFace(1) == ficha.GetFace(2))
+                {
+                    table.CardinTable.Insert(0, new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
+                    //table.CardinTable.Insert(0, ficha);
+                }
+                else if (table.fichaJugable.GetFace(2) == ficha.GetFace(1))
+                {
+                    table.CardinTable.Add(new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
+                    //table.CardinTable.Add(ficha);
+                }
+                else if (table.fichaJugable.GetFace(2) == ficha.GetFace(2))
+                {
+                    table.CardinTable.Add(ficha);
+                    //table.CardinTable.Add(new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
+                }
+                
 
-            in_turn = false;
+                table.Log.Add($"EL Jugador {name} ha jugado la ficha: {ficha}");
+            }
         }
     }
 
@@ -72,10 +92,11 @@ namespace matcom_domino
         public PlayerRandom(Mesa table, string name) : base(table, name)
         {
         }
+        
+        
 
         public override void SelectCard()
         {
-            in_turn = true;
             List<IFichas<int>> fichasjugables = new List<IFichas<int>>();
             Random r = new Random();
 
@@ -129,13 +150,12 @@ namespace matcom_domino
         public override void SelectCard()
         {
             SortHand();
-            in_turn = true;
+
             foreach (var ficha in ManoDeFichas)
             {
                 if (table.IsValido(ficha))
                 {
                     Play(ficha);
-                    in_turn = false;
                     break;
                 }
 
