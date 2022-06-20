@@ -2,11 +2,12 @@ namespace matcom_domino
 {
     public interface IFichas<T>
     {
+        
         T GetFace(int a);
         int ValueFace(T a);
         int FichaValue();
         //void Reverse(IFichas<T> a);
-
+        
     }
     
 
@@ -19,6 +20,14 @@ namespace matcom_domino
             ficha = new Tuple<int, int>(a, b);
 
         }
+
+        public  int CantdeCaras
+        {
+            get => this.cantdecaras;
+        }
+
+        private int cantdecaras=2;
+        
 
        
         public int FichaValue()
@@ -55,5 +64,8 @@ namespace matcom_domino
             }
 
         }
+        
+       
+
     }
 }

@@ -9,7 +9,8 @@ namespace matcom_domino
         //error en crear uun campo conjunto de fichs ,nose me almacenan las fichas ahi
 
         public bool Tranke();
-        void GeneratedCards(int k);
+        
+        void GeneratedCards(int k);//
         List<IFichas<T>> ConjuntodeFichas { get; }
 
         List<IPlayer<T>> Jugadores { get; }
@@ -18,13 +19,15 @@ namespace matcom_domino
         void AgregarJugador(IPlayer<T> a);
         void RepartirFichas(int k);
         void GameOrden();
+        void StartGame();
         bool EndGame();
         void Wins();
     }
 
     public class DominoClassic : Domino<int>
     {
-        public Mesa Table { get; }
+        
+        public IMesa<int> Table { get; }
 
         public List<IFichas<int>> ConjuntodeFichas
         {
@@ -40,21 +43,24 @@ namespace matcom_domino
 
         private List<IPlayer<int>> jugadores;
 
-        public DominoClassic(Mesa Table, int cant)
+        public DominoClassic(IMesa<int> Table, int cant)
         {
             this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
             this.jugadores = new List<IPlayer<int>>();
             this.GeneratedCards(cant);
+            
         }
 
-        public void GeneratedCards(int k)
+        public virtual void GeneratedCards(int k)
         {
-            for (int i = 0; i <= k; i++)
+           
+            
+            for (int i = 0; i <k; i++)
             {
-                for (int j = i; j <= k; j++)
+                for (int j = i; j <=k; j++)
                 {
-                    this.conjuntodeFichas.Add(new Fichas9(i, j));
+                    this.conjuntodeFichas.Add(new Fichas9(i,j));
                 }
             }
 
@@ -125,7 +131,22 @@ namespace matcom_domino
             return true;
         }
 
-        public bool EndGame()
+      
+
+        public virtual void StartGame()
+        {
+            while (!EndGame())
+            {
+                foreach (var player in Jugadores)
+                {
+                    player.SelectCard();
+                    if (EndGame())
+                        break;
+                }
+            }
+        }
+
+        public virtual bool EndGame()
         {
             if (Tranke())
             {
@@ -164,32 +185,93 @@ namespace matcom_domino
         {
         }
 
-        public void Robar(List<IPlayer<int>> PlayerList)
+        public override void StartGame()
         {
-            foreach (var Player in PlayerList)
+            while (!EndGame())
+            {
+                foreach (var player in Jugadores)
+                {
+                    player.SelectCard();
+                    Robar();
+                    if (EndGame())
+                        break;
+                }
+            }
+        }
+
+        public override bool EndGame()
+        {
+            foreach (var player in Jugadores)
+            {
+                if (player.ManoDeFichas.Count == 0)
+                {
+                    Wins();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void Robar()
+        {
+            for (int i = 0; i < Jugadores.Count; i++)
             {
                 Random r = new Random();
-                while (Player.Pasarse && Player.in_turn )
+                while (Jugadores[i].Pasarse && Jugadores[i].in_turn)
                 {
                     if (ConjuntodeFichas.Count > 0)
                     {
                         int index = r.Next(this.ConjuntodeFichas.Count);
                         IFichas<int> ficha = this.ConjuntodeFichas[index];
-                        Player.ManoDeFichas.Add(ficha);
+                        Jugadores[i].ManoDeFichas.Add(ficha);
                         ConjuntodeFichas.RemoveAt(index);
-                        Table.Log.Add($"EL Jugador {Player.name} robo la ficha {ficha}");
-                        Player.Play(ficha);
+                        Table.Log.Add($"EL Jugador {Jugadores[i].name} robo la ficha {ficha}");
+                        Jugadores[i].Play(ficha);
                     }
                     else
                     {
                         Table.Log.Add("Se han acabado las fichas para robar");
-                        int index = r.Next(this.ConjuntodeFichas.Count);
+                        if (i + 1 >= Jugadores.Count)
+                        {
+                            int index = r.Next(Jugadores[0].ManoDeFichas.Count);
+                            IFichas<int> ficha = Jugadores[0].ManoDeFichas[index];
+                            Jugadores[i].ManoDeFichas.Add(ficha);
+                            Jugadores[0].ManoDeFichas.RemoveAt(index);
+                            Table.Log.Add(
+                                $"El jugador {Jugadores[i].name} le ha robado la ficha {ficha} a {Jugadores[0].name}");
+                            if (Jugadores[0].ManoDeFichas.Count == 0)
+                            {
+                                EndGame();
+                                break;
+                            }
 
+                            Jugadores[i].Play(ficha);
+                        }
+                        else if (i + 1 < Jugadores.Count)
+                        {
+                            int index = r.Next(Jugadores[i + 1].ManoDeFichas.Count);
+                            IFichas<int> ficha = Jugadores[i + 1].ManoDeFichas[index];
+                            Jugadores[i].ManoDeFichas.Add(ficha);
+                            Jugadores[i + 1].ManoDeFichas.RemoveAt(index);
+                            Table.Log.Add(
+                                $"El jugador {Jugadores[i].name} le ha robado la ficha {ficha} a {Jugadores[i + 1].name}");
+                            if (Jugadores[i+1].ManoDeFichas.Count == 0)
+                            {
+                                EndGame();
+                                break;
+                            }
 
-                        break;
+                            Jugadores[i].Play(ficha);
+                        }
+                        
                     }
                 }
             }
         }
     }
+
+    
+
+   
 }
