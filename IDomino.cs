@@ -128,14 +128,18 @@ namespace matcom_domino
 
         public virtual void StartGame()
         {
+            int turn = 1;
             while (!EndGame())
             {
+                Table.Log.Add($"Turno: {turn}");
                 foreach (var player in Jugadores)
                 {
                     player.SelectCard();
                     if (EndGame())
                         break;
                 }
+
+                turn++;
             }
         }
 
@@ -178,10 +182,13 @@ namespace matcom_domino
         {
         }
 
-        public override void StartGame()
+        public override void
+            StartGame()
         {
+            int turn = 1;
             while (!EndGame())
             {
+                Table.Log.Add($"Turno: {turn}");
                 foreach (var player in Jugadores)
                 {
                     player.SelectCard();
@@ -189,6 +196,8 @@ namespace matcom_domino
                     if (EndGame())
                         break;
                 }
+
+                turn++;
             }
         }
 
@@ -249,7 +258,7 @@ namespace matcom_domino
                             Jugadores[i + 1].ManoDeFichas.RemoveAt(index);
                             Table.Log.Add(
                                 $"El jugador {Jugadores[i].name} le ha robado la ficha {ficha} a {Jugadores[i + 1].name}");
-                            if (Jugadores[i+1].ManoDeFichas.Count == 0)
+                            if (Jugadores[i + 1].ManoDeFichas.Count == 0)
                             {
                                 EndGame();
                                 break;
@@ -257,7 +266,6 @@ namespace matcom_domino
 
                             Jugadores[i].Play(ficha);
                         }
-                        
                     }
                 }
             }

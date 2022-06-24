@@ -41,8 +41,7 @@ namespace matcom_domino
             PlayerBotaGorda B1 = new PlayerBotaGorda(table, "PlayerBotaG1");
             PlayerBotaGorda B2 = new PlayerBotaGorda(table, "PlayerBotaG2");
             IPlayer<int> R1 = new PlayerRandom(table, "PlayerRandom1");
-            
-            
+
             //Agregando Jugadores al Juego
             //c.Jugadores.Add(P1);
             robaito.Jugadores.Add(B1);

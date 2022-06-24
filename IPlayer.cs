@@ -58,7 +58,7 @@ namespace matcom_domino
                 this.paso = false;
                 table.RecibirJugada(ficha);
                 manoficha.Remove(ficha);
-                
+
                 //table.CardinTable.Add(ficha);
                 if (table.CardinTable.Count() == 0)
                 {
@@ -66,7 +66,7 @@ namespace matcom_domino
                 }
                 else if (table.fichaJugable.GetFace(1) == ficha.GetFace(1))
                 {
-                    table.CardinTable.Insert(0,ficha);
+                    table.CardinTable.Insert(0, ficha);
                     //table.CardinTable.Insert(0,new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
                 }
                 else if (table.fichaJugable.GetFace(1) == ficha.GetFace(2))
@@ -76,7 +76,7 @@ namespace matcom_domino
                 }
                 else if (table.fichaJugable.GetFace(2) == ficha.GetFace(1))
                 {
-                    table.CardinTable.Add(new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
+                    table.CardinTable.Add(new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
                     //table.CardinTable.Add(ficha);
                 }
                 else if (table.fichaJugable.GetFace(2) == ficha.GetFace(2))
@@ -97,8 +97,7 @@ namespace matcom_domino
         public PlayerRandom(Mesa table, string name) : base(table, name)
         {
         }
-        
-        
+
 
         public override void SelectCard()
         {
@@ -148,6 +147,7 @@ namespace matcom_domino
                         Fichas9 repuesto = new Fichas9(ManoDeFichas[i].GetFace(1), ManoDeFichas[i].GetFace(2));
                         ManoDeFichas[i] = ManoDeFichas[j];
                         ManoDeFichas[j] = repuesto;
+                        
                     }
                 }
             }
@@ -172,6 +172,74 @@ namespace matcom_domino
                     paso = true;
                 }
             }
+        }
+    }
+
+
+    public class SmartPlayer : Player
+    {
+        public SmartPlayer(Mesa table, string name) : base(table, name)
+        {
+        }
+
+        private Mesa fakeTable = new Mesa();
+
+        public string GetNextPlayer()
+        {
+            string next_player = "";
+            string[] _nextPLayerArray=new string[0];
+            List<string> _player_logs = new List<string>();
+            foreach (var log in table.Log)
+            {
+                if (log.Contains("EL Jugador"))
+                    _player_logs.Add(log);
+            }
+
+            for (int i = 0; i < _player_logs.Count; i++)
+            {
+                if (_player_logs[i].Contains("EL Jugador " + name) && !_player_logs[i+1].Contains("EL Jugador "+ name))
+                {
+                    next_player = _player_logs[i + 1];
+                    _nextPLayerArray = next_player.Split();
+                }
+            }
+
+            for (int i = 0; i < _nextPLayerArray.Length; i++)
+            {
+                if (_nextPLayerArray[i]=="Jugador")
+                {
+                    next_player = _nextPLayerArray[i + 1];
+                    break;
+                }
+            }
+
+            return next_player;
+        }
+        
+        
+        
+
+        public override void SelectCard()
+        {
+            string nextPlayer = GetNextPlayer();
+
+            List<IFichas<int>> _to_pass_next_player = new List<IFichas<int>>();
+
+            List<string> nextPlayerLog = new List<string>();
+
+
+
+            foreach (var log in table.Log)
+            {
+                if(log.Contains($"El Jugador {nextPlayer} no lleva:"))
+                    nextPlayerLog.Add(log);
+            }
+
+            foreach (var log in nextPlayerLog)
+            {
+                
+            }
+            
         }
     }
 }
