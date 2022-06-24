@@ -13,8 +13,7 @@ namespace matcom_domino
         List<IFichas<T>> ConjuntodeFichas { get; }
 
         List<IPlayer<T>> Jugadores { get; }
-
-        //IMesa<T> Table { get; }
+        
         void AgregarJugador(IPlayer<T> a);
         void RepartirFichas(int k);
         void GameOrden();
@@ -59,7 +58,7 @@ namespace matcom_domino
                 }
             }
 
-            Table.Log.Add($"Se han generado todas las fichas hasta: {k}");
+            Table.Log.Add($"Se han generado todas las fichas hasta el doble {k}");
         }
 
         public void AgregarJugador(IPlayer<int> a)
@@ -87,7 +86,7 @@ namespace matcom_domino
                 }
             }
 
-            Table.Log.Add("Se han repartido todas las fichas a todos los jugadores");
+            Table.Log.Add($"Se han repartido {l} fichas a cada jugador ");
         }
 
         int CalcManoJugador(IPlayer<int> player)

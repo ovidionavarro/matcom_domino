@@ -5,12 +5,12 @@ namespace matcom_domino
         T GetFace(int a);
         int ValueFace(T a);
         int FichaValue();
-        //void Reverse(IFichas<T> a);
+        IFichas<T> Reverse();
 
     }
     
 
-    public class Fichas9 : IFichas<int> //se puede implementar tambien con arrays
+    public class Fichas9 : IFichas<int> //voidse puede implementar tambien con arrays
     {
         public Fichas9(int a, int b)
         {
@@ -20,7 +20,12 @@ namespace matcom_domino
 
         }
 
-       
+        public IFichas<int> Reverse()
+        {
+            this.ficha = new Tuple<int, int>(ficha.Item2, ficha.Item1);
+            return new Fichas9(ficha.Item1,ficha.Item2);
+        }
+        
         public int FichaValue()
         {
             return ValueFace(1) + ValueFace(2);

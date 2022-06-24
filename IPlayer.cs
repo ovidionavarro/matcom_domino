@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace matcom_domino
 {
     public interface IPlayer<T>
@@ -50,7 +52,7 @@ namespace matcom_domino
 
         public bool paso = false;
 
-        public void Play(IFichas<int> ficha) // Esto hay que arreglarlo... no puede ser un bool
+        public void Play(IFichas<int> ficha) 
         {
             in_turn = true;
             if (table.IsValido(ficha))
@@ -60,7 +62,7 @@ namespace matcom_domino
                 manoficha.Remove(ficha);
 
                 //table.CardinTable.Add(ficha);
-                if (table.CardinTable.Count() == 0)
+                if (!table.CardinTable.Any())
                 {
                     table.CardinTable.Add(ficha);
                 }
@@ -71,12 +73,12 @@ namespace matcom_domino
                 }
                 else if (table.fichaJugable.GetFace(1) == ficha.GetFace(2))
                 {
-                    table.CardinTable.Insert(0, new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
+                    table.CardinTable.Insert(0, ficha.Reverse()); //new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
                     //table.CardinTable.Insert(0, ficha);
                 }
                 else if (table.fichaJugable.GetFace(2) == ficha.GetFace(1))
                 {
-                    table.CardinTable.Add(new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
+                    table.CardinTable.Add(ficha.Reverse()); //new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
                     //table.CardinTable.Add(ficha);
                 }
                 else if (table.fichaJugable.GetFace(2) == ficha.GetFace(2))
@@ -125,7 +127,7 @@ namespace matcom_domino
         }
     }
 
-    class PlayerBotaGorda : Player
+    public class PlayerBotaGorda : Player
     {
         public PlayerBotaGorda(Mesa table, string name) : base(table, name)
         {
@@ -147,7 +149,6 @@ namespace matcom_domino
                         Fichas9 repuesto = new Fichas9(ManoDeFichas[i].GetFace(1), ManoDeFichas[i].GetFace(2));
                         ManoDeFichas[i] = ManoDeFichas[j];
                         ManoDeFichas[j] = repuesto;
-                        
                     }
                 }
             }
@@ -176,18 +177,22 @@ namespace matcom_domino
     }
 
 
-    public class SmartPlayer : Player
+    public class PlayerSmart : PlayerBotaGorda
     {
-        public SmartPlayer(Mesa table, string name) : base(table, name)
+        private bool FirstPlay = true;
+
+        public PlayerSmart(Mesa table, string name) : base(table, name)
         {
         }
 
         private Mesa fakeTable = new Mesa();
 
+        
+        // Get next player base on log
         public string GetNextPlayer()
         {
             string next_player = "";
-            string[] _nextPLayerArray=new string[0];
+            string[] _nextPLayerArray = new string[0];
             List<string> _player_logs = new List<string>();
             foreach (var log in table.Log)
             {
@@ -197,7 +202,8 @@ namespace matcom_domino
 
             for (int i = 0; i < _player_logs.Count; i++)
             {
-                if (_player_logs[i].Contains("EL Jugador " + name) && !_player_logs[i+1].Contains("EL Jugador "+ name))
+                if (_player_logs[i].Contains("EL Jugador " + name) && i + 1 < _player_logs.Count &&
+                    !_player_logs[i + 1].Contains("EL Jugador " + name))
                 {
                     next_player = _player_logs[i + 1];
                     _nextPLayerArray = next_player.Split();
@@ -206,7 +212,7 @@ namespace matcom_domino
 
             for (int i = 0; i < _nextPLayerArray.Length; i++)
             {
-                if (_nextPLayerArray[i]=="Jugador")
+                if (_nextPLayerArray[i] == "Jugador")
                 {
                     next_player = _nextPLayerArray[i + 1];
                     break;
@@ -215,31 +221,56 @@ namespace matcom_domino
 
             return next_player;
         }
-        
-        
-        
+
 
         public override void SelectCard()
         {
+            if (FirstPlay)
+            {
+                base.SelectCard();
+
+                FirstPlay = false;
+            }
+
             string nextPlayer = GetNextPlayer();
 
             List<IFichas<int>> _to_pass_next_player = new List<IFichas<int>>();
 
+            List<IFichas<int>> _my_tokens = new List<IFichas<int>>();
+
             List<string> nextPlayerLog = new List<string>();
-
-
 
             foreach (var log in table.Log)
             {
-                if(log.Contains($"El Jugador {nextPlayer} no lleva:"))
+                if (log.Contains("no lleva:"))
                     nextPlayerLog.Add(log);
             }
 
-            foreach (var log in nextPlayerLog)
+            if (nextPlayerLog.Count > 0)
             {
+                foreach (var log in nextPlayerLog)
+                {
+                    if (log.Contains(nextPlayer))
+                    {
+                        string[] pSplit = log.Split(':');
+                        string[] tokens = pSplit[1].Split('-');
+                        _to_pass_next_player.Add(new Fichas9(int.Parse(tokens[0]), int.Parse(tokens[1])));
+                    }
+                }
+
+                foreach (var token in _to_pass_next_player)
+                {
+                    if (table.fichaJugable.GetFace(1)==token.GetFace(1))
+                    {
+                        
+                    }
+                }
                 
             }
-            
+            else
+            {
+                FirstPlay = true;
+            }
         }
     }
 }
