@@ -7,7 +7,7 @@ namespace matcom_domino
         List<IFichas<T>> CardinTable { get; }
 
         void RecibirJugada(IFichas<T> ficha);
-        List<string> Log { get; set; }
+        List<string> Log { get;  }
         
     }
 
