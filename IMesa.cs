@@ -19,8 +19,7 @@ namespace matcom_domino
 
         public IFichas<int> fichaJugable { get; set; }
 
-        public List<string> Log { get; set; }
-        
+        public List<string> Log { get; }
 
         public Mesa()
         {
