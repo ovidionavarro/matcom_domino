@@ -2,15 +2,6 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace matcom_domino
 {
-    public interface ITranke
-    {
-        bool Tranke<T>(List<IPlayer<T>> PlayersList);
-    }
-
-    // public class Tranke : ITranke
-    // {
-    //     
-    // }
     public interface IDomino<T>
     {
         //orden en el k se juega,como se reparten las fichas,cuando fializa
@@ -20,11 +11,12 @@ namespace matcom_domino
         public bool Tranke();
 
         void GeneratedCards(int k); //
-        List<IFichas<T>> ConjuntodeFichas { get; }
+        List <IFichas<T>> ConjuntodeFichas { get; }
 
         List<IPlayer<T>> Jugadores { get; }
         void Robar();
 
+        ITranke<T> _tranke { get; }
         void AgregarJugador(IPlayer<T> a);
         void RepartirFichas(int k);
         void GameOrden();
@@ -76,6 +68,8 @@ namespace matcom_domino
         {
             Console.WriteLine("en el clasico no se puede robar");
         }
+
+        public ITranke<int> _tranke { get; }
 
         public void AgregarJugador(IPlayer<int> a)
         {
@@ -129,6 +123,7 @@ namespace matcom_domino
 
         public bool Tranke()
         {
+            
             foreach (var player in jugadores)
             {
                 foreach (var ficha in player.ManoDeFichas)
