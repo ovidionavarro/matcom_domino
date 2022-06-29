@@ -58,6 +58,7 @@ namespace matcom_domino
             if (table.IsValido(ficha))
             {
                 this.paso = false;
+                table.Log.Add($"EL Jugador {name} ha jugado la ficha: {ficha}");
                 table.RecibirJugada(ficha);
                 manoficha.Remove(ficha);
                /* //@@@@@##### en realidad nose ni xq esto pincha 
@@ -89,7 +90,6 @@ namespace matcom_domino
 
                 in_turn = false;
 
-                table.Log.Add($"EL Jugador {name} ha jugado la ficha: {ficha}");
             }
         }
     }

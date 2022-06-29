@@ -34,15 +34,15 @@ namespace matcom_domino
             // Inicializando Objetos del Juego
 
             IMesa<int> table = new Mesa();
-            MesaDobleSupremo tabledoble = new MesaDobleSupremo();
+            MesaDobleSupremo mesadoble = new MesaDobleSupremo();
            
 
             // Domino<int> c = new DominoClassic(table, 9);
-            DominoRobaito robaito = new DominoRobaito(table, 9);
-            IPlayer<int> P1 = new Player(tabledoble, "PlayerNormal1");
-            IPlayer<int> B1 = new PlayerBotaGorda(tabledoble, "PlayerBotaG1");
-            IPlayer<int> B2 = new PlayerBotaGorda(tabledoble, "PlayerBotaG2");
-            IPlayer<int> R1 = new PlayerRandom(tabledoble, "PlayerRandom1");
+            IDomino<int> robaito = new DominoRobaito(table, 9);
+            IPlayer<int> P1 = new Player(table, "PlayerNormal1");
+            IPlayer<int> B1 = new PlayerBotaGorda(table, "PlayerBotaG1");
+            IPlayer<int> B2 = new PlayerBotaGorda(table, "PlayerBotaG2");
+            IPlayer<int> R1 = new PlayerRandom(table, "PlayerRandom1");
             //IPlayer<int> B2 = new PlayerSobreviviente(table, "PlayerSobreviviente");
             
             
@@ -61,8 +61,8 @@ namespace matcom_domino
                 // MostrarMano(B1);
                 B1.SelectCard();
                 robaito.Robar();
-                MostrarMesa(tabledoble);
-                Console.WriteLine("Ficha Jugable: " + tabledoble.fichaJugable);
+                MostrarMesa(table);
+                Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
                 if (robaito.EndGame())
                     break;
             
@@ -70,8 +70,8 @@ namespace matcom_domino
                 // MostrarMano(B2);
                 B2.SelectCard();
                 robaito.Robar();
-                MostrarMesa(tabledoble);
-                Console.WriteLine("Ficha Jugable: " + tabledoble.fichaJugable);
+                MostrarMesa(table);
+                Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
                 if (robaito.EndGame())
                     break;
             
@@ -79,8 +79,8 @@ namespace matcom_domino
                 // MostrarMano(R1);
                 R1.SelectCard();
                 robaito.Robar();
-                MostrarMesa(tabledoble);
-                Console.WriteLine("Ficha Jugable: " + tabledoble.fichaJugable); 
+                MostrarMesa(table);
+                Console.WriteLine("Ficha Jugable: " + table.fichaJugable); 
                 Console.Read();
             }
 

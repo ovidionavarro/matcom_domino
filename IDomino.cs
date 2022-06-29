@@ -11,7 +11,7 @@ namespace matcom_domino
     // {
     //     
     // }
-    public interface Domino<T>
+    public interface IDomino<T>
     {
         //orden en el k se juega,como se reparten las fichas,cuando fializa
         //*no se le asigna valor a la fichas cuando se tranca xq eso lo hacen las fichas
@@ -23,6 +23,7 @@ namespace matcom_domino
         List<IFichas<T>> ConjuntodeFichas { get; }
 
         List<IPlayer<T>> Jugadores { get; }
+        void Robar();
 
         void AgregarJugador(IPlayer<T> a);
         void RepartirFichas(int k);
@@ -32,7 +33,7 @@ namespace matcom_domino
         void Wins();
     }
 
-    public class DominoClassic : Domino<int>
+    public class DominoClassic : IDomino<int>
     {
         public IMesa<int> Table { get; }
 
@@ -69,6 +70,11 @@ namespace matcom_domino
             }
 
             Table.Log.Add($"Se han generado todas las fichas hasta el doble {k}");
+        }
+
+        public virtual void Robar()
+        {
+            Console.WriteLine("en el clasico no se puede robar");
         }
 
         public void AgregarJugador(IPlayer<int> a)
@@ -225,7 +231,7 @@ namespace matcom_domino
             return false;
         }
 
-        public void Robar()
+        public override void Robar()
         {
             for (int i = 0; i < Jugadores.Count; i++)
             {
