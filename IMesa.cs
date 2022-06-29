@@ -5,10 +5,11 @@ namespace matcom_domino
         //jugar la ficha ,balidar la jugada, ver fichas en la mesa
         bool IsValido(IFichas<T> a); //boliano
         List<IFichas<T>> CardinTable { get; }
-
         void RecibirJugada(IFichas<T> ficha);
         List<string> Log { get;  }
         
+        IFichas<T> fichaJugable { get; }
+
     }
 
 
@@ -16,7 +17,7 @@ namespace matcom_domino
     {
         protected List<IFichas<int>> cardintable;
 
-        public IFichas<int> fichaJugable;
+        public IFichas<int> fichaJugable { get; set; }
 
         public List<string> Log { get; set; }
         
@@ -129,19 +130,19 @@ namespace matcom_domino
         }
     }
 
-    public class mesatemp : IMesa<int>
-    {
-        public bool IsValido(IFichas<int> a)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<IFichas<int>> CardinTable { get; }
-        public void RecibirJugada(IFichas<int> ficha)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    // public class mesatemp : IMesa<int>
+    // {
+    //     public bool IsValido(IFichas<int> a)
+    //     {
+    //         throw new NotImplementedException();
+    //     }
+    //
+    //     public List<IFichas<int>> CardinTable { get; }
+    //     public void RecibirJugada(IFichas<int> ficha)
+    //     {
+    //         throw new NotImplementedException();
+    //     }
+    // }
 
 
 

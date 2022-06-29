@@ -96,7 +96,7 @@ namespace matcom_domino
 
     class PlayerRandom : Player
     {
-        public PlayerRandom(Mesa table, string name) : base(table, name)
+        public PlayerRandom(IMesa<int> table, string name) : base(table, name)
         {
         }
         
@@ -130,7 +130,7 @@ namespace matcom_domino
 
     class PlayerBotaGorda : Player
     {
-        public PlayerBotaGorda(Mesa table, string name) : base(table, name)
+        public PlayerBotaGorda(IMesa<int> table, string name) : base(table, name)
         {
         }
 

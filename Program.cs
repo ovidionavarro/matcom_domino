@@ -33,12 +33,12 @@ namespace matcom_domino
         {
             // Inicializando Objetos del Juego
 
-            Mesa table = new Mesa();
+            IMesa<int> table = new Mesa();
             MesaDobleSupremo tabledoble = new MesaDobleSupremo();
-            IMesa<int> rrr = new mesatemp();
+           
 
             // Domino<int> c = new DominoClassic(table, 9);
-            DominoClassic robaito = new DominoRobaito(rrr, 9);
+            DominoRobaito robaito = new DominoRobaito(table, 9);
             IPlayer<int> P1 = new Player(table, "PlayerNormal1");
             IPlayer<int> B1 = new PlayerBotaGorda(table, "PlayerBotaG1");
             IPlayer<int> B2 = new PlayerBotaGorda(table, "PlayerBotaG2");

@@ -184,7 +184,7 @@ namespace matcom_domino
 
     class DominoRobaito : DominoClassic
     {
-        public DominoRobaito(Mesa Table, int cant) : base(Table, cant)
+        public DominoRobaito(IMesa<int> Table, int cant) : base(Table, cant)
         {
         }
 
