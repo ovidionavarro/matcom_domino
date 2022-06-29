@@ -115,12 +115,14 @@ namespace matcom_domino
 
         public override void RecibirJugada(IFichas<int> ficha)
         {
+            
+                
             if (ficha.GetFace((1)) == ficha.GetFace(2))
             {
                 fichaJugable = new Fichas9( ficha.GetFace(2),fichaJugable.GetFace(2));
                 //CardinTable.Insert(0,new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
                 Log.Add($"La ficha jugable cambio a: {fichaJugable}");
-                CardinTable.Add(ficha);
+                CardinTable.Insert(0,ficha);
             }
             else
             {
