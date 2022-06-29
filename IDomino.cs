@@ -2,6 +2,15 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace matcom_domino
 {
+    public interface ITranke
+    {
+        bool Tranke<T>(List<IPlayer<T>> PlayersList);
+    }
+
+    // public class Tranke : ITranke
+    // {
+    //     
+    // }
     public interface Domino<T>
     {
         //orden en el k se juega,como se reparten las fichas,cuando fializa
@@ -9,12 +18,12 @@ namespace matcom_domino
         //error en crear uun campo conjunto de fichs ,nose me almacenan las fichas ahi
 
         public bool Tranke();
-        
-        void GeneratedCards(int k);//
+
+        void GeneratedCards(int k); //
         List<IFichas<T>> ConjuntodeFichas { get; }
 
         List<IPlayer<T>> Jugadores { get; }
-        
+
         void AgregarJugador(IPlayer<T> a);
         void RepartirFichas(int k);
         void GameOrden();
@@ -25,7 +34,6 @@ namespace matcom_domino
 
     public class DominoClassic : Domino<int>
     {
-        
         public IMesa<int> Table { get; }
 
         public List<IFichas<int>> ConjuntodeFichas
@@ -48,18 +56,15 @@ namespace matcom_domino
             this.conjuntodeFichas = new List<IFichas<int>>();
             this.jugadores = new List<IPlayer<int>>();
             this.GeneratedCards(cant);
-            
         }
 
         public virtual void GeneratedCards(int k)
         {
-           
-            
-            for (int i = 0; i <k; i++)
+            for (int i = 0; i < k; i++)
             {
-                for (int j = i; j <=k; j++)
+                for (int j = i; j <= k; j++)
                 {
-                    this.conjuntodeFichas.Add(new Fichas9(i,j));
+                    this.conjuntodeFichas.Add(new Fichas9(i, j));
                 }
             }
 
@@ -130,7 +135,6 @@ namespace matcom_domino
             return true;
         }
 
-      
 
         public virtual void StartGame()
         {
@@ -277,8 +281,4 @@ namespace matcom_domino
             }
         }
     }
-
-    
-
-   
 }
