@@ -1,4 +1,4 @@
-using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace matcom_domino
 {
@@ -18,13 +18,13 @@ namespace matcom_domino
 
     public class Player : IPlayer<int> //despues hay k hacerlo generico
     {
-        public Mesa table { get; }
+        public IMesa<int> table { get; }
 
         public bool in_turn { get; set; }
 
         public string name { get; set; }
 
-        public Player(Mesa Table, string Name)
+        public Player(IMesa<int> Table, string Name)
         {
             manoficha = new List<IFichas<int>>();
             this.table = Table;
@@ -52,7 +52,7 @@ namespace matcom_domino
 
         public bool paso = false;
 
-        public void Play(IFichas<int> ficha) 
+        public void Play(IFichas<int> ficha) // Esto hay que arreglarlo... no puede ser un bool
         {
             in_turn = true;
             if (table.IsValido(ficha))
@@ -60,32 +60,32 @@ namespace matcom_domino
                 this.paso = false;
                 table.RecibirJugada(ficha);
                 manoficha.Remove(ficha);
-
+               /* //@@@@@##### en realidad nose ni xq esto pincha 
                 //table.CardinTable.Add(ficha);
-                if (!table.CardinTable.Any())
+                if (table.CardinTable.Count() == 0)
                 {
                     table.CardinTable.Add(ficha);
                 }
                 else if (table.fichaJugable.GetFace(1) == ficha.GetFace(1))
                 {
-                    table.CardinTable.Insert(0, ficha);
+                    table.CardinTable.Insert(0,ficha);
                     //table.CardinTable.Insert(0,new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
                 }
                 else if (table.fichaJugable.GetFace(1) == ficha.GetFace(2))
                 {
-                    table.CardinTable.Insert(0, ficha.Reverse()); //new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
+                    table.CardinTable.Insert(0, new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
                     //table.CardinTable.Insert(0, ficha);
                 }
                 else if (table.fichaJugable.GetFace(2) == ficha.GetFace(1))
                 {
-                    table.CardinTable.Add(ficha.Reverse()); //new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
+                    table.CardinTable.Add(new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
                     //table.CardinTable.Add(ficha);
                 }
                 else if (table.fichaJugable.GetFace(2) == ficha.GetFace(2))
                 {
                     table.CardinTable.Add(ficha);
                     //table.CardinTable.Add(new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
-                }
+                }*/
 
                 in_turn = false;
 
@@ -99,7 +99,8 @@ namespace matcom_domino
         public PlayerRandom(Mesa table, string name) : base(table, name)
         {
         }
-
+        
+        
 
         public override void SelectCard()
         {
@@ -127,7 +128,7 @@ namespace matcom_domino
         }
     }
 
-    public class PlayerBotaGorda : Player
+    class PlayerBotaGorda : Player
     {
         public PlayerBotaGorda(Mesa table, string name) : base(table, name)
         {
@@ -176,101 +177,103 @@ namespace matcom_domino
         }
     }
 
-
-    public class PlayerSmart : PlayerBotaGorda
+   class PlayerSobreviviente : Player
     {
-        private bool FirstPlay = true;
-
-        public PlayerSmart(Mesa table, string name) : base(table, name)
+        public PlayerSobreviviente(Mesa table, string name) : base(table, name)
         {
+            ValorJugable = new List<int>();
         }
 
-        private Mesa fakeTable = new Mesa();
+        private List<int> ValorJugable;
 
-        
-        // Get next player base on log
-        public string GetNextPlayer()
+        public void Posivilidad()
         {
-            string next_player = "";
-            string[] _nextPLayerArray = new string[0];
-            List<string> _player_logs = new List<string>();
-            foreach (var log in table.Log)
+            for (int i = 0; i < ManoDeFichas.Count(); i++)
             {
-                if (log.Contains("EL Jugador"))
-                    _player_logs.Add(log);
-            }
-
-            for (int i = 0; i < _player_logs.Count; i++)
-            {
-                if (_player_logs[i].Contains("EL Jugador " + name) && i + 1 < _player_logs.Count &&
-                    !_player_logs[i + 1].Contains("EL Jugador " + name))
+                int count = 0;
+                for (int j = 0; j < ManoDeFichas.Count(); j++)
                 {
-                    next_player = _player_logs[i + 1];
-                    _nextPLayerArray = next_player.Split();
-                }
-            }
+                    if (i == j)
+                    {
+                        continue;
+                    }
 
-            for (int i = 0; i < _nextPLayerArray.Length; i++)
-            {
-                if (_nextPLayerArray[i] == "Jugador")
-                {
-                    next_player = _nextPLayerArray[i + 1];
-                    break;
+                    else if (ManoDeFichas[i].GetFace(1) == ManoDeFichas[j].GetFace(1)||
+                             ManoDeFichas[i].GetFace(1) == ManoDeFichas[j].GetFace(2))
+                    {
+                        count++;
+                        if (ManoDeFichas[i].GetFace(2) == ManoDeFichas[j].GetFace(1) ||
+                            ManoDeFichas[i].GetFace(2) == ManoDeFichas[j].GetFace(2))
+                        {
+                            count+= 5;
+                        }
+                    }
+                    else if (ManoDeFichas[i].GetFace(2) == ManoDeFichas[j].GetFace(1)||
+                             ManoDeFichas[i].GetFace(2) == ManoDeFichas[j].GetFace(2))
+                    {
+                        count++;
+                        if (ManoDeFichas[i].GetFace(1) == ManoDeFichas[j].GetFace(1) ||
+                            ManoDeFichas[i].GetFace(1) == ManoDeFichas[j].GetFace(2))
+                        {
+                            count+= 5;
+                        }
+                    }
                 }
+                ValorJugable[i] = count;
             }
-
-            return next_player;
         }
 
+        public int Posicion(int a)
+        {
+            for (int i = 0; i < ValorJugable.Count(); i++)
+            {
+                if (a == ValorJugable[i])
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
 
         public override void SelectCard()
         {
-            if (FirstPlay)
+            Posivilidad();
+            in_turn = true;
+            List<int> temp_valor_jugable = new List<int>();
+            List<IFichas<int>> temp_fichas = new List<IFichas<int>>();
+            bool[] FichasValidas = new bool[ManoDeFichas.Count()];
+            //poniendo en true las k son jugables
+            for (int i = 0; i < ManoDeFichas.Count(); i++)
             {
-                base.SelectCard();
-
-                FirstPlay = false;
-            }
-
-            string nextPlayer = GetNextPlayer();
-
-            List<IFichas<int>> _to_pass_next_player = new List<IFichas<int>>();
-
-            List<IFichas<int>> _my_tokens = new List<IFichas<int>>();
-
-            List<string> nextPlayerLog = new List<string>();
-
-            foreach (var log in table.Log)
-            {
-                if (log.Contains("no lleva:"))
-                    nextPlayerLog.Add(log);
-            }
-
-            if (nextPlayerLog.Count > 0)
-            {
-                foreach (var log in nextPlayerLog)
+                if (table.IsValido(ManoDeFichas[i]))
                 {
-                    if (log.Contains(nextPlayer))
-                    {
-                        string[] pSplit = log.Split(':');
-                        string[] tokens = pSplit[1].Split('-');
-                        _to_pass_next_player.Add(new Fichas9(int.Parse(tokens[0]), int.Parse(tokens[1])));
-                    }
+                    FichasValidas[i] = true;
                 }
-
-                foreach (var token in _to_pass_next_player)
-                {
-                    if (table.fichaJugable.GetFace(1)==token.GetFace(1))
-                    {
-                        
-                    }
-                }
-                
             }
-            else
+            //eliminando los k estan en false
+            for (int i = 0; i < ManoDeFichas.Count(); i++)
             {
-                FirstPlay = true;
+                if (FichasValidas[i])
+                {
+                    temp_valor_jugable.Add(ValorJugable[i]);
+                    temp_fichas.Add(ManoDeFichas[i]);
+                }
             }
+            Play(ManoDeFichas[Posicion(temp_valor_jugable.Max())]);
+            ValorJugable.Remove(temp_valor_jugable.Max());
+
+
+
+
+
+
+
         }
+
+        
+
+
+
+
     }
 }

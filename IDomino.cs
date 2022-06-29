@@ -9,7 +9,8 @@ namespace matcom_domino
         //error en crear uun campo conjunto de fichs ,nose me almacenan las fichas ahi
 
         public bool Tranke();
-        void GeneratedCards(int k);
+        
+        void GeneratedCards(int k);//
         List<IFichas<T>> ConjuntodeFichas { get; }
 
         List<IPlayer<T>> Jugadores { get; }
@@ -24,7 +25,8 @@ namespace matcom_domino
 
     public class DominoClassic : Domino<int>
     {
-        public Mesa Table { get; }
+        
+        public IMesa<int> Table { get; }
 
         public List<IFichas<int>> ConjuntodeFichas
         {
@@ -40,21 +42,24 @@ namespace matcom_domino
 
         private List<IPlayer<int>> jugadores;
 
-        public DominoClassic(Mesa Table, int cant)
+        public DominoClassic(IMesa<int> Table, int cant)
         {
             this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
             this.jugadores = new List<IPlayer<int>>();
             this.GeneratedCards(cant);
+            
         }
 
-        public void GeneratedCards(int k)
+        public virtual void GeneratedCards(int k)
         {
-            for (int i = 0; i <= k; i++)
+           
+            
+            for (int i = 0; i <k; i++)
             {
-                for (int j = i; j <= k; j++)
+                for (int j = i; j <=k; j++)
                 {
-                    this.conjuntodeFichas.Add(new Fichas9(i, j));
+                    this.conjuntodeFichas.Add(new Fichas9(i,j));
                 }
             }
 
@@ -124,6 +129,8 @@ namespace matcom_domino
 
             return true;
         }
+
+      
 
         public virtual void StartGame()
         {
@@ -270,4 +277,8 @@ namespace matcom_domino
             }
         }
     }
+
+    
+
+   
 }
