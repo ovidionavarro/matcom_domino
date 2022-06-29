@@ -43,12 +43,13 @@ namespace matcom_domino
 
         private List<IPlayer<int>> jugadores;
 
-        public DominoClassic(IMesa<int> Table, int cant)
+        public DominoClassic(IMesa<int> Table, int cant, ITranke<int> _tranke)
         {
             this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
             this.jugadores = new List<IPlayer<int>>();
             this.GeneratedCards(cant);
+            this._tranke = _tranke;
         }
 
         public virtual void GeneratedCards(int k)
@@ -156,7 +157,7 @@ namespace matcom_domino
 
         public virtual bool EndGame()
         {
-            if (Tranke())
+            if (_tranke.Tranke(Jugadores,Table))
             {
                 Wins();
                 Table.Log.Add("Se ha Trancado el juego ");
@@ -189,7 +190,7 @@ namespace matcom_domino
 
     class DominoRobaito : DominoClassic
     {
-        public DominoRobaito(IMesa<int> Table, int cant) : base(Table, cant)
+        public DominoRobaito(IMesa<int> Table, int cant, ITranke<int> _tranke) : base(Table, cant,_tranke)
         {
         }
 
