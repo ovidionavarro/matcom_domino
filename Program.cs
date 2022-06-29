@@ -37,8 +37,8 @@ namespace matcom_domino
             MesaDobleSupremo mesadoble = new MesaDobleSupremo();
            
 
-            // Domino<int> c = new DominoClassic(table, 9);
-            IDomino<int> robaito = new DominoRobaito(table, 9);
+             IDomino<int> c = new DominoClassic(table, 9, new TrankeClasico());
+            //IDomino<int> robaito = new DominoRobaito(table, 9);
             IPlayer<int> P1 = new Player(table, "PlayerNormal1");
             IPlayer<int> B1 = new PlayerBotaGorda(table, "PlayerBotaG1");
             IPlayer<int> B2 = new PlayerBotaGorda(table, "PlayerBotaG2");
@@ -48,37 +48,37 @@ namespace matcom_domino
             
             //Agregando Jugadores al Juego
             //c.Jugadores.Add(P1);
-            robaito.Jugadores.Add(B1);
-            robaito.Jugadores.Add(B2);
-            robaito.Jugadores.Add(R1);
+            c.Jugadores.Add(B1);
+            c.Jugadores.Add(B2);
+            c.Jugadores.Add(R1);
 
             // Repartiendo las fichas
-            robaito.RepartirFichas(10);
+            c.RepartirFichas(10);
 
             //robaito.StartGame();
-            while (!robaito.EndGame())
+            while (!c.EndGame())
             {
                 // MostrarMano(B1);
                 B1.SelectCard();
-                robaito.Robar();
+                //c.Robar();
                 MostrarMesa(table);
                 Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
-                if (robaito.EndGame())
+                if (c.EndGame())
                     break;
             
                 Console.Read();
                 // MostrarMano(B2);
                 B2.SelectCard();
-                robaito.Robar();
+                //c.Robar();
                 MostrarMesa(table);
                 Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
-                if (robaito.EndGame())
+                if (c.EndGame())
                     break;
             
                 Console.Read();
                 // MostrarMano(R1);
                 R1.SelectCard();
-                robaito.Robar();
+                //robaito.Robar();
                 MostrarMesa(table);
                 Console.WriteLine("Ficha Jugable: " + table.fichaJugable); 
                 Console.Read();
