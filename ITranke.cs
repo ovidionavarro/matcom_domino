@@ -11,7 +11,7 @@ namespace matcom_domino
     {
         public TrankeClasico()
         {
-
+        
         }
 
         public bool Tranke(List<IPlayer<int>> PlayersList, IMesa<int> Table)
