@@ -54,7 +54,7 @@ namespace matcom_domino
         public bool Pasarse
         {
             get => paso;
-            set { }
+            
         }
 
         public bool paso = false;

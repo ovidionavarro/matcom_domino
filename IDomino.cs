@@ -70,7 +70,7 @@ namespace matcom_domino
 
         public virtual void Robar()
         {
-            Console.WriteLine("en el clasico no se puede robar");
+            //Console.WriteLine("en el clasico no se puede robar");
         }
 
 
