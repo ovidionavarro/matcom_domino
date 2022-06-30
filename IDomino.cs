@@ -8,7 +8,7 @@ namespace matcom_domino
         //*no se le asigna valor a la fichas cuando se tranca xq eso lo hacen las fichas
         //error en crear uun campo conjunto de fichs ,nose me almacenan las fichas ahi
 
-        public bool Tranke();
+        //public bool Tranke();
 
         void GeneratedCards(int k); //
         List <IFichas<T>> ConjuntodeFichas { get; }
@@ -27,6 +27,9 @@ namespace matcom_domino
 
     public class DominoClassic : IDomino<int>
     {
+        public ITranke<int> _tranke { get;
+            
+        }
         public IMesa<int> Table { get; }
 
         public List<IFichas<int>> ConjuntodeFichas
@@ -69,8 +72,7 @@ namespace matcom_domino
         {
             Console.WriteLine("en el clasico no se puede robar");
         }
-
-        public ITranke<int> _tranke { get; }
+        
 
         public void AgregarJugador(IPlayer<int> a)
         {
@@ -147,7 +149,7 @@ namespace matcom_domino
                 foreach (var player in Jugadores)
                 {
                     player.SelectCard();
-                    if (EndGame())
+                    if (this.EndGame())
                         break;
                 }
 
@@ -157,7 +159,7 @@ namespace matcom_domino
 
         public virtual bool EndGame()
         {
-            if (_tranke.Tranke(Jugadores,Table))
+            if (_tranke.Tranke(jugadores,Table))
             {
                 Wins();
                 Table.Log.Add("Se ha Trancado el juego ");

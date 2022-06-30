@@ -35,9 +35,8 @@ namespace matcom_domino
 
             IMesa<int> table = new Mesa();
             MesaDobleSupremo mesadoble = new MesaDobleSupremo();
-           
 
-             IDomino<int> c = new DominoClassic(table, 9, new TrankeClasico());
+             IDomino<int> c = new DominoClassic(table, 9, new DobleTranke());
             //IDomino<int> robaito = new DominoRobaito(table, 9);
             IPlayer<int> P1 = new Player(table, "PlayerNormal1");
             IPlayer<int> B1 = new PlayerBotaGorda(table, "PlayerBotaG1");
@@ -54,42 +53,41 @@ namespace matcom_domino
 
             // Repartiendo las fichas
             c.RepartirFichas(10);
-
+            c.StartGame();
             //robaito.StartGame();
-            while (!c.EndGame())
-            {
-                // MostrarMano(B1);
-                B1.SelectCard();
-                //c.Robar();
-                MostrarMesa(table);
-                Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
-                if (c.EndGame())
-                    break;
-            
-                Console.Read();
-                // MostrarMano(B2);
-                B2.SelectCard();
-                //c.Robar();
-                MostrarMesa(table);
-                Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
-                if (c.EndGame())
-                    break;
-            
-                Console.Read();
-                // MostrarMano(R1);
-                R1.SelectCard();
-                //robaito.Robar();
-                MostrarMesa(table);
-                Console.WriteLine("Ficha Jugable: " + table.fichaJugable); 
-                Console.Read();
-            }
+            // while (!c.EndGame())
+            // {
+            //     // MostrarMano(B1);
+            //     B1.SelectCard();
+            //     //c.Robar();
+            //     MostrarMesa(table);
+            //     Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
+            //     if (c.EndGame())
+            //         break;
+            //
+            //     Console.Read();
+            //     // MostrarMano(B2);
+            //     B2.SelectCard();
+            //     //c.Robar();
+            //     MostrarMesa(table);
+            //     Console.WriteLine("Ficha Jugable: " + table.fichaJugable);
+            //     if (c.EndGame())
+            //         break;
+            //
+            //     Console.Read();
+            //     // MostrarMano(R1);
+            //     R1.SelectCard();
+            //     //robaito.Robar();
+            //     MostrarMesa(table);
+            //     Console.WriteLine("Ficha Jugable: " + table.fichaJugable); 
+            //     Console.Read();
+            // }
 
             foreach (var log in table.Log)
             {
                 Console.WriteLine(log);
             }
-            //Iesvalodo a=new doblesupremo;
-            //imesa table=new mesa(a)
+           
             
         }
     }
