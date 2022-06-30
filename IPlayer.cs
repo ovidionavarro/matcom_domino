@@ -14,6 +14,8 @@ namespace matcom_domino
         public bool in_turn { get; set; }
         string name { get; }
         void Play(IFichas<T> ficha);
+        
+        int time_passed { get; set; }
     }
 
     public class Player : IPlayer<int> //despues hay k hacerlo generico
@@ -30,6 +32,7 @@ namespace matcom_domino
             this.table = Table;
             this.name = Name;
             this.in_turn = false;
+            time_passed = 0;
         }
 
         public List<IFichas<int>> ManoDeFichas
@@ -61,37 +64,13 @@ namespace matcom_domino
                 table.Log.Add($"EL Jugador {name} ha jugado la ficha: {ficha}");
                 table.RecibirJugada(ficha);
                 manoficha.Remove(ficha);
-               /* //@@@@@##### en realidad nose ni xq esto pincha 
-                //table.CardinTable.Add(ficha);
-                if (table.CardinTable.Count() == 0)
-                {
-                    table.CardinTable.Add(ficha);
-                }
-                else if (table.fichaJugable.GetFace(1) == ficha.GetFace(1))
-                {
-                    table.CardinTable.Insert(0,ficha);
-                    //table.CardinTable.Insert(0,new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
-                }
-                else if (table.fichaJugable.GetFace(1) == ficha.GetFace(2))
-                {
-                    table.CardinTable.Insert(0, new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
-                    //table.CardinTable.Insert(0, ficha);
-                }
-                else if (table.fichaJugable.GetFace(2) == ficha.GetFace(1))
-                {
-                    table.CardinTable.Add(new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
-                    //table.CardinTable.Add(ficha);
-                }
-                else if (table.fichaJugable.GetFace(2) == ficha.GetFace(2))
-                {
-                    table.CardinTable.Add(ficha);
-                    //table.CardinTable.Add(new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
-                }*/
 
                 in_turn = false;
 
             }
         }
+
+        public int time_passed { get; set; }
     }
 
     class PlayerRandom : Player
@@ -124,6 +103,7 @@ namespace matcom_domino
             {
                 table.Log.Add($"EL Jugador {name} no lleva: {table.fichaJugable}");
                 this.paso = true;
+                time_passed++;
             }
         }
     }
@@ -172,6 +152,7 @@ namespace matcom_domino
                 {
                     table.Log.Add($"El Jugador {name} no lleva: {table.fichaJugable}");
                     paso = true;
+                    time_passed++;
                 }
             }
         }

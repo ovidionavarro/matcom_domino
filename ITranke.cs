@@ -19,8 +19,6 @@ namespace matcom_domino
 
             foreach (var player in PlayersList)
             {
-                if (player.Pasarse)
-                    return true;
                 foreach (var ficha in player.ManoDeFichas)
                 {
                     if (Table.IsValido(ficha))
@@ -29,6 +27,25 @@ namespace matcom_domino
             }
 
             return true;
+        }
+    }
+
+    public class DobleTranke : ITranke<int>
+    {
+        private int[] pass_count;
+        public DobleTranke()
+        {
+            
+        }
+        public bool Tranke(List<IPlayer<int>> PlayersList, IMesa<int> table)
+        {
+            foreach (var player in PlayersList)
+            {
+                if (player.time_passed >= 2)
+                    return true;
+            }
+
+            return false;
         }
     }
 }
