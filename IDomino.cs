@@ -11,25 +11,24 @@ namespace matcom_domino
         //public bool Tranke();
 
         void GeneratedCards(int k); //
-        List <IFichas<T>> ConjuntodeFichas { get; }
-
+        List<IFichas<T>> ConjuntodeFichas { get; }
         List<IPlayer<T>> Jugadores { get; }
         void Robar();
-
         ITranke<T> _tranke { get; }
         void AgregarJugador(IPlayer<T> a);
         void RepartirFichas(int k);
         void GameOrden();
         void StartGame();
         bool EndGame();
-        void Wins();
+
+        IWinner<T> Winner { get; set; }
     }
 
     public class DominoClassic : IDomino<int>
     {
-        public ITranke<int> _tranke { get;
-            
-        }
+        public IWinner<int> Winner { get; set; }
+
+        public ITranke<int> _tranke { get; }
         public IMesa<int> Table { get; }
 
         public List<IFichas<int>> ConjuntodeFichas
@@ -46,13 +45,14 @@ namespace matcom_domino
 
         private List<IPlayer<int>> jugadores;
 
-        public DominoClassic(IMesa<int> Table, int cant, ITranke<int> _tranke)
+        public DominoClassic(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner)
         {
             this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
             this.jugadores = new List<IPlayer<int>>();
             this.GeneratedCards(cant);
             this._tranke = _tranke;
+            Winner = winner;
         }
 
         public virtual void GeneratedCards(int k)
@@ -72,7 +72,7 @@ namespace matcom_domino
         {
             Console.WriteLine("en el clasico no se puede robar");
         }
-        
+
 
         public void AgregarJugador(IPlayer<int> a)
         {
@@ -124,21 +124,6 @@ namespace matcom_domino
             return PtosPlayers;
         }
 
-        public bool Tranke()
-        {
-            
-            foreach (var player in jugadores)
-            {
-                foreach (var ficha in player.ManoDeFichas)
-                {
-                    if (Table.IsValido(ficha))
-                        return false;
-                }
-            }
-
-            return true;
-        }
-
 
         public virtual void StartGame()
         {
@@ -159,9 +144,9 @@ namespace matcom_domino
 
         public virtual bool EndGame()
         {
-            if (_tranke.Tranke(jugadores,Table))
+            if (_tranke.Tranke(jugadores, Table))
             {
-                Wins();
+                Wins(Winner.PlayerWinner(jugadores));
                 Table.Log.Add("Se ha Trancado el juego ");
                 return true;
             }
@@ -170,7 +155,7 @@ namespace matcom_domino
             {
                 if (player.ManoDeFichas.Count == 0)
                 {
-                    Wins();
+                    Wins(Winner.PlayerWinner(jugadores));
                     return true;
                 }
             }
@@ -182,17 +167,16 @@ namespace matcom_domino
         {
         }
 
-        public void Wins()
+        public void Wins(IPlayer<int> player_winner)
         {
-            int[] player_points = CalcPtos();
-            int index = Array.IndexOf(player_points, player_points.Min());
-            Table.Log.Add($"Ha ganado el jugador {jugadores[index].name} con {player_points.Min()} Pts");
+            Table.Log.Add($"Ha ganado el jugador {player_winner.name} con {player_winner.player_score} Pts");
         }
     }
 
     class DominoRobaito : DominoClassic
     {
-        public DominoRobaito(IMesa<int> Table, int cant, ITranke<int> _tranke) : base(Table, cant,_tranke)
+        public DominoRobaito(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner) : base(Table, cant,
+            _tranke, winner)
         {
         }
 
@@ -221,7 +205,7 @@ namespace matcom_domino
             {
                 if (player.ManoDeFichas.Count == 0)
                 {
-                    Wins();
+                    Wins(Winner.PlayerWinner(Jugadores));
                     return true;
                 }
             }

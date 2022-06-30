@@ -6,10 +6,9 @@ namespace matcom_domino
         bool IsValido(IFichas<T> a); //boliano
         List<IFichas<T>> CardinTable { get; }
         void RecibirJugada(IFichas<T> ficha);
-        List<string> Log { get;  }
-        
-        IFichas<T> fichaJugable { get; }
+        List<string> Log { get; }
 
+        IFichas<T> fichaJugable { get; }
     }
 
 
@@ -27,7 +26,6 @@ namespace matcom_domino
             this.Log = new List<string>();
         }
 
-       
 
         public virtual void RecibirJugada(IFichas<int> ficha)
         {
@@ -40,8 +38,8 @@ namespace matcom_domino
 
             else if (fichaJugable.GetFace(1) == ficha.GetFace(1))
             {
-                fichaJugable = new Fichas9( ficha.GetFace(2),fichaJugable.GetFace(2));
-                CardinTable.Insert(0,new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
+                fichaJugable = new Fichas9(ficha.GetFace(2), fichaJugable.GetFace(2));
+                CardinTable.Insert(0, new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
                 Log.Add($"La ficha jugable cambio a: {fichaJugable}");
             }
 
@@ -49,14 +47,14 @@ namespace matcom_domino
             else if (fichaJugable.GetFace(2) == ficha.GetFace(2))
             {
                 fichaJugable = new Fichas9(fichaJugable.GetFace(1), ficha.GetFace(1));
-                CardinTable.Add(new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
+                CardinTable.Add(new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
                 Log.Add($"La ficha jugable cambio a: {fichaJugable}");
             }
 
 
             else if (fichaJugable.GetFace(1) == ficha.GetFace(2))
             {
-                fichaJugable = new Fichas9(ficha.GetFace(1),fichaJugable.GetFace(2) );
+                fichaJugable = new Fichas9(ficha.GetFace(1), fichaJugable.GetFace(2));
                 CardinTable.Insert(0, ficha);
                 Log.Add($"La ficha jugable cambio a: {fichaJugable}");
             }
@@ -70,7 +68,7 @@ namespace matcom_domino
             }
         }
 
-        public virtual bool IsValido(IFichas<int> a) 
+        public virtual bool IsValido(IFichas<int> a)
         {
             if (cardintable.Count == 0)
                 return true;
@@ -98,31 +96,35 @@ namespace matcom_domino
 
     public class MesaDobleSupremo : Mesa
     {
-        public MesaDobleSupremo():base()
+        public MesaDobleSupremo() : base()
         {
-            
         }
 
-        public override bool IsValido(IFichas<int> a)
+        public override bool IsValido(IFichas<int> ficha)
         {
-            if (a.GetFace(1) == a.GetFace(2))
+            if (ficha.GetFace(1) == ficha.GetFace(2))
             {
                 return true;
             }
-            return base.IsValido(a);
-            
+
+            return base.IsValido(ficha);
         }
 
         public override void RecibirJugada(IFichas<int> ficha)
         {
-            
-                
             if (ficha.GetFace((1)) == ficha.GetFace(2))
             {
-                fichaJugable = new Fichas9( ficha.GetFace(2),fichaJugable.GetFace(2));
-                //CardinTable.Insert(0,new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
-                Log.Add($"La ficha jugable cambio a: {fichaJugable}");
-                CardinTable.Insert(0,ficha);
+                if (cardintable.Count > 0)
+                {
+                    fichaJugable = new Fichas9(ficha.GetFace(2), fichaJugable.GetFace(2));
+                    //CardinTable.Insert(0,new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
+                    Log.Add($"La ficha jugable cambio a: {fichaJugable}");
+                    CardinTable.Insert(0, ficha);
+                }
+                else
+                {
+                    cardintable.Add(ficha);
+                }
             }
             else
             {
@@ -130,21 +132,4 @@ namespace matcom_domino
             }
         }
     }
-
-    // public class mesatemp : IMesa<int>
-    // {
-    //     public bool IsValido(IFichas<int> a)
-    //     {
-    //         throw new NotImplementedException();
-    //     }
-    //
-    //     public List<IFichas<int>> CardinTable { get; }
-    //     public void RecibirJugada(IFichas<int> ficha)
-    //     {
-    //         throw new NotImplementedException();
-    //     }
-    // }
-
-
-
 }

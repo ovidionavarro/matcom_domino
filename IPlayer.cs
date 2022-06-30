@@ -7,7 +7,8 @@ namespace matcom_domino
         //mismo errror que con la lsita de la clase referee del inumeroable
 
         //cambie el repardor de fichas xq lo tenia puesto en la clase referee pero pienso k el jugador es el k tenga la funcion de coher la fichas
-
+        
+        int player_score { get; set; }
         bool Pasarse { get; }
         List<IFichas<T>> ManoDeFichas { get; }
         void SelectCard();
@@ -20,6 +21,13 @@ namespace matcom_domino
 
     public class Player : IPlayer<int> //despues hay k hacerlo generico
     {
+        public int player_score { get; set; }
+        private List<IFichas<int>> manoficha;
+        public List<IFichas<int>> ManoDeFichas
+        {
+            get => this.manoficha;
+        }
+        public int time_passed { get; set; }
         public IMesa<int> table { get; }
 
         public bool in_turn { get; set; }
@@ -33,19 +41,15 @@ namespace matcom_domino
             this.name = Name;
             this.in_turn = false;
             time_passed = 0;
+            player_score = 0;
         }
-
-        public List<IFichas<int>> ManoDeFichas
-        {
-            get => this.manoficha;
-        }
-
-        private List<IFichas<int>> manoficha;
 
         public virtual void SelectCard()
         {
             throw new NotImplementedException();
         }
+
+        
 
         public bool Pasarse
         {
@@ -64,13 +68,13 @@ namespace matcom_domino
                 table.Log.Add($"EL Jugador {name} ha jugado la ficha: {ficha}");
                 table.RecibirJugada(ficha);
                 manoficha.Remove(ficha);
-
+                player_score += ficha.FichaValue();
                 in_turn = false;
 
             }
         }
 
-        public int time_passed { get; set; }
+        
     }
 
     class PlayerRandom : Player
