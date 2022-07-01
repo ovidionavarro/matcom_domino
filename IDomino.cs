@@ -130,29 +130,30 @@ namespace matcom_domino
             int turn = 1;
             while (!EndGame())
             {
-                Table.Log.Add($"Turno: {turn}");
+                
                 foreach (var player in Jugadores)
                 {
+                    Table.Log.Add($"Turno: {turn}");
                     if (player.GetType() == new Player(Table, "yo").GetType())
                     {
-                        Console.Clear();
+                        //Console.Clear();
                         Console.WriteLine("La Mesa");
                 
                         foreach (var token in Table.CardinTable)
                         {
                             Console.Write(token + ", ");
                         }
-                        Console.WriteLine(Table.fichaJugable);
+                        Console.WriteLine(" Ficha JUgable: "+Table.fichaJugable);
 
-                        Console.WriteLine("Tus Fichas");
+                        Console.WriteLine("Tus Fichas:");
 
                         foreach (var token in player.ManoDeFichas)
                         {
                             Console.Write(token + $":, ");
                         }
-
-                        int index = int.Parse(Console.ReadLine());
-                        player.Play(player.ManoDeFichas[index - 1]);
+                        // Aki se dice la ficha a jugar y el side -1 izq 1 dere
+                        string[] index_side = Console.ReadLine().Split();
+                        player.Play(player.ManoDeFichas[int.Parse(index_side[0])-1],int.Parse(index_side[1]));
                     }
                     else
                     {
@@ -161,9 +162,11 @@ namespace matcom_domino
 
                     if (this.EndGame())
                         break;
+                    
+                    turn++;
                 }
 
-                turn++;
+                
             }
         }
 

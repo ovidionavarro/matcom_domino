@@ -14,7 +14,7 @@ namespace matcom_domino
         void SelectCard();
         public bool in_turn { get; set; }
         string name { get; }
-        void Play(IFichas<T> ficha);
+        void Play(IFichas<T> ficha, int side=-1);
         
         int time_passed { get; set; }
     }
@@ -59,18 +59,22 @@ namespace matcom_domino
 
         public bool paso = false;
 
-        public void Play(IFichas<int> ficha) // Esto hay que arreglarlo... no puede ser un bool
+        public void Play(IFichas<int> ficha, int side=-2) 
         {
             in_turn = true;
+            if (side == 0)
+            {
+                in_turn = false;
+                paso = true;
+            }
             if (table.IsValido(ficha))
             {
                 this.paso = false;
                 table.Log.Add($"EL Jugador {name} ha jugado la ficha: {ficha}");
-                table.RecibirJugada(ficha);
+                table.RecibirJugada(ficha, side);
                 manoficha.Remove(ficha);
                 player_score += ficha.FichaValue();
                 in_turn = false;
-
             }
         }
 
