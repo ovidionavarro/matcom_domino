@@ -133,6 +133,7 @@ namespace matcom_domino
                 
                 foreach (var player in Jugadores)
                 {
+                    player.in_turn = true;
                     Table.Log.Add($"Turno: {turn}");
                     if (player.GetType() == new Player(Table, "yo").GetType())
                     {
@@ -162,7 +163,7 @@ namespace matcom_domino
 
                     if (this.EndGame())
                         break;
-                    
+                    player.in_turn = false;
                     turn++;
                 }
 
@@ -217,10 +218,40 @@ namespace matcom_domino
                 Table.Log.Add($"Turno: {turn}");
                 foreach (var player in Jugadores)
                 {
-                    player.SelectCard();
-                    Robar();
-                    if (EndGame())
-                        break;
+                    player.in_turn = true;
+                    if (player.GetType() == new Player(Table, "yo").GetType())
+                    {
+                        Console.WriteLine("La Mesa");
+                
+                        foreach (var token in Table.CardinTable)
+                        {
+                            Console.Write(token + ", ");
+                        }
+                        Console.WriteLine(" Ficha JUgable: "+Table.fichaJugable);
+
+                        Console.WriteLine("Tus Fichas:");
+                        
+                        foreach (var token in player.ManoDeFichas)
+                        {
+                            Console.Write(token + $":, ");
+                        }
+                        
+                        string[] index_side = Console.ReadLine().Split();
+                        player.Play(player.ManoDeFichas[int.Parse(index_side[0])-1],int.Parse(index_side[1]));
+                        Robar();
+                        if (EndGame())
+                            break;
+
+                    }
+                    else
+                    {
+                        player.SelectCard();
+                        Robar();
+                        if (EndGame())
+                            break; 
+                    }
+                    
+                    player.in_turn = false;
                 }
 
                 turn++;
@@ -256,6 +287,7 @@ namespace matcom_domino
                         ConjuntodeFichas.RemoveAt(index);
                         Table.Log.Add($"EL Jugador {Jugadores[i].name} robo la ficha {ficha}");
                         Jugadores[i].Play(ficha);
+                        Console.WriteLine($"EL Jugador {Jugadores[i].name} robo la ficha {ficha}");
                     }
                     else
                     {
@@ -275,6 +307,7 @@ namespace matcom_domino
                             }
 
                             Jugadores[i].Play(ficha);
+                            Console.WriteLine($"EL Jugador {Jugadores[i].name} robo la ficha {ficha}");
                         }
                         else if (i + 1 < Jugadores.Count)
                         {
