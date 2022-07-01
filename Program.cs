@@ -35,9 +35,9 @@ namespace matcom_domino
 
             IMesa<int> mesadoble = new Mesa();
             //IMesa<int> mesadoble = new MesaDobleSupremo();
-            //IGameOrden<int> orden = new OrdenClasico();
+            IGameOrden<int> orden = new OrdenClasico();
             //IGameOrden<int> orden = new OrdenclasicoIinverso();
-            IGameOrden<int> orden = new OrdenDespuesDePase();
+            //IGameOrden<int> orden = new OrdenDespuesDePase();
 
             IDomino<int> c = new DominoClassic(mesadoble, 9, new DobleTranke(), new LowScoreWinner(),orden);
             IDomino<int> robaito = new DominoRobaito(mesadoble, 9, new DobleTranke(), new LowScoreWinner(),orden);
