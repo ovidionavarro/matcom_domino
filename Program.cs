@@ -33,11 +33,14 @@ namespace matcom_domino
         {
             // Inicializando Objetos del Juego
 
-            IMesa<int> table = new Mesa();
-            IMesa<int> mesadoble = new MesaDobleSupremo();
+            IMesa<int> mesadoble = new Mesa();
+            //IMesa<int> mesadoble = new MesaDobleSupremo();
+            //IGameOrden<int> orden = new OrdenClasico();
+            //IGameOrden<int> orden = new OrdenclasicoIinverso();
+            IGameOrden<int> orden = new OrdenDespuesDePase();
 
-            IDomino<int> c = new DominoClassic(mesadoble, 9, new DobleTranke(), new LowScoreWinner());
-            IDomino<int> robaito = new DominoRobaito(mesadoble, 9, new DobleTranke(), new LowScoreWinner());
+            IDomino<int> c = new DominoClassic(mesadoble, 9, new DobleTranke(), new LowScoreWinner(),orden);
+            IDomino<int> robaito = new DominoRobaito(mesadoble, 9, new DobleTranke(), new LowScoreWinner(),orden);
             IPlayer<int> P1 = new Player(mesadoble, "PlayerNormal1");
             IPlayer<int> B1 = new PlayerBotaGorda(mesadoble, "PlayerBotaG1");
             IPlayer<int> B2 = new PlayerBotaGorda(mesadoble, "PlayerBotaG2");
@@ -54,75 +57,75 @@ namespace matcom_domino
             c.Jugadores.Add(R1);
 
             // Repartiendo las fichas
-            c.RepartirFichas(10);
+            c.RepartirFichas(5);
             
             c.StartGame();
-            // while (!c.EndGame())
-            // {
-            //     // MostrarMano(B1);
-            //     B1.SelectCard();
-            //     MostrarMesa(mesadoble);
-            //     Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
-            //     if (c.EndGame())
-            //         break;
-            //
-            //     Console.Read();
-            //     // MostrarMano(B2);
-            //     B2.SelectCard();
-            //
-            //     MostrarMesa(mesadoble);
-            //     Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
-            //     if (c.EndGame())
-            //         break;
-            //
-            //     Console.Read();
-            //     // MostrarMano(R1);
-            //     R1.SelectCard();
-            //     MostrarMesa(mesadoble);
-            //     Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
-            //     Console.Read();
-            // }
-            //
+           /*while (!c.EndGame())
+             {
+                 // MostrarMano(B1);
+                 B1.SelectCard();
+                 MostrarMesa(mesadoble);
+                 Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
+                 if (c.EndGame())
+                     break;
+            
+                 Console.Read();
+                 // MostrarMano(B2);
+                 B2.SelectCard();
+            
+            MostrarMesa(mesadoble);
+                 Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
+                 if (c.EndGame())
+                     break;
+            
+                 Console.Read();
+                 // MostrarMano(R1);
+                 R1.SelectCard();
+                 MostrarMesa(mesadoble);
+                 Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
+                 Console.Read();
+             }*/
+            
 
-            // Robaitoooooo!!!!!!!!!!!!!
+             //Robaitoooooo!!!!!!!!!!!!!
 
 
             //Agregando Jugadores al Juego
-            //
-            // robaito.Jugadores.Add(B1);
-            // robaito.Jugadores.Add(B2);
-            // robaito.Jugadores.Add(R1);
-            //
-            // // Repartiendo las fichas
-            // robaito.RepartirFichas(10);
-            // //robaito.StartGame();
-            // while (!robaito.EndGame())
-            // {
-            //     // MostrarMano(B1);
-            //     B1.SelectCard();
-            //     robaito.Robar();
-            //     MostrarMesa(mesadoble);
-            //     Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
-            //     if (robaito.EndGame())
-            //         break;
-            //
-            //     Console.Read();
-            //     // MostrarMano(B2);
-            //     B2.SelectCard();
-            //     robaito.Robar();
-            //     MostrarMesa(mesadoble);
-            //     Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
-            //     if (robaito.EndGame())
-            //         break;
-            //
-            //     Console.Read();
-            //     // MostrarMano(R1);
-            //     R1.SelectCard();
-            //     robaito.Robar();
-            //     MostrarMesa(mesadoble);
-            //     Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
-            //     Console.Read();
-            // }
+            
+             //robaito.Jugadores.Add(B1);
+             //robaito.Jugadores.Add(B2);
+             //robaito.Jugadores.Add(R1);
+            
+             // Repartiendo las fichas
+             //robaito.RepartirFichas(10);
+             //robaito.StartGame();
+             /*while (!robaito.EndGame())
+             {
+                 // MostrarMano(B1);
+                 B1.SelectCard();
+                 robaito.Robar();
+                 MostrarMesa(mesadoble);
+                 Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
+                 if (robaito.EndGame())
+                     break;
+            
+                 Console.Read();
+                 // MostrarMano(B2);
+                 B2.SelectCard();
+                 robaito.Robar();
+                 MostrarMesa(mesadoble);
+                 Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
+                 if (robaito.EndGame())
+                     break;
+            
+                 Console.Read();
+                 // MostrarMano(R1);
+                 R1.SelectCard();
+                 robaito.Robar();
+                 MostrarMesa(mesadoble);
+                 Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
+                 Console.Read();
+             }
 
             foreach (var log in mesadoble.Log)
             {
@@ -136,7 +139,7 @@ namespace matcom_domino
                     Console.Write(token+", ");
                 }
                 Console.WriteLine();
-            }
+            }*/
         }
     }
 }
