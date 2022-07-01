@@ -133,7 +133,31 @@ namespace matcom_domino
                 Table.Log.Add($"Turno: {turn}");
                 foreach (var player in Jugadores)
                 {
-                    player.SelectCard();
+                    if (player.GetType() == new Player(Table, "yo").GetType())
+                    {
+                        Console.WriteLine("La Mesa");
+                
+                        foreach (var token in Table.CardinTable)
+                        {
+                            Console.Write(token + ", ");
+                        }
+                        Console.WriteLine(Table.fichaJugable);
+
+                        Console.WriteLine("Tus Fichas");
+
+                        foreach (var token in player.ManoDeFichas)
+                        {
+                            Console.Write(token + $":,{player.ManoDeFichas.IndexOf()} ");
+                        }
+
+                        int index = int.Parse(Console.ReadLine());
+                        player.Play(player.ManoDeFichas[index - 1]);
+                    }
+                    else
+                    {
+                        player.SelectCard();
+                    }
+
                     if (this.EndGame())
                         break;
                 }

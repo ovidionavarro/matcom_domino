@@ -34,9 +34,9 @@ namespace matcom_domino
             // Inicializando Objetos del Juego
 
             IMesa<int> table = new Mesa();
-            MesaDobleSupremo mesadoble = new MesaDobleSupremo();
+            IMesa<int> mesadoble = new MesaDobleSupremo();
 
-            IDomino<int> c = new DominoClassic(table, 9, new DobleTranke(), new HighScoreWinner());
+            IDomino<int> c = new DominoClassic(mesadoble, 9, new DobleTranke(), new LowScoreWinner());
             IDomino<int> robaito = new DominoRobaito(mesadoble, 9, new DobleTranke(), new LowScoreWinner());
             IPlayer<int> P1 = new Player(mesadoble, "PlayerNormal1");
             IPlayer<int> B1 = new PlayerBotaGorda(mesadoble, "PlayerBotaG1");
@@ -48,39 +48,41 @@ namespace matcom_domino
             // Clasico!!!!!!!!
             //Agregando Jugadores al Juego
             //c.Jugadores.Add(P1);
+            c.Jugadores.Add(P1);
             c.Jugadores.Add(B1);
             c.Jugadores.Add(B2);
             c.Jugadores.Add(R1);
 
             // Repartiendo las fichas
             c.RepartirFichas(10);
-            //c.StartGame();
-            while (!c.EndGame())
-            {
-                // MostrarMano(B1);
-                B1.SelectCard();
-                MostrarMesa(mesadoble);
-                Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
-                if (c.EndGame())
-                    break;
-
-                Console.Read();
-                // MostrarMano(B2);
-                B2.SelectCard();
-
-                MostrarMesa(mesadoble);
-                Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
-                if (c.EndGame())
-                    break;
-
-                Console.Read();
-                // MostrarMano(R1);
-                R1.SelectCard();
-                MostrarMesa(mesadoble);
-                Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
-                Console.Read();
-            }
-
+            
+            c.StartGame();
+            // while (!c.EndGame())
+            // {
+            //     // MostrarMano(B1);
+            //     B1.SelectCard();
+            //     MostrarMesa(mesadoble);
+            //     Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
+            //     if (c.EndGame())
+            //         break;
+            //
+            //     Console.Read();
+            //     // MostrarMano(B2);
+            //     B2.SelectCard();
+            //
+            //     MostrarMesa(mesadoble);
+            //     Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
+            //     if (c.EndGame())
+            //         break;
+            //
+            //     Console.Read();
+            //     // MostrarMano(R1);
+            //     R1.SelectCard();
+            //     MostrarMesa(mesadoble);
+            //     Console.WriteLine("Ficha Jugable: " + mesadoble.fichaJugable);
+            //     Console.Read();
+            // }
+            //
 
             // Robaitoooooo!!!!!!!!!!!!!
 
@@ -125,6 +127,15 @@ namespace matcom_domino
             foreach (var log in mesadoble.Log)
             {
                 Console.WriteLine(log);
+            }
+
+            foreach (var player in c.Jugadores)
+            {
+                foreach (var token in player.ManoDeFichas)
+                {
+                    Console.Write(token+", ");
+                }
+                Console.WriteLine();
             }
         }
     }
