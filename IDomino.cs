@@ -15,10 +15,9 @@ namespace matcom_domino
         List<IPlayer<T>> Jugadores { get; }
         void Robar();
         ITranke<T> _tranke { get; }
-        IGameOrden<int> orden { get; }
-
         void AgregarJugador(IPlayer<T> a);
         void RepartirFichas(int k);
+        void GameOrden();
         void StartGame();
         bool EndGame();
 
@@ -31,7 +30,6 @@ namespace matcom_domino
 
         public ITranke<int> _tranke { get; }
         public IMesa<int> Table { get; }
-        public IGameOrden<int> orden { get; }
 
         public List<IFichas<int>> ConjuntodeFichas
         {
@@ -47,7 +45,7 @@ namespace matcom_domino
 
         private List<IPlayer<int>> jugadores;
 
-        public DominoClassic(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner,IGameOrden<int> orden)
+        public DominoClassic(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner)
         {
             this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
@@ -55,9 +53,7 @@ namespace matcom_domino
             this.GeneratedCards(cant);
             this._tranke = _tranke;
             Winner = winner;
-            this.orden = orden;
         }
-        
 
         public virtual void GeneratedCards(int k)
         {
@@ -137,7 +133,7 @@ namespace matcom_domino
                 
                 foreach (var player in Jugadores)
                 {
-                    orden.OrdendelJuego(jugadores);
+                    player.in_turn = true;
                     Table.Log.Add($"Turno: {turn}");
                     if (player.GetType() == new Player(Table, "yo").GetType())
                     {
@@ -159,18 +155,15 @@ namespace matcom_domino
                         // Aki se dice la ficha a jugar y el side -1 izq 1 dere
                         string[] index_side = Console.ReadLine().Split();
                         player.Play(player.ManoDeFichas[int.Parse(index_side[0])-1],int.Parse(index_side[1]));
-                        orden.OrdendelJuego(jugadores);
                     }
                     else
                     {
                         player.SelectCard();
-                        orden.OrdendelJuego(jugadores);
-                        
                     }
 
                     if (this.EndGame())
                         break;
-                    
+                    player.in_turn = false;
                     turn++;
                 }
 
@@ -199,7 +192,9 @@ namespace matcom_domino
             return false;
         }
 
-       
+        public virtual void GameOrden() //Aki cambiar el orden de la lista
+        {
+        }
 
         public void Wins(IPlayer<int> player_winner)
         {
@@ -209,8 +204,8 @@ namespace matcom_domino
 
     class DominoRobaito : DominoClassic
     {
-        public DominoRobaito(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner,IGameOrden<int> orden) : base(Table, cant,
-            _tranke, winner,orden)
+        public DominoRobaito(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner) : base(Table, cant,
+            _tranke, winner)
         {
         }
 
@@ -223,10 +218,40 @@ namespace matcom_domino
                 Table.Log.Add($"Turno: {turn}");
                 foreach (var player in Jugadores)
                 {
-                    player.SelectCard();
-                    Robar();
-                    if (EndGame())
-                        break;
+                    player.in_turn = true;
+                    if (player.GetType() == new Player(Table, "yo").GetType())
+                    {
+                        Console.WriteLine("La Mesa");
+                
+                        foreach (var token in Table.CardinTable)
+                        {
+                            Console.Write(token + ", ");
+                        }
+                        Console.WriteLine(" Ficha JUgable: "+Table.fichaJugable);
+
+                        Console.WriteLine("Tus Fichas:");
+                        
+                        foreach (var token in player.ManoDeFichas)
+                        {
+                            Console.Write(token + $":, ");
+                        }
+                        
+                        string[] index_side = Console.ReadLine().Split();
+                        player.Play(player.ManoDeFichas[int.Parse(index_side[0])-1],int.Parse(index_side[1]));
+                        Robar();
+                        if (EndGame())
+                            break;
+
+                    }
+                    else
+                    {
+                        player.SelectCard();
+                        Robar();
+                        if (EndGame())
+                            break; 
+                    }
+                    
+                    player.in_turn = false;
                 }
 
                 turn++;
@@ -262,6 +287,7 @@ namespace matcom_domino
                         ConjuntodeFichas.RemoveAt(index);
                         Table.Log.Add($"EL Jugador {Jugadores[i].name} robo la ficha {ficha}");
                         Jugadores[i].Play(ficha);
+                        Console.WriteLine($"EL Jugador {Jugadores[i].name} robo la ficha {ficha}");
                     }
                     else
                     {
@@ -281,6 +307,7 @@ namespace matcom_domino
                             }
 
                             Jugadores[i].Play(ficha);
+                            Console.WriteLine($"EL Jugador {Jugadores[i].name} robo la ficha {ficha}");
                         }
                         else if (i + 1 < Jugadores.Count)
                         {

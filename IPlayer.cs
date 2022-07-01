@@ -61,11 +61,11 @@ namespace matcom_domino
 
         public void Play(IFichas<int> ficha, int side=-2) 
         {
-            in_turn = true;
+            
             if (side == 0)
             {
-                in_turn = false;
                 paso = true;
+                return;
             }
             if (table.IsValido(ficha))
             {
@@ -74,8 +74,10 @@ namespace matcom_domino
                 table.RecibirJugada(ficha, side);
                 manoficha.Remove(ficha);
                 player_score += ficha.FichaValue();
-                in_turn = false;
+                Console.WriteLine($"El jugador {name} jugo la ficha {ficha}");
+
             }
+
         }
 
         

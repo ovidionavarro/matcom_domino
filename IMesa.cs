@@ -36,7 +36,7 @@ namespace matcom_domino
                 Log.Add($"La ficha jugable cambio a: {fichaJugable}");
             }
 
-            if (side == -2)
+            else if (side == -2)
             {
                 if (fichaJugable.GetFace(1) == ficha.GetFace(1))
                 {
@@ -74,31 +74,35 @@ namespace matcom_domino
                 }
             }
 
-            if (side == 1)
+            else if (side == 1)
             {
                 if (fichaJugable.GetFace(2) == ficha.GetFace(1))
                 {
                     cardintable.Add(ficha);
-                    fichaJugable = new Fichas9(ficha.GetFace(2), fichaJugable.GetFace(2));
+                    fichaJugable = new Fichas9(CardinTable[0].GetFace(1),
+                        CardinTable[cardintable.Count - 1].GetFace(2));
+                    return;
                 }
 
-                if (fichaJugable.GetFace(2) == ficha.GetFace(2))
+                else if (fichaJugable.GetFace(2) == ficha.GetFace(2))
                 {
                     cardintable.Add(new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
-                    fichaJugable = new Fichas9(ficha.GetFace(2), fichaJugable.GetFace(2));
+                    fichaJugable = new Fichas9(CardinTable[0].GetFace(1),
+                        CardinTable[cardintable.Count - 1].GetFace(2));
                 }
             }
 
-            if (side == -1)
+            else if (side == -1)
             {
                 if (fichaJugable.GetFace(1) == ficha.GetFace(2))
                 {
                     cardintable.Insert(0, ficha);
                     fichaJugable = new Fichas9(CardinTable[0].GetFace(1),
                         CardinTable[cardintable.Count - 1].GetFace(2));
+                    return;
                 }
 
-                if (fichaJugable.GetFace(1) == ficha.GetFace(1))
+                else if (fichaJugable.GetFace(1) == ficha.GetFace(1))
                 {
                     cardintable.Insert(0, new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
                     fichaJugable = new Fichas9(CardinTable[0].GetFace(1),
@@ -157,17 +161,66 @@ namespace matcom_domino
             {
                 if (cardintable.Count > 0)
                 {
-                    CardinTable.Insert(0, ficha);
-                    fichaJugable = new Fichas9(CardinTable[0].GetFace(1),
-                        CardinTable[cardintable.Count - 1].GetFace(2));
-                    //CardinTable.Insert(0,new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
-                    Log.Add($"La ficha jugable cambio a: {fichaJugable}");
-                    
+                    if (side == 2)
+                    {
+                        if (fichaJugable.GetFace(1) == ficha.GetFace(1))
+                        {
+                            fichaJugable = new Fichas9(ficha.GetFace(2), fichaJugable.GetFace(2));
+                            CardinTable.Insert(0, new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
+                            Log.Add($"La ficha jugable cambio a: {fichaJugable}");
+                            return;
+                        }
+
+
+                        else if (fichaJugable.GetFace(2) == ficha.GetFace(2))
+                        {
+                            fichaJugable = new Fichas9(fichaJugable.GetFace(1), ficha.GetFace(1));
+                            CardinTable.Add(new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
+                            Log.Add($"La ficha jugable cambio a: {fichaJugable}");
+                            return;
+                        }
+
+
+                        else if (fichaJugable.GetFace(1) == ficha.GetFace(2))
+                        {
+                            fichaJugable = new Fichas9(ficha.GetFace(1), fichaJugable.GetFace(2));
+                            CardinTable.Insert(0, ficha);
+                            Log.Add($"La ficha jugable cambio a: {fichaJugable}");
+                            return;
+                        }
+
+
+                        else if (fichaJugable.GetFace(2) == ficha.GetFace(1))
+                        {
+                            fichaJugable = new Fichas9(fichaJugable.GetFace(1), ficha.GetFace(2));
+                            CardinTable.Add(ficha);
+                            Log.Add($"La ficha jugable cambio a: {fichaJugable}");
+                            return;
+                        }
+                    }
+
+                    if (side == 1)
+                    {
+                        CardinTable.Add(ficha);
+                        fichaJugable = new Fichas9(CardinTable[0].GetFace(1),
+                            CardinTable[cardintable.Count - 1].GetFace(2));
+                        //CardinTable.Insert(0,new Fichas9(ficha.GetFace(2),ficha.GetFace(1)));
+                        Log.Add($"La ficha jugable cambio a: {fichaJugable}");
+                    }
+
+                    if (side == -1)
+                    {
+                        CardinTable.Insert(0, ficha);
+                        fichaJugable = new Fichas9(CardinTable[0].GetFace(1),
+                            CardinTable[cardintable.Count - 1].GetFace(2));
+                        Log.Add($"La ficha jugable cambio a: {fichaJugable}");
+                    }
                 }
                 else
                 {
                     cardintable.Add(ficha);
                     fichaJugable = ficha;
+                    Log.Add($"La ficha jugable cambio a: {fichaJugable}");
                 }
             }
             else
