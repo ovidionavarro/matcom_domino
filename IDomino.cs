@@ -135,6 +135,7 @@ namespace matcom_domino
                 {
                     if (player.GetType() == new Player(Table, "yo").GetType())
                     {
+                        Console.Clear();
                         Console.WriteLine("La Mesa");
                 
                         foreach (var token in Table.CardinTable)
@@ -147,7 +148,7 @@ namespace matcom_domino
 
                         foreach (var token in player.ManoDeFichas)
                         {
-                            Console.Write(token + $":,{player.ManoDeFichas.IndexOf()} ");
+                            Console.Write(token + $":, ");
                         }
 
                         int index = int.Parse(Console.ReadLine());
