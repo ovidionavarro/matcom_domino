@@ -10,7 +10,7 @@ namespace matcom_domino
         //cambie el repardor de fichas xq lo tenia puesto en la clase referee pero pienso k el jugador es el k tenga la funcion de coher la fichas
         
         int player_score { get; set; }
-        bool Pasarse { get; }
+        bool Pasarse { get; set; }
         List<IFichas<T>> ManoDeFichas { get; }
         void SelectCard();
         public bool in_turn { get; set; }
@@ -55,7 +55,8 @@ namespace matcom_domino
         public bool Pasarse
         {
             get => paso;
-            
+            set {}
+
         }
 
         public bool paso = false;
@@ -65,6 +66,7 @@ namespace matcom_domino
             
             if (side == 0)
             {
+                time_passed++;
                 paso = true;
                 return;
             }
@@ -113,8 +115,7 @@ namespace matcom_domino
             else
             {
                 table.Log.Add($"EL Jugador {name} no lleva: {table.fichaJugable}");
-                this.paso = true;
-                time_passed++;
+                Play(ManoDeFichas[0],0);
             }
         }
     }
@@ -267,6 +268,12 @@ namespace matcom_domino
                     temp_fichas.Add(ManoDeFichas[i]);
                 }
             }
+
+            if (temp_fichas.Count == 0)
+            {
+                Play(ManoDeFichas[0],0);
+            }
+            
             Play(ManoDeFichas[Posicion(temp_valor_jugable.Max())]);
             ValorJugable.Remove(temp_valor_jugable.Max());
             ValorJugable.Clear();

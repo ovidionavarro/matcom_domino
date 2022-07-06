@@ -45,6 +45,7 @@ namespace matcom_domino
             IPlayer<int> B1 = new PlayerBotaGorda(mesadoble, "PlayerBotaG1");
             IPlayer<int> B2 = new PlayerBotaGorda(mesadoble, "PlayerBotaG2");
             IPlayer<int> R1 = new PlayerRandom(mesadoble, "PlayerRandom1");
+            IPlayer<int> S1 = new PlayerSobreviviente(mesadoble, "PlayerSobreviviente1");
             //IPlayer<int> B2 = new PlayerSobreviviente(table, "PlayerSobreviviente");
 
 
@@ -53,7 +54,7 @@ namespace matcom_domino
             //c.Jugadores.Add(P1);
             c.Jugadores.Add(P1);
             c.Jugadores.Add(B1);
-            c.Jugadores.Add(B2);
+            c.Jugadores.Add(S1);
             c.Jugadores.Add(R1);
 
             // Repartiendo las fichas

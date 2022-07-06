@@ -163,11 +163,12 @@ namespace matcom_domino
                     {
                         player.SelectCard();
                     }
-
+                    
                     if (this.EndGame())
                         break;
                     player.in_turn = false;
                     turn++;
+                    
                 }
 
                 
@@ -243,6 +244,7 @@ namespace matcom_domino
                         string[] index_side = Console.ReadLine().Split();
                         player.Play(player.ManoDeFichas[int.Parse(index_side[0])-1],int.Parse(index_side[1]));
                         Robar();
+                        player.Pasarse = false;
                         if (EndGame())
                             break;
 
@@ -251,6 +253,7 @@ namespace matcom_domino
                     {
                         player.SelectCard();
                         Robar();
+                        player.Pasarse = false;
                         if (EndGame())
                             break; 
                     }
