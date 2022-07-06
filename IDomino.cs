@@ -17,7 +17,7 @@ namespace matcom_domino
         ITranke<T> _tranke { get; }
         void AgregarJugador(IPlayer<T> a);
         void RepartirFichas(int k);
-        void GameOrden();
+        IGameOrden<int> orden { get; }
         void StartGame();
         bool EndGame();
 
@@ -30,6 +30,7 @@ namespace matcom_domino
 
         public ITranke<int> _tranke { get; }
         public IMesa<int> Table { get; }
+        public IGameOrden<int> orden { get; }
 
         public List<IFichas<int>> ConjuntodeFichas
         {
@@ -45,7 +46,7 @@ namespace matcom_domino
 
         private List<IPlayer<int>> jugadores;
 
-        public DominoClassic(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner)
+        public DominoClassic(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner,IGameOrden<int> orden)
         {
             this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
@@ -53,6 +54,7 @@ namespace matcom_domino
             this.GeneratedCards(cant);
             this._tranke = _tranke;
             Winner = winner;
+            this.orden = orden;
         }
 
         public virtual void GeneratedCards(int k)
@@ -130,7 +132,7 @@ namespace matcom_domino
             int turn = 1;
             while (!EndGame())
             {
-                
+                orden.OrdendelJuego(jugadores);
                 foreach (var player in Jugadores)
                 {
                     player.in_turn = true;
@@ -204,8 +206,8 @@ namespace matcom_domino
 
     class DominoRobaito : DominoClassic
     {
-        public DominoRobaito(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner) : base(Table, cant,
-            _tranke, winner)
+        public DominoRobaito(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner,IGameOrden<int> orden) : base(Table, cant,
+            _tranke, winner,orden)
         {
         }
 
@@ -215,6 +217,7 @@ namespace matcom_domino
             int turn = 1;
             while (!EndGame())
             {
+                orden.OrdendelJuego(Jugadores);
                 Table.Log.Add($"Turno: {turn}");
                 foreach (var player in Jugadores)
                 {

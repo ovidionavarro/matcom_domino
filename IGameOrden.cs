@@ -30,18 +30,20 @@ public class OrdenDespuesDePase : IGameOrden<int>
         {
             if (jugadores[i].Pasarse)
             {
-                int k = i;
+                jugadores.Reverse();
+                /*int k = i;
                 for (int j = 1; j < jugadores.Count(); j++)
                 {
                     aux[j] = jugadores[((j - k) + jugadores.Count()) % (jugadores.Count())];
                 }
 
                 aux.Reverse();
+                jugadores.Clear();
 
                 for (int j = 0; j < jugadores.Count(); j++)
                 {
                     jugadores[j] = aux[((j - k) + aux.Count()) % (aux.Count())];
-                }
+                }*/
             }
         }
     }
