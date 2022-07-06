@@ -165,8 +165,9 @@ namespace matcom_domino
                     {
                         if (fichaJugable.GetFace(1) == ficha.GetFace(1))
                         {
-                            fichaJugable = new Fichas9(ficha.GetFace(2), fichaJugable.GetFace(2));
+
                             CardinTable.Insert(0, new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
+                            fichaJugable = new Fichas9(cardintable[0].GetFace(1), cardintable[cardintable.Count-1].GetFace(2));
                             Log.Add($"La ficha jugable cambio a: {fichaJugable}");
                             return;
                         }
@@ -174,8 +175,8 @@ namespace matcom_domino
 
                         else if (fichaJugable.GetFace(2) == ficha.GetFace(2))
                         {
-                            fichaJugable = new Fichas9(fichaJugable.GetFace(1), ficha.GetFace(1));
                             CardinTable.Add(new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
+                            fichaJugable = new Fichas9(cardintable[0].GetFace(1), cardintable[cardintable.Count-1].GetFace(2));
                             Log.Add($"La ficha jugable cambio a: {fichaJugable}");
                             return;
                         }
@@ -183,8 +184,8 @@ namespace matcom_domino
 
                         else if (fichaJugable.GetFace(1) == ficha.GetFace(2))
                         {
-                            fichaJugable = new Fichas9(ficha.GetFace(1), fichaJugable.GetFace(2));
                             CardinTable.Insert(0, ficha);
+                            fichaJugable = new Fichas9(cardintable[0].GetFace(1), cardintable[cardintable.Count-1].GetFace(2));
                             Log.Add($"La ficha jugable cambio a: {fichaJugable}");
                             return;
                         }
@@ -192,8 +193,8 @@ namespace matcom_domino
 
                         else if (fichaJugable.GetFace(2) == ficha.GetFace(1))
                         {
-                            fichaJugable = new Fichas9(fichaJugable.GetFace(1), ficha.GetFace(2));
                             CardinTable.Add(ficha);
+                            fichaJugable = new Fichas9(cardintable[0].GetFace(1), cardintable[cardintable.Count-1].GetFace(2));
                             Log.Add($"La ficha jugable cambio a: {fichaJugable}");
                             return;
                         }

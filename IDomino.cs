@@ -152,8 +152,9 @@ namespace matcom_domino
 
                         foreach (var token in player.ManoDeFichas)
                         {
-                            Console.Write(token + $":, ");
+                            Console.Write(token + ", ");
                         }
+                        Console.WriteLine();
                         // Aki se dice la ficha a jugar y el side -1 izq 1 dere
                         string[] index_side = Console.ReadLine().Split();
                         player.Play(player.ManoDeFichas[int.Parse(index_side[0])-1],int.Parse(index_side[1]));

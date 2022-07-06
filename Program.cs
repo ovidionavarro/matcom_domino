@@ -33,7 +33,7 @@ namespace matcom_domino
         {
             // Inicializando Objetos del Juego
 
-            IMesa<int> mesadoble = new Mesa();
+            IMesa<int> mesadoble = new MesaDobleSupremo();
             //IMesa<int> mesadoble = new MesaDobleSupremo();
             IGameOrden<int> orden = new OrdenClasico();
             //IGameOrden<int> orden = new OrdenclasicoIinverso();
@@ -60,6 +60,11 @@ namespace matcom_domino
             c.RepartirFichas(5);
             
             c.StartGame();
+            
+            foreach (var log in mesadoble.Log)
+            {
+                Console.WriteLine(log);
+            }
            /*while (!c.EndGame())
              {
                  // MostrarMano(B1);
@@ -127,10 +132,7 @@ namespace matcom_domino
                  Console.Read();
              }
 
-            foreach (var log in mesadoble.Log)
-            {
-                Console.WriteLine(log);
-            }
+            
 
             foreach (var player in c.Jugadores)
             {
