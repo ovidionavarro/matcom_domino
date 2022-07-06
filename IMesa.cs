@@ -90,6 +90,12 @@ namespace matcom_domino
                     fichaJugable = new Fichas9(CardinTable[0].GetFace(1),
                         CardinTable[cardintable.Count - 1].GetFace(2));
                 }
+
+                else
+                {
+                    Console.WriteLine("No se puede jugar por este lado, se jugara por donde se pueda");
+                    RecibirJugada(ficha, 2);
+                }
             }
 
             else if (side == -1)
@@ -107,6 +113,11 @@ namespace matcom_domino
                     cardintable.Insert(0, new Fichas9(ficha.GetFace(2), ficha.GetFace(1)));
                     fichaJugable = new Fichas9(CardinTable[0].GetFace(1),
                         CardinTable[cardintable.Count - 1].GetFace(2));
+                }
+                else
+                {
+                    Console.WriteLine("No se puede jugar por este lado, se jugara por donde se pueda");
+                    RecibirJugada(ficha, 2);
                 }
             }
         }
