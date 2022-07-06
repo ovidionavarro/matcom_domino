@@ -132,7 +132,7 @@ namespace matcom_domino
             int turn = 1;
             while (!EndGame())
             {
-                orden.OrdendelJuego(jugadores);
+                
                 foreach (var player in Jugadores)
                 {
                     player.in_turn = true;
@@ -160,7 +160,12 @@ namespace matcom_domino
                         player.Play(player.ManoDeFichas[int.Parse(index_side[0])-1],int.Parse(index_side[1]));
                     }
                     else
-                    {
+                    {   Console.WriteLine($"{player.name} Tokens");
+                        foreach (var token in player.ManoDeFichas)
+                        {
+                            Console.Write(token + ", ");
+                        }
+                        Console.WriteLine();
                         player.SelectCard();
                     }
                     

@@ -1,22 +1,22 @@
-using System.Data;
-using System.Runtime.CompilerServices;
-
 namespace matcom_domino
 {
     public interface IPlayer<T>
     {
-        //mismo errror que con la lsita de la clase referee del inumeroable
-
-        //cambie el repardor de fichas xq lo tenia puesto en la clase referee pero pienso k el jugador es el k tenga la funcion de coher la fichas
-        
+        // Campo que acumula la puntuacion del player
         int player_score { get; set; }
+        // Campo para saber si el jugador se paso 
         bool Pasarse { get; set; }
+        // Lista que contiene las fichas del jugador
         List<IFichas<T>> ManoDeFichas { get; }
+        // Decide como cada jugador selecciona la ficha a jugar
         void SelectCard();
+        // Campo para saber si el jugador esta en turno
         public bool in_turn { get; set; }
+        // Campo que da nombre al jugador
         string name { get; }
-        void Play(IFichas<T> ficha, int side=-1);
-        
+        // Metodo que juega una Ficha
+        void Play(IFichas<T> ficha, int side = -1);
+        // Campo que dice las veces que se ha pasado el jugador
         int time_passed { get; set; }
     }
 
@@ -24,10 +24,12 @@ namespace matcom_domino
     {
         public int player_score { get; set; }
         private List<IFichas<int>> manoficha;
+
         public List<IFichas<int>> ManoDeFichas
         {
             get => this.manoficha;
         }
+
         public int time_passed { get; set; }
         public IMesa<int> table { get; }
 
@@ -45,31 +47,33 @@ namespace matcom_domino
             player_score = 0;
         }
 
+        // Este metodo no se implementa en player 
         public virtual void SelectCard()
         {
             throw new NotImplementedException();
         }
 
-        
 
         public bool Pasarse
         {
             get => paso;
-            set {}
-
+            set { }
         }
 
         public bool paso = false;
-
-        public void Play(IFichas<int> ficha, int side=2) 
+        
+        // Recibe una ficha y el lado por el que jugarla (-1 por la izquierda, 1 por la derecha, 0 para pasarse)
+        // Por defecto esta en 2 para que los jugadores IA jueguen por defecto por el lado que se pueda
+        public void Play(IFichas<int> ficha, int side = 2)
         {
-            
             if (side == 0)
             {
                 time_passed++;
                 paso = true;
+                in_turn = false;
                 return;
             }
+
             if (table.IsValido(ficha))
             {
                 this.paso = false;
@@ -78,12 +82,9 @@ namespace matcom_domino
                 manoficha.Remove(ficha);
                 player_score += ficha.FichaValue();
                 Console.WriteLine($"El jugador {name} jugo la ficha {ficha}");
-
+                in_turn = false;
             }
-
         }
-
-        
     }
 
     class PlayerRandom : Player
@@ -91,8 +92,7 @@ namespace matcom_domino
         public PlayerRandom(IMesa<int> table, string name) : base(table, name)
         {
         }
-        
-        
+
 
         public override void SelectCard()
         {
@@ -115,7 +115,7 @@ namespace matcom_domino
             else
             {
                 table.Log.Add($"EL Jugador {name} no lleva: {table.fichaJugable}");
-                Play(ManoDeFichas[0],0);
+                Play(ManoDeFichas[0], 0);
             }
         }
     }
@@ -170,7 +170,7 @@ namespace matcom_domino
         }
     }
 
-   class PlayerSobreviviente : Player
+    class PlayerSobreviviente : Player
     {
         public PlayerSobreviviente(IMesa<int> table, string name) : base(table, name)
         {
@@ -179,60 +179,87 @@ namespace matcom_domino
 
         private List<int> ValorJugable;
 
-        public void Posivilidad()
+
+        public void Posivilidad(List<IFichas<int>> FichasJugables)
         {
-            for (int i = 0; i < ManoDeFichas.Count(); i++)
+            // Por todas las fichas validas
+            for (int i = 0; i < FichasJugables.Count; i++)
             {
-                int count = 0;
-                bool[] temp = new bool[2];
-                temp[0] = true;
-                temp[1] = true;
+                int token_value = 0;
                 
-                for (int j = 0; j < ManoDeFichas.Count(); j++)
+                // Por toda las fichas de la mano
+                for (int j = 0; j < ManoDeFichas.Count; j++)
                 {
-                    if (i == j)
+                    // Si encuentra fichas con la misma cara aumenta el valor jugable de la ficha i
+                    if (FichasJugables[i].GetFace(1) == ManoDeFichas[j].GetFace(1)||
+                        FichasJugables[i].GetFace(1) == ManoDeFichas[j].GetFace(2))
                     {
-                        continue;
+                        token_value += 1;
                     }
-
-                    if (ManoDeFichas[i].GetFace(1) == ManoDeFichas[j].GetFace(1) ||
-                        ManoDeFichas[i].GetFace(1) == ManoDeFichas[j].GetFace(2))
-
+                    if (FichasJugables[i].GetFace(2) == ManoDeFichas[j].GetFace(1)||
+                        FichasJugables[i].GetFace(2) == ManoDeFichas[j].GetFace(2))
                     {
-                        temp[0] = false;
-                        if ((temp[0] == false) && (temp[1] == false))
-                        {
-                            count += 5;
-                        }
-                        else
-                        {
-                            count++;
-                        }
-                        
-                        continue;
+                        token_value += 1;
                     }
-                    else if (ManoDeFichas[i].GetFace(2) == ManoDeFichas[j].GetFace(1) ||
-                             ManoDeFichas[i].GetFace(2) == ManoDeFichas[j].GetFace(2))
-                    {
-                        temp[1] = false;
-                        if ((temp[0] == false) && (temp[1] == false))
-                        {
-                            count += 5;
-                        }
-                        else
-                        {
-                            count++;
-                        }
-                        
-                    }
-                        
-                    
                 }
-                ValorJugable.Add(count);
+                // Adiciona el valor jugable a la lista
+                ValorJugable.Add(token_value);
             }
         }
 
-        public int Posicion(int a)
+        // public void Posivilidad(List<IFichas<int>> FichasJugables)
+        // {
+        //     for (int i = 0; i < FichasJugables.Count(); i++)
+        //     {
+        //         int count = 0;
+        //         bool[] temp = new bool[2];
+        //         temp[0] = true;
+        //         temp[1] = true;
+        //
+        //         for (int j = 0; j < FichasJugables.Count(); j++)
+        //         {
+        //             if (i == j)
+        //             {
+        //                 continue;
+        //             }
+        //
+        //             if (FichasJugables[i].GetFace(1) == FichasJugables[j].GetFace(1) ||
+        //                 FichasJugables[i].GetFace(1) == FichasJugables[j].GetFace(2))
+        //
+        //             {
+        //                 temp[0] = false;
+        //                 if ((temp[0] == false) && (temp[1] == false))
+        //                 {
+        //                     count += 5;
+        //                 }
+        //                 else
+        //                 {
+        //                     count++;
+        //                 }
+        //
+        //                 continue;
+        //             }
+        //             
+        //             if (FichasJugables[i].GetFace(2) == FichasJugables[j].GetFace(1) ||
+        //                      FichasJugables[i].GetFace(2) == FichasJugables[j].GetFace(2))
+        //             {
+        //                 temp[1] = false;
+        //                 if ((temp[0] == false) && (temp[1] == false))
+        //                 {
+        //                     count += 5;
+        //                 }
+        //                 else
+        //                 {
+        //                     count++;
+        //                 }
+        //             }
+        //         }
+        //
+        //         ValorJugable.Add(count);
+        //     }
+        // }
+
+        public int IndexOf(int a)
         {
             for (int i = 0; i < ValorJugable.Count(); i++)
             {
@@ -241,55 +268,45 @@ namespace matcom_domino
                     return i;
                 }
             }
+
+            throw new Exception("Cannot Find value on list");
             return -1;
         }
 
         public override void SelectCard()
         {
-            Posivilidad();
             in_turn = true;
-            List<int> temp_valor_jugable = new List<int>();
             List<IFichas<int>> temp_fichas = new List<IFichas<int>>();
-            bool[] FichasValidas = new bool[ManoDeFichas.Count()];
-            //poniendo en true las k son jugables
+
+            //Agregando fichas jugables a la lista
             for (int i = 0; i < ManoDeFichas.Count(); i++)
             {
                 if (table.IsValido(ManoDeFichas[i]))
                 {
-                    FichasValidas[i] = true;
-                }
-            }
-            //eliminando los k estan en false
-            for (int i = 0; i < ManoDeFichas.Count(); i++)
-            {
-                if (FichasValidas[i])
-                {
-                    temp_valor_jugable.Add(ValorJugable[i]);
                     temp_fichas.Add(ManoDeFichas[i]);
                 }
             }
 
+            // Calculando la posivilidad de cada ficha jugable
+            Posivilidad(temp_fichas);
+
+            // //eliminando los k estan en false
+            // for (int i = 0; i < temp_fichas.Count(); i++)
+            // {
+            //     temp_valor_jugable.Add(ValorJugable[i]);
+            // }
+            
+            // Si no hay fichas jugables se pasa
             if (temp_fichas.Count == 0)
             {
-                Play(ManoDeFichas[0],0);
+                Play(ManoDeFichas[0], 0);
             }
-            
-            Play(ManoDeFichas[Posicion(temp_valor_jugable.Max())]);
-            ValorJugable.Remove(temp_valor_jugable.Max());
-            ValorJugable.Clear();
-
-
-
-
-
-
-
+            else
+            {
+                //Juega la ficha jugable con mayor posibilidad
+                Play(temp_fichas[IndexOf(ValorJugable.Max())]);
+                ValorJugable.Clear();
+            }
         }
-
-        
-
-
-
-
     }
 }

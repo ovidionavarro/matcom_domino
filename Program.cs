@@ -51,11 +51,11 @@ namespace matcom_domino
 
             // Clasico!!!!!!!!
             //Agregando Jugadores al Juego
-            //c.Jugadores.Add(P1);
-            c.Jugadores.Add(P1);
             c.Jugadores.Add(B1);
+            // c.Jugadores.Add(P1);
+            //c.Jugadores.Add(B1);
             c.Jugadores.Add(S1);
-            c.Jugadores.Add(R1);
+            //c.Jugadores.Add(R1);
 
             // Repartiendo las fichas
             c.RepartirFichas(5);
