@@ -35,14 +35,14 @@ namespace matcom_domino
 
             IMesa<int> mesadoble = new Mesa();
             //IMesa<int> mesadoble = new MesaDobleSupremo();
-            IGameOrden<int> orden = new OrdenClasico();
+            IGameOrden<int> orden = new OrdenclasicoIinverso();
             //IGameOrden<int> orden = new OrdenclasicoIinverso();
             //IGameOrden<int> orden = new OrdenDespuesDePase();
 
             IDomino<int> c = new DominoClassic(mesadoble, 9, new DobleTranke(), new LowScoreWinner(),orden);
-            IDomino<int> robaito = new DominoRobaito(mesadoble, 9, new DobleTranke(), new LowScoreWinner(),orden);
+            //IDomino<int> robaito = new DominoRobaito(mesadoble, 9, new TrankeClasico(), new LowScoreWinner(),orden);
             IPlayer<int> P1 = new Player(mesadoble, "PlayerNormal1");
-            IPlayer<int> B1 = new PlayerBotaGorda(mesadoble, "PlayerBotaG1");
+            IPlayer<int> B1 = new PlayerSobreviviente(mesadoble, "PlayersobrevivienteG1");
             IPlayer<int> B2 = new PlayerBotaGorda(mesadoble, "PlayerBotaG2");
             IPlayer<int> R1 = new PlayerRandom(mesadoble, "PlayerRandom1");
             //IPlayer<int> B2 = new PlayerSobreviviente(table, "PlayerSobreviviente");
@@ -53,8 +53,8 @@ namespace matcom_domino
             //c.Jugadores.Add(P1);
             c.Jugadores.Add(P1);
             c.Jugadores.Add(B1);
-            c.Jugadores.Add(B2);
-            c.Jugadores.Add(R1);
+            //c.Jugadores.Add(B2);
+            //c.Jugadores.Add(R1);
 
             // Repartiendo las fichas
             c.RepartirFichas(5);
