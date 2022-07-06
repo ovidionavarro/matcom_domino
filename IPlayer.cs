@@ -1,3 +1,4 @@
+using System.Data;
 using System.Runtime.CompilerServices;
 
 namespace matcom_domino
@@ -170,7 +171,7 @@ namespace matcom_domino
 
    class PlayerSobreviviente : Player
     {
-        public PlayerSobreviviente(Mesa table, string name) : base(table, name)
+        public PlayerSobreviviente(IMesa<int> table, string name) : base(table, name)
         {
             ValorJugable = new List<int>();
         }
@@ -182,6 +183,10 @@ namespace matcom_domino
             for (int i = 0; i < ManoDeFichas.Count(); i++)
             {
                 int count = 0;
+                bool[] temp = new bool[2];
+                temp[0] = true;
+                temp[1] = true;
+                
                 for (int j = 0; j < ManoDeFichas.Count(); j++)
                 {
                     if (i == j)
@@ -189,28 +194,40 @@ namespace matcom_domino
                         continue;
                     }
 
-                    else if (ManoDeFichas[i].GetFace(1) == ManoDeFichas[j].GetFace(1)||
-                             ManoDeFichas[i].GetFace(1) == ManoDeFichas[j].GetFace(2))
+                    if (ManoDeFichas[i].GetFace(1) == ManoDeFichas[j].GetFace(1) ||
+                        ManoDeFichas[i].GetFace(1) == ManoDeFichas[j].GetFace(2))
+
                     {
-                        count++;
-                        if (ManoDeFichas[i].GetFace(2) == ManoDeFichas[j].GetFace(1) ||
-                            ManoDeFichas[i].GetFace(2) == ManoDeFichas[j].GetFace(2))
+                        temp[0] = false;
+                        if ((temp[0] == false) && (temp[1] == false))
                         {
-                            count+= 5;
+                            count += 5;
                         }
+                        else
+                        {
+                            count++;
+                        }
+                        
+                        continue;
                     }
-                    else if (ManoDeFichas[i].GetFace(2) == ManoDeFichas[j].GetFace(1)||
+                    else if (ManoDeFichas[i].GetFace(2) == ManoDeFichas[j].GetFace(1) ||
                              ManoDeFichas[i].GetFace(2) == ManoDeFichas[j].GetFace(2))
                     {
-                        count++;
-                        if (ManoDeFichas[i].GetFace(1) == ManoDeFichas[j].GetFace(1) ||
-                            ManoDeFichas[i].GetFace(1) == ManoDeFichas[j].GetFace(2))
+                        temp[1] = false;
+                        if ((temp[0] == false) && (temp[1] == false))
                         {
-                            count+= 5;
+                            count += 5;
                         }
+                        else
+                        {
+                            count++;
+                        }
+                        
                     }
+                        
+                    
                 }
-                ValorJugable[i] = count;
+                ValorJugable.Add(count);
             }
         }
 
@@ -252,6 +269,7 @@ namespace matcom_domino
             }
             Play(ManoDeFichas[Posicion(temp_valor_jugable.Max())]);
             ValorJugable.Remove(temp_valor_jugable.Max());
+            ValorJugable.Clear();
 
 
 
