@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/jose_coscu/VS_Code_Proyects/matcom_domino/matcom domino.csproj",
+      "projectUniqueName": "/home/jose_coscu/Riders_Proyects/matcom_domino/matcom domino.csproj",
       "projectName": "matcom domino",
-      "projectPath": "/home/jose_coscu/VS_Code_Proyects/matcom_domino/matcom domino.csproj",
+      "projectPath": "/home/jose_coscu/Riders_Proyects/matcom_domino/matcom domino.csproj",
       "packagesPath": "/home/jose_coscu/.nuget/packages/",
-      "outputPath": "/home/jose_coscu/VS_Code_Proyects/matcom_domino/obj/",
+      "outputPath": "/home/jose_coscu/Riders_Proyects/matcom_domino/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/jose_coscu/.nuget/NuGet/NuGet.Config"
