@@ -39,7 +39,7 @@ namespace matcom_domino
             //IGameOrden<int> orden = new OrdenclasicoIinverso();
             //IGameOrden<int> orden = new OrdenDespuesDePase();
 
-            IDomino<int> c = new DominoClassic(mesadoble, 9, new DobleTranke(), new LowScoreWinner(), orden);
+            IDomino<int> c = new DominoClassic(mesadoble, 9, new TrankeClasico(), new LowScoreWinner(), orden);
             IDomino<int> robaito = new DominoRobaito(mesadoble, 9, new DobleTranke(), new LowScoreWinner(), orden);
             IPlayer<int> P1 = new Player(mesadoble, "PlayerNormal1");
             IPlayer<int> B1 = new PlayerBotaGorda(mesadoble, "PlayerBotaG1");
@@ -51,15 +51,15 @@ namespace matcom_domino
             // Clasico!!!!!!!!
             //Agregando Jugadores al Juego
             //c.Jugadores.Add(P1);
-            c.Jugadores.Add(P1);
-            c.Jugadores.Add(B1);
-            c.Jugadores.Add(B2);
-            c.Jugadores.Add(R1);
+            robaito.Jugadores.Add(P1);
+            robaito.Jugadores.Add(B1);
+            robaito.Jugadores.Add(B2);
+            robaito.Jugadores.Add(R1);
 
             // Repartiendo las fichas
-            c.RepartirFichas(5);
+            robaito.RepartirFichas(5);
 
-            c.StartGame();
+            robaito.StartGame();
 
             foreach (var log in mesadoble.Log)
             {

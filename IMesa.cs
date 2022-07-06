@@ -36,7 +36,7 @@ namespace matcom_domino
                 Log.Add($"La ficha jugable cambio a: {fichaJugable}");
             }
 
-            else if (side == -2)
+            else if (side == 2)
             {
                 if (fichaJugable.GetFace(1) == ficha.GetFace(1))
                 {

@@ -59,7 +59,7 @@ namespace matcom_domino
 
         public bool paso = false;
 
-        public void Play(IFichas<int> ficha, int side=-2) 
+        public void Play(IFichas<int> ficha, int side=2) 
         {
             
             if (side == 0)
