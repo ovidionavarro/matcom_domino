@@ -194,12 +194,12 @@ namespace matcom_domino
                     if (FichasJugables[i].GetFace(1) == ManoDeFichas[j].GetFace(1)||
                         FichasJugables[i].GetFace(1) == ManoDeFichas[j].GetFace(2))
                     {
-                        token_value += 1;
+                        token_value ++;
                     }
                     if (FichasJugables[i].GetFace(2) == ManoDeFichas[j].GetFace(1)||
                         FichasJugables[i].GetFace(2) == ManoDeFichas[j].GetFace(2))
                     {
-                        token_value += 1;
+                        token_value ++;
                     }
                 }
                 // Adiciona el valor jugable a la lista
