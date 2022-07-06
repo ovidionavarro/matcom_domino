@@ -48,15 +48,15 @@ namespace matcom_domino
             // Clasico!!!!!!!!
             //Agregando Jugadores al Juego
             //c.Jugadores.Add(P1);
-            robaito.Jugadores.Add(P1);
-            robaito.Jugadores.Add(B1);
-            robaito.Jugadores.Add(B2);
-            robaito.Jugadores.Add(R1);
+            c.Jugadores.Add(P1);
+            c.Jugadores.Add(B1);
+            c.Jugadores.Add(B2);
+            c.Jugadores.Add(R1);
 
             // Repartiendo las fichas
-            robaito.RepartirFichas(10);
+            c.RepartirFichas(10);
             
-            robaito.StartGame();
+            c.StartGame();
             // while (!c.EndGame())
             // {
             //     // MostrarMano(B1);
