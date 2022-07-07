@@ -7,7 +7,7 @@ namespace matcom_domino
         List<IFichas<T>> CardinTable { get; }
         void RecibirJugada(IFichas<T> ficha, int side);
         List<string> Log { get; }
-
+        List<IFichas<T>> FichasSobrantes { get; set; }
         IFichas<T> fichaJugable { get; }
     }
 
@@ -15,10 +15,9 @@ namespace matcom_domino
     public class Mesa : IMesa<int>
     {
         protected List<IFichas<int>> cardintable;
-
         public IFichas<int> fichaJugable { get; set; }
-
         public List<string> Log { get; }
+        public List<IFichas<int>> FichasSobrantes { get; set; }
 
         public Mesa()
         {

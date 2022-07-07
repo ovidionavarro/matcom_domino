@@ -4,18 +4,25 @@ namespace matcom_domino
     {
         // Campo que acumula la puntuacion del player
         int player_score { get; set; }
+
         // Campo para saber si el jugador se paso 
         bool Pasarse { get; set; }
+
         // Lista que contiene las fichas del jugador
         List<IFichas<T>> ManoDeFichas { get; }
+
         // Decide como cada jugador selecciona la ficha a jugar
         void SelectCard();
+
         // Campo para saber si el jugador esta en turno
         public bool in_turn { get; set; }
+
         // Campo que da nombre al jugador
         string name { get; }
+
         // Metodo que juega una Ficha
         void Play(IFichas<T> ficha, int side = -1);
+
         // Campo que dice las veces que se ha pasado el jugador
         int time_passed { get; set; }
     }
@@ -61,7 +68,7 @@ namespace matcom_domino
         }
 
         public bool paso = false;
-        
+
         // Recibe una ficha y el lado por el que jugarla (-1 por la izquierda, 1 por la derecha, 0 para pasarse)
         // Por defecto esta en 2 para que los jugadores IA jueguen por defecto por el lado que se pueda
         public void Play(IFichas<int> ficha, int side = 2)
@@ -186,22 +193,24 @@ namespace matcom_domino
             for (int i = 0; i < FichasJugables.Count; i++)
             {
                 int token_value = 0;
-                
+
                 // Por toda las fichas de la mano
                 for (int j = 0; j < ManoDeFichas.Count; j++)
                 {
                     // Si encuentra fichas con la misma cara aumenta el valor jugable de la ficha i
-                    if (FichasJugables[i].GetFace(1) == ManoDeFichas[j].GetFace(1)||
+                    if (FichasJugables[i].GetFace(1) == ManoDeFichas[j].GetFace(1) ||
                         FichasJugables[i].GetFace(1) == ManoDeFichas[j].GetFace(2))
                     {
-                        token_value ++;
+                        token_value++;
                     }
-                    if (FichasJugables[i].GetFace(2) == ManoDeFichas[j].GetFace(1)||
+
+                    if (FichasJugables[i].GetFace(2) == ManoDeFichas[j].GetFace(1) ||
                         FichasJugables[i].GetFace(2) == ManoDeFichas[j].GetFace(2))
                     {
-                        token_value ++;
+                        token_value++;
                     }
                 }
+
                 // Adiciona el valor jugable a la lista
                 ValorJugable.Add(token_value);
             }
@@ -270,7 +279,7 @@ namespace matcom_domino
             }
 
             throw new Exception("Cannot Find value on list");
-            return -1;
+            //return -1;
         }
 
         public override void SelectCard()
@@ -295,7 +304,7 @@ namespace matcom_domino
             // {
             //     temp_valor_jugable.Add(ValorJugable[i]);
             // }
-            
+
             // Si no hay fichas jugables se pasa
             if (temp_fichas.Count == 0)
             {
@@ -306,6 +315,49 @@ namespace matcom_domino
                 //Juega la ficha jugable con mayor posibilidad
                 Play(temp_fichas[IndexOf(ValorJugable.Max())]);
                 ValorJugable.Clear();
+            }
+        }
+    }
+
+    class PlayerTramposo : PlayerBotaGorda
+    {
+        public PlayerTramposo(IMesa<int> table, string name) : base(table, name)
+        {
+        }
+
+        public override void SelectCard()
+        {
+            in_turn = true;
+            SortHand();
+            for (int i = 0; i < ManoDeFichas.Count; i++)
+            {
+                if (table.IsValido(ManoDeFichas[i]))
+                {
+                    Play(ManoDeFichas[i]);
+                    break;
+                }
+
+                // Si es la ultima ficha y no la jugo... no lleva y roba de la pila
+                if (i == ManoDeFichas.Count - 1)
+                {
+                    foreach (var token in table.FichasSobrantes)
+                    {
+                        if (table.IsValido(token))
+                        {
+                            table.FichasSobrantes.Add(ManoDeFichas[0]);
+                            ManoDeFichas.RemoveAt(0);
+                            Play(token);
+                            break;
+                        }
+                    }
+
+                    // Si Miro todas las fichas de la mesa y no robo ninguna bota una ficha de su mano
+                    if (in_turn)
+                    {
+                        ManoDeFichas.RemoveAt(0);
+                        break;
+                    }
+                }
             }
         }
     }

@@ -39,9 +39,9 @@ namespace matcom_domino
             //IGameOrden<int> orden = new OrdenclasicoIinverso();
             //IGameOrden<int> orden = new OrdenDespuesDePase();
 
-            IDomino<int> c = new DominoClassic(mesadoble, 9, new TrankeClasico(), new LowScoreWinner(), orden);
-            IDomino<int> robaito = new DominoRobaito(mesadoble, 9, new DobleTranke(), new LowScoreWinner(), orden);
-            IPlayer<int> P1 = new Player(mesadoble, "PlayerNormal1");
+            IDomino<int> c = new DominoClassic(mesadoble, 9, new TrankeClasico(), new LowScoreWinner(), orden , new RepartirPar());
+            IDomino<int> robaito = new DominoRobaito(mesadoble, 9, new DobleTranke(), new LowScoreWinner(), orden, new RepartirEnOrden());
+            IPlayer<int> P1 = new PlayerTramposo(mesadoble, "PlayerTramposo1");
             IPlayer<int> B1 = new PlayerBotaGorda(mesadoble, "PlayerBotaG1");
             IPlayer<int> B2 = new PlayerBotaGorda(mesadoble, "PlayerBotaG2");
             IPlayer<int> R1 = new PlayerRandom(mesadoble, "PlayerRandom1");
@@ -51,16 +51,16 @@ namespace matcom_domino
 
             // Clasico!!!!!!!!
             //Agregando Jugadores al Juego
-            c.Jugadores.Add(B1);
-            // c.Jugadores.Add(P1);
-            //c.Jugadores.Add(B1);
-            c.Jugadores.Add(S1);
-            //c.Jugadores.Add(R1);
+            robaito.AgregarJugador(P1);
+            // c.AgregarJugador(P1);
+            robaito.AgregarJugador(B1);
+            robaito.AgregarJugador(S1);
+            robaito.AgregarJugador(R1);
 
             // Repartiendo las fichas
-            c.RepartirFichas(5);
+            robaito.RepartirFichas(10);
 
-            c.StartGame();
+            robaito.StartGame();
 
             foreach (var log in mesadoble.Log)
             {
