@@ -10,7 +10,7 @@ namespace matcom_domino
 
         //public bool Tranke();
 
-        void GeneratedCards(int k); //
+        //void GeneratedCards(int k); //
         List<IFichas<T>> ConjuntodeFichas { get; }
         List<IPlayer<T>> Jugadores { get; }
         void Robar();
@@ -18,6 +18,8 @@ namespace matcom_domino
         void AgregarJugador(IPlayer<T> a);
         IRepartirFichas<T> _repartirFichas { get; }
         void RepartirFichas(int k);
+        
+        IGenerarFichas<T> _generarFichas { get; }
         IGameOrden<int> orden { get; }
         void StartGame();
         bool EndGame();
@@ -34,7 +36,8 @@ namespace matcom_domino
         public ITranke<int> _tranke { get; }
         public IMesa<int> Table { get; }
         public IGameOrden<int> orden { get; }
-
+        
+        public IGenerarFichas<int> _generarFichas { get; }
         public List<IFichas<int>> ConjuntodeFichas
         {
             get => this.conjuntodeFichas;
@@ -50,21 +53,24 @@ namespace matcom_domino
         private List<IPlayer<int>> jugadores;
 
         public DominoClassic(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner,
-            IGameOrden<int> orden, IRepartirFichas<int> repartirFichas)
+            IGameOrden<int> orden, IRepartirFichas<int> repartirFichas,IGenerarFichas<int> _generar)
         {
             this._repartirFichas = repartirFichas;
             this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
             this.jugadores = new List<IPlayer<int>>();
-            this.GeneratedCards(cant);
+            //this.GeneratedCards(cant);
             this._tranke = _tranke;
             Winner = winner;
             this.orden = orden;
+            this._generarFichas = _generar;
+            conjuntodeFichas = _generarFichas.GenerateCards(cant);
         }
 
-        public virtual void GeneratedCards(int k)
+        /*public virtual void GeneratedCards(int k)
         {
-            for (int i = 0; i < k; i++)
+            conjuntodeFichas = _Generar.GenerateCards(k);
+           /* for (int i = 0; i < k; i++)
             {
                 for (int j = i; j <= k; j++)
                 {
@@ -73,7 +79,7 @@ namespace matcom_domino
             }
 
             Table.Log.Add($"Se han generado todas las fichas hasta el doble {k}");
-        }
+        }*/
 
         public virtual void Robar()
         {
@@ -222,8 +228,8 @@ namespace matcom_domino
     class DominoRobaito : DominoClassic
     {
         public DominoRobaito(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner,
-            IGameOrden<int> orden, IRepartirFichas<int> repartirFichas) : base(Table, cant,
-            _tranke, winner, orden, repartirFichas)
+            IGameOrden<int> orden, IRepartirFichas<int> repartirFichas,IGenerarFichas<int> _generarFichas) : base(Table, cant,
+            _tranke, winner, orden, repartirFichas,_generarFichas)
         {
         }
 
