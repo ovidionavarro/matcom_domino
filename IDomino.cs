@@ -67,19 +67,7 @@ namespace matcom_domino
             conjuntodeFichas = _generarFichas.GenerateCards(cant);
         }
 
-        /*public virtual void GeneratedCards(int k)
-        {
-            conjuntodeFichas = _Generar.GenerateCards(k);
-           /* for (int i = 0; i < k; i++)
-            {
-                for (int j = i; j <= k; j++)
-                {
-                    this.conjuntodeFichas.Add(new Fichas9(i, j));
-                }
-            }
-
-            Table.Log.Add($"Se han generado todas las fichas hasta el doble {k}");
-        }*/
+        
 
         public virtual void Robar()
         {
