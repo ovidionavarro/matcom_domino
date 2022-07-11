@@ -51,7 +51,7 @@ namespace matcom_domino
         }
         public override string ToString()
         {
-            return this.ficha.Item1.ToString() + "-" + this.ficha.Item2.ToString();
+            return "["+this.ficha.Item1.ToString() + "*" + this.ficha.Item2.ToString()+"]";
         }
 
         public int ValueFace(int a)

@@ -58,7 +58,6 @@ namespace matcom_domino
             this.Table = Table;
             this.conjuntodeFichas = new List<IFichas<int>>();
             this.jugadores = new List<IPlayer<int>>();
-            //this.GeneratedCards(cant);
             this._tranke = _tranke;
             Winner = winner;
             this.orden = orden;
@@ -66,22 +65,32 @@ namespace matcom_domino
             conjuntodeFichas = _generarFichas.GenerateCards(cant);
         }
 
-        /*public virtual void GeneratedCards(int k)
+
+        private void ShowLastLog()
         {
-            conjuntodeFichas = _Generar.GenerateCards(k);
-           /* for (int i = 0; i < k; i++)
+            List<string> logtoShow = new List<string>();
+            int turn = 0;
+            for (int i = Table.Log.Count-1; i >= 0; i--)
             {
-                for (int j = i; j <= k; j++)
-                {
-                    this.conjuntodeFichas.Add(new Fichas9(i, j));
-                }
+                logtoShow.Add(Table.Log[i]);
+                
+                if (Table.Log[i].Contains("Turno: "))
+                    turn++;
+                if (turn==2)
+                    break;
             }
-            Table.Log.Add($"Se han generado todas las fichas hasta el doble {k}");
-        }*/
+
+            logtoShow.Reverse();
+            Console.Clear();
+            foreach (var log in logtoShow)
+            {
+                Console.WriteLine(log);
+            }
+        }
 
         public virtual void Robar()
         {
-            //Console.WriteLine("en el clasico no se puede robar");
+            //throw new NotImplementedException("En el clasico no se puede robar");
         }
 
 
@@ -100,18 +109,6 @@ namespace matcom_domino
             }
 
             _repartirFichas.Repartir(conjuntodeFichas, jugadores, l);
-            // Random r = new Random();
-
-            // while (this.jugadores[this.jugadores.Count - 1].ManoDeFichas.Count != l)
-            // {
-            //     for (int i = 0; i < this.jugadores.Count; i++)
-            //     {
-            //         int k = r.Next(this.conjuntodeFichas.Count);
-            //         this.jugadores[i].ManoDeFichas.Add(conjuntodeFichas[k]);
-            //         conjuntodeFichas.RemoveAt(k);
-            //     }
-            // }
-
             Table.FichasSobrantes = conjuntodeFichas;
             Table.Log.Add($"Se han repartido {l} fichas a cada jugador ");
         }
@@ -144,12 +141,14 @@ namespace matcom_domino
             int turn = 1;
             while (!EndGame())
             {
+                Table.Log.Add($"Turno: {turn}");
                 foreach (var player in Jugadores)
                 {
                     player.in_turn = true;
-                    Table.Log.Add($"Turno: {turn}");
+
                     if (player.GetType() == new Player(Table, "yo").GetType())
                     {
+                        ShowLastLog();
                         //Console.Clear();
                         Console.WriteLine("La Mesa");
 
@@ -158,13 +157,14 @@ namespace matcom_domino
                             Console.Write(token + ", ");
                         }
 
-                        Console.WriteLine(" Ficha JUgable: " + Table.fichaJugable);
+                        Console.WriteLine("Ficha JUgable: " + Table.fichaJugable);
 
                         Console.WriteLine("Tus Fichas:");
-
+                        int tokenIndex = 1;
                         foreach (var token in player.ManoDeFichas)
                         {
-                            Console.Write(token + ", ");
+                            Console.Write(token + $":{tokenIndex}, ");
+                            tokenIndex++;
                         }
 
                         Console.WriteLine();
@@ -174,21 +174,15 @@ namespace matcom_domino
                     }
                     else
                     {
-                        Console.WriteLine($"{player.name} Tokens");
-                        foreach (var token in player.ManoDeFichas)
-                        {
-                            Console.Write(token + ", ");
-                        }
-
-                        Console.WriteLine();
                         player.SelectCard();
                     }
 
                     if (this.EndGame())
                         break;
                     player.in_turn = false;
-                    turn++;
+                    
                 }
+                turn++;
             }
         }
 
@@ -264,21 +258,20 @@ namespace matcom_domino
                         string[] index_side = Console.ReadLine().Split();
                         int token_index = int.Parse(index_side[0]) - 1;
                         int side = int.Parse(index_side[1]);
-                        
+
                         player.Play(player.ManoDeFichas[token_index], side);
                         Robar();
                         player.Pasarse = false;
-                        if (EndGame())
-                            break;
                     }
                     else
                     {
                         player.SelectCard();
                         Robar();
                         player.Pasarse = false;
-                        if (EndGame())
-                            break;
                     }
+
+                    if (EndGame())
+                        break;
 
                     player.in_turn = false;
                 }

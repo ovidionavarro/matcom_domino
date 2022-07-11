@@ -368,9 +368,14 @@ namespace matcom_domino
             }
         }
 
+        private static void PrintWinner(IMesa<int> Table)
+        {
+             Console.WriteLine(Table.Log[Table.Log.Count-1]);
+             Console.WriteLine(Table.Log[Table.Log.Count-2]);
+        }
+
         public static void Main(string[] args)
         {
-            
             IMesa<int> mesa = ChooseTable();
             IGenerarFichas<int> generador = ChooseGenerateTokens();
             int auxdata = ChooseData();
@@ -383,6 +388,7 @@ namespace matcom_domino
             PlayerTokensNumbers(domino);
             Console.Clear();
             domino.StartGame();
+            PrintWinner(mesa);
         }
     }
 }

@@ -87,7 +87,6 @@ namespace matcom_domino
                 table.RecibirJugada(ficha, side);
                 manoficha.Remove(ficha);
                 player_score += ficha.FichaValue();
-                Console.WriteLine($"El jugador {name} jugo la ficha {ficha}");
                 in_turn = false;
             }
         }
