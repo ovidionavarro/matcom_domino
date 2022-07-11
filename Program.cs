@@ -5,23 +5,8 @@ namespace matcom_domino
 {
     class Program
     {
-        public static void Main(string[] args)
+        private static IMesa<int> ChooseTable()
         {
-            IMesa<int> mesa;
-            ITranke<int> tranke;
-            IWinner<int> winner;
-            IGameOrden<int> ordengame;
-            IRepartirFichas<int> repartidor;
-            IGenerarFichas<int> generador;
-            IDomino<int> domino;
-            IPlayer<int> player;
-            //ver como se puede arreglar para que una excepcion en la repartidera de fichas par
-            //me parece que el juego nunca llega al final
-            //porque el jugador tramposo nunca termnina de poner todas las fichas 
-            // el stargame nunca dice kien es el ganador 
-
-            #region Tipo de Mesa
-
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("BIENVENIDO A TU PERDICION");
             Console.ForegroundColor = ConsoleColor.Green;
@@ -31,6 +16,7 @@ namespace matcom_domino
                               "2:Mesa Doble Supremo =>" +
                               "la jugada posee la misma valides que la clasica pero los dobles siempre se pueden jugar");
 
+            IMesa<int> mesa;
             while (true)
             {
                 int aux = int.Parse(Console.ReadLine());
@@ -50,10 +36,11 @@ namespace matcom_domino
                 }
             }
 
-            #endregion
+            return mesa;
+        }
 
-            #region Generador de fichas
-
+        private static IGenerarFichas<int> ChooseGenerateTokens()
+        {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Selecione la manera en que desea generar las fichas");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -63,6 +50,7 @@ namespace matcom_domino
                 "Usted prodra generar hasta la data 20,si desearia jugar con una data mayor debe insertar los numeros" +
                 "" + '\n' + "en LA LISTA #TEM# DE LA CLASE #GERADORPRIMO# ");
             int auxgenerate = int.Parse(Console.ReadLine());
+            IGenerarFichas<int> generador;
             while (true)
             {
                 if (auxgenerate == 1)
@@ -82,10 +70,11 @@ namespace matcom_domino
                 }
             }
 
-            #endregion
+            return generador;
+        }
 
-            #region Numero de data
-
+        private static int ChooseData()
+        {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Diga hasta que data desea jugar ");
             int auxdata = int.Parse(Console.ReadLine());
@@ -102,26 +91,28 @@ namespace matcom_domino
                 }
             }
 
-            #endregion
+            return auxdata;
+        }
 
-            #region Orden del juego
-
+        private static IGameOrden<int> ChooseGameOrder()
+        {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Elija el orden del juego");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1:Orden Clasico" + '\n' + "2:Orden Inverso");
             int auxorden = int.Parse(Console.ReadLine());
+            IGameOrden<int> gameOrder;
             while (true)
             {
                 if (auxorden == 1)
                 {
-                    ordengame = new OrdenClasico();
+                    gameOrder = new OrdenClasico();
                     break;
                 }
                 else if (auxorden == 2)
 
                 {
-                    ordengame = new OrdenclasicoIinverso();
+                    gameOrder = new OrdenclasicoIinverso();
                     break;
                 }
                 else
@@ -131,10 +122,11 @@ namespace matcom_domino
                 }
             }
 
-            #endregion
+            return gameOrder;
+        }
 
-            #region Repardidoe de fichas
-
+        private static IRepartirFichas<int> ChooseHowtoDeliverTokens()
+        {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Elija como repartir las fichas");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -146,6 +138,7 @@ namespace matcom_domino
                 "2:Reparticion Random" + '\n' +
                 "3:Reparticion Par=>suma las 2 caras de la ficha y reparte de manera random las fichas cuya suma sea par");
             int auxrepartidor = int.Parse(Console.ReadLine());
+            IRepartirFichas<int> repartidor;
             while (true)
             {
                 if (auxrepartidor == 1)
@@ -170,10 +163,11 @@ namespace matcom_domino
                 }
             }
 
-            #endregion
+            return repartidor;
+        }
 
-            #region Tipo de tranke
-
+        private static ITranke<int> ChooseTranke()
+        {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Elija el tipo de tranque ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -181,6 +175,7 @@ namespace matcom_domino
                               '\n' + "2:Tranque doble:=>el juego se acaba cuando" +
                               " un jugador se pasa 2 veces");
             int auxtranke = int.Parse(Console.ReadLine());
+            ITranke<int> tranke;
             while (true)
             {
                 if (auxtranke == 1)
@@ -200,15 +195,17 @@ namespace matcom_domino
                 }
             }
 
-            #endregion
+            return tranke;
+        }
 
-            #region Tipo de winner
-
+        private static IWinner<int> ChooseWinMethod()
+        {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Elija cual sea el ganador al terminar el juego");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1:Menor puntuacion" + '\n' + "2:Mayor puntuacion");
             int auxwinner = int.Parse(Console.ReadLine());
+            IWinner<int> winner;
             while (true)
             {
                 if (auxwinner == 2)
@@ -229,10 +226,13 @@ namespace matcom_domino
                 }
             }
 
-            #endregion
+            return winner;
+        }
 
-            #region Tipo de domino
-
+        private static IDomino<int> ChooseGameType(IMesa<int> table, int data, ITranke<int> tranke, IWinner<int> winner,
+            IGameOrden<int> gameOrden, IRepartirFichas<int> delivery, IGenerarFichas<int> generador)
+        {
+            IDomino<int> domino;
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Elija el tipo de domino que desea jugar");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -246,13 +246,13 @@ namespace matcom_domino
             {
                 if (auxdomino == 1)
                 {
-                    domino = new DominoClassic(mesa, auxdata, tranke, winner, ordengame, repartidor, generador);
+                    domino = new DominoClassic(table, data, tranke, winner, gameOrden, delivery, generador);
                     break;
                 }
                 else if (auxdomino == 2)
 
                 {
-                    domino = new DominoRobaito(mesa, auxdata, tranke, winner, ordengame, repartidor, generador);
+                    domino = new DominoRobaito(table, data, tranke, winner, gameOrden, delivery, generador);
                     break;
                 }
                 else
@@ -262,10 +262,12 @@ namespace matcom_domino
                 }
             }
 
-            #endregion
+            return domino;
+        }
 
-            #region Agregando jugadores
-
+        private static void AddPlayers(IDomino<int> domino, IMesa<int> mesa)
+        {
+            IPlayer<int> player;
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Elija los jugadores que usted desea que juegen segun la dificultad");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -333,11 +335,11 @@ namespace matcom_domino
                     auxplayer = int.Parse(Console.ReadLine());
                 }
             }
+        }
 
-            #endregion
 
-            #region Cantidad de fichas a repartir
-
+        private static void PlayerTokensNumbers(IDomino<int> domino)
+        {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Escriba la cantidad de fichas que kiere asignarle a cada jugador " + '\n' +
                               "NOTA: Recuerde" +
@@ -364,9 +366,21 @@ namespace matcom_domino
                     break;
                 }
             }
+        }
 
-            #endregion
-
+        public static void Main(string[] args)
+        {
+            
+            IMesa<int> mesa = ChooseTable();
+            IGenerarFichas<int> generador = ChooseGenerateTokens();
+            int auxdata = ChooseData();
+            IGameOrden<int> ordengame = ChooseGameOrder();
+            IRepartirFichas<int> repartidor = ChooseHowtoDeliverTokens();
+            ITranke<int> tranke = ChooseTranke();
+            IWinner<int> winner = ChooseWinMethod();
+            IDomino<int> domino = ChooseGameType(mesa, auxdata, tranke, winner, ordengame, repartidor, generador);
+            AddPlayers(domino, mesa);
+            PlayerTokensNumbers(domino);
             Console.Clear();
             domino.StartGame();
         }
