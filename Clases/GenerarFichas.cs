@@ -1,10 +1,4 @@
-namespace matcom_domino;
-
-public interface IGenerarFichas<T>
-{
-    List<IFichas<T>> GenerateCards(int a);
-    
-}
+namespace matcom_domino.Interfaces;
 
 public class GeneradorClasico : IGenerarFichas<int>
 {

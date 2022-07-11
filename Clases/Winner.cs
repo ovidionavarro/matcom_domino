@@ -1,9 +1,5 @@
-namespace matcom_domino;
+namespace matcom_domino.Interfaces;
 
-public interface IWinner<T>
-{
-    IPlayer<T> PlayerWinner(List<IPlayer<T>> PlayerList);
-}
 
 public class HighScoreWinner:IWinner<int>
 {

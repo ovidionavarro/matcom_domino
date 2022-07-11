@@ -1,9 +1,6 @@
-namespace matcom_domino;
+namespace matcom_domino.Interfaces;
 
-public interface IRepartirFichas<T>
-{
-    void Repartir(List<IFichas<T>> AllTokens, List<IPlayer<T>> PlayerList, int TokenQty);
-}
+
 
 public class RepartirEnOrden : IRepartirFichas<int>
 {

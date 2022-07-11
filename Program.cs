@@ -1,7 +1,4 @@
-﻿using matcom_domino;
-using System.Collections.Generic;
-
-namespace matcom_domino
+﻿namespace matcom_domino.Interfaces
 {
     class Program
     {
