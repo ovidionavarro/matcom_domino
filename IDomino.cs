@@ -16,7 +16,7 @@ namespace matcom_domino
         void AgregarJugador(IPlayer<T> a);
         IRepartirFichas<T> _repartirFichas { get; }
         void RepartirFichas(int k);
-        
+
         IGenerarFichas<T> _generarFichas { get; }
         IGameOrden<int> orden { get; }
         void StartGame();
@@ -34,8 +34,9 @@ namespace matcom_domino
         public ITranke<int> _tranke { get; }
         public IMesa<int> Table { get; }
         public IGameOrden<int> orden { get; }
-        
+
         public IGenerarFichas<int> _generarFichas { get; }
+
         public List<IFichas<int>> ConjuntodeFichas
         {
             get => this.conjuntodeFichas;
@@ -51,7 +52,7 @@ namespace matcom_domino
         private List<IPlayer<int>> jugadores;
 
         public DominoClassic(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner,
-            IGameOrden<int> orden, IRepartirFichas<int> repartirFichas,IGenerarFichas<int> _generar)
+            IGameOrden<int> orden, IRepartirFichas<int> repartirFichas, IGenerarFichas<int> _generar)
         {
             this._repartirFichas = repartirFichas;
             this.Table = Table;
@@ -225,8 +226,9 @@ namespace matcom_domino
     class DominoRobaito : DominoClassic
     {
         public DominoRobaito(IMesa<int> Table, int cant, ITranke<int> _tranke, IWinner<int> winner,
-            IGameOrden<int> orden, IRepartirFichas<int> repartirFichas,IGenerarFichas<int> _generarFichas) : base(Table, cant,
-            _tranke, winner, orden, repartirFichas,_generarFichas)
+            IGameOrden<int> orden, IRepartirFichas<int> repartirFichas, IGenerarFichas<int> _generarFichas) : base(
+            Table, cant,
+            _tranke, winner, orden, repartirFichas, _generarFichas)
         {
         }
 
@@ -250,7 +252,7 @@ namespace matcom_domino
                             Console.Write(token + ", ");
                         }
 
-                        Console.WriteLine(" Ficha JUgable: " + Table.fichaJugable);
+                        Console.WriteLine("Ficha JUgable: " + Table.fichaJugable);
 
                         Console.WriteLine("Tus Fichas:");
 
@@ -260,7 +262,10 @@ namespace matcom_domino
                         }
 
                         string[] index_side = Console.ReadLine().Split();
-                        player.Play(player.ManoDeFichas[int.Parse(index_side[0]) - 1], int.Parse(index_side[1]));
+                        int token_index = int.Parse(index_side[0]) - 1;
+                        int side = int.Parse(index_side[1]);
+                        
+                        player.Play(player.ManoDeFichas[token_index], side);
                         Robar();
                         player.Pasarse = false;
                         if (EndGame())
