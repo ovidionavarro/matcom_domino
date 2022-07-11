@@ -77,7 +77,6 @@ namespace matcom_domino
             {
                 time_passed++;
                 paso = true;
-                in_turn = false;
                 return;
             }
 
@@ -170,8 +169,7 @@ namespace matcom_domino
                 if (ficha == ManoDeFichas[ManoDeFichas.Count - 1])
                 {
                     table.Log.Add($"El Jugador {name} no lleva: {table.fichaJugable}");
-                    paso = true;
-                    time_passed++;
+                    Play(ManoDeFichas[0], 0);
                 }
             }
         }
@@ -215,58 +213,7 @@ namespace matcom_domino
                 ValorJugable.Add(token_value);
             }
         }
-
-        // public void Posivilidad(List<IFichas<int>> FichasJugables)
-        // {
-        //     for (int i = 0; i < FichasJugables.Count(); i++)
-        //     {
-        //         int count = 0;
-        //         bool[] temp = new bool[2];
-        //         temp[0] = true;
-        //         temp[1] = true;
-        //
-        //         for (int j = 0; j < FichasJugables.Count(); j++)
-        //         {
-        //             if (i == j)
-        //             {
-        //                 continue;
-        //             }
-        //
-        //             if (FichasJugables[i].GetFace(1) == FichasJugables[j].GetFace(1) ||
-        //                 FichasJugables[i].GetFace(1) == FichasJugables[j].GetFace(2))
-        //
-        //             {
-        //                 temp[0] = false;
-        //                 if ((temp[0] == false) && (temp[1] == false))
-        //                 {
-        //                     count += 5;
-        //                 }
-        //                 else
-        //                 {
-        //                     count++;
-        //                 }
-        //
-        //                 continue;
-        //             }
-        //             
-        //             if (FichasJugables[i].GetFace(2) == FichasJugables[j].GetFace(1) ||
-        //                      FichasJugables[i].GetFace(2) == FichasJugables[j].GetFace(2))
-        //             {
-        //                 temp[1] = false;
-        //                 if ((temp[0] == false) && (temp[1] == false))
-        //                 {
-        //                     count += 5;
-        //                 }
-        //                 else
-        //                 {
-        //                     count++;
-        //                 }
-        //             }
-        //         }
-        //
-        //         ValorJugable.Add(count);
-        //     }
-        // }
+        
 
         public int IndexOf(int a)
         {

@@ -110,6 +110,5 @@ public class RepartirPar : RepartirEnOrden, IRepartirFichas<int>
             if (RepartoCompleto(PlayerList, TokenQty)||FichasSumaPar.Count==0)
                 break;
         }
-        
     }
 }
