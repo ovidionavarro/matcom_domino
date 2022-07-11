@@ -10,11 +10,11 @@ namespace matcom_domino
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("BIENVENIDO A TU PERDICION");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(" Inserte 1 o 2 para elegir el tipo de mesa en la que kiere jugar");
+            Console.WriteLine(" Inserte 1 o 2 para elegir el tipo de mesa en la que quiere jugar");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1:Mesa Clasica => la valides de la jugada es semejante a la del domino normal" + '\n' +
-                              "2:Mesa Doble Supremo =>" +
-                              "la jugada posee la misma valides que la clasica pero los dobles siempre se pueden jugar");
+                              "2:Mesa Doble Supremo => " +
+                              "La jugada posee la misma valides que la clasica pero los dobles siempre se pueden jugar");
 
             IMesa<int> mesa;
             while (true)
@@ -44,21 +44,21 @@ namespace matcom_domino
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Selecione la manera en que desea generar las fichas");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("1:Generador Clasico=>te genera todas fichas posibles con n caras difentes" + '\n'
-                + "2:Generador Primo=>genera todas las fichas posibles pero las fichas n caras se refieren a numeros primos" +
+            Console.WriteLine("1:Generador Clasico=> Te genera todas fichas posibles con n caras difentes" + '\n'
+                + "2:Generador Primo=> Genera todas las fichas posibles pero las fichas n caras se refieren a numeros primos" +
                 "" + '\n' +
-                "Usted prodra generar hasta la data 20,si desearia jugar con una data mayor debe insertar los numeros" +
+                "Usted prodra generar hasta la data 20, si desearia jugar con una data mayor debe insertar los numeros" +
                 "" + '\n' + "en LA LISTA #TEM# DE LA CLASE #GERADORPRIMO# ");
-            int auxgenerate = int.Parse(Console.ReadLine());
+            string auxgenerate = Console.ReadLine();
             IGenerarFichas<int> generador;
             while (true)
             {
-                if (auxgenerate == 1)
+                if (auxgenerate == "1")
                 {
                     generador = new GeneradorClasico();
                     break;
                 }
-                else if (auxgenerate == 2)
+                else if (auxgenerate == "2")
                 {
                     generador = new GeneradorPrimo();
                     break;
@@ -66,7 +66,7 @@ namespace matcom_domino
                 else
                 {
                     Console.WriteLine("escoje el numero 1 o 2");
-                    auxgenerate = int.Parse(Console.ReadLine());
+                    auxgenerate = Console.ReadLine();
                 }
             }
 
@@ -77,13 +77,13 @@ namespace matcom_domino
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Diga hasta que data desea jugar ");
-            int auxdata = int.Parse(Console.ReadLine());
+            string auxdata = Console.ReadLine();
             while (true)
             {
-                if (auxdata < 1)
+                if (auxdata==null || int.Parse(auxdata)<1)
                 {
-                    Console.WriteLine("elija un numero positivo");
-                    auxdata = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Elija un numero positivo!!!");
+                    auxdata = Console.ReadLine();
                 }
                 else
                 {
@@ -91,7 +91,7 @@ namespace matcom_domino
                 }
             }
 
-            return auxdata;
+            return int.Parse(auxdata);
         }
 
         private static IGameOrden<int> ChooseGameOrder()
@@ -99,7 +99,7 @@ namespace matcom_domino
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Elija el orden del juego");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("1:Orden Clasico" + '\n' + "2:Orden Inverso");
+            Console.WriteLine("1: Orden Clasico" + '\n' + "2: Orden Inverso");
             int auxorden = int.Parse(Console.ReadLine());
             IGameOrden<int> gameOrder;
             while (true)
@@ -117,7 +117,7 @@ namespace matcom_domino
                 }
                 else
                 {
-                    Console.WriteLine("escoje el numero 1 o 2");
+                    Console.WriteLine("Escoje el numero 1 o 2");
                     auxorden = int.Parse(Console.ReadLine());
                 }
             }
@@ -131,12 +131,12 @@ namespace matcom_domino
             Console.WriteLine("Elija como repartir las fichas");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine(
-                "1:Reparticion en orden =>se le da a cada jugador 1 ficha y asi seguidamente pero la segunda ficha entregada" +
+                "1:Reparticion en orden => Se le da a cada jugador 1 ficha y asi seguidamente pero la segunda ficha entregada " +
                 '\n' +
-                "entregada al sigiente jugador es la que es adyacente a la anterior Ej:jugador1=>(0,1)y jugador2=>(0,2)" +
+                "al sigiente jugador es la que es adyacente a la anterior Ej:jugador1 => (0,1) y jugador2 => (0,2)" +
                 '\n' + "" +
                 "2:Reparticion Random" + '\n' +
-                "3:Reparticion Par=>suma las 2 caras de la ficha y reparte de manera random las fichas cuya suma sea par");
+                "3:Reparticion Par => Suma las 2 caras de la ficha y reparte de manera random las fichas cuya suma sea par");
             int auxrepartidor = int.Parse(Console.ReadLine());
             IRepartirFichas<int> repartidor;
             while (true)
@@ -158,7 +158,7 @@ namespace matcom_domino
                 }
                 else
                 {
-                    Console.WriteLine("elija el numero 1,2 o 3 ");
+                    Console.WriteLine("Elija el numero 1, 2 o 3!!!!");
                     auxrepartidor = int.Parse(Console.ReadLine());
                 }
             }
@@ -171,8 +171,8 @@ namespace matcom_domino
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Elija el tipo de tranque ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("1:Tranque Clasico=>el juego se acaba cuando nadie tiene una ficha diponible valida" +
-                              '\n' + "2:Tranque doble:=>el juego se acaba cuando" +
+            Console.WriteLine("1:Tranque Clasico=> El juego se acaba cuando nadie tiene una ficha diponible valida" +
+                              '\n' + "2:Tranque doble:=> El juego se acaba cuando" +
                               " un jugador se pasa 2 veces");
             int auxtranke = int.Parse(Console.ReadLine());
             ITranke<int> tranke;
@@ -190,7 +190,7 @@ namespace matcom_domino
                 }
                 else
                 {
-                    Console.WriteLine("escoja el numero 1 o 2 ");
+                    Console.WriteLine("Escoja el numero 1 o 2!!!! ");
                     auxtranke = int.Parse(Console.ReadLine());
                 }
             }
@@ -237,7 +237,7 @@ namespace matcom_domino
             Console.WriteLine("Elija el tipo de domino que desea jugar");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("1:Domino Clasico" + '\n' +
-                              "2:Domino Robaito=>consiste en que cuando no lleves ficha valida" +
+                              "2:Domino Robaito => Consiste en que cuando no lleves ficha valida" +
                               "robes una de las que sobran,en caso de que esas se acaben le robas fichas al jugador " +
                               '\n' + "del" +
                               "sigiente turno hasta que obtengas una ficha valida");
@@ -257,7 +257,7 @@ namespace matcom_domino
                 }
                 else
                 {
-                    Console.WriteLine("escoja el numero 1 o 2");
+                    Console.WriteLine("Escoja el numero 1 o 2");
                     auxdomino = int.Parse(Console.ReadLine());
                 }
             }
@@ -272,25 +272,27 @@ namespace matcom_domino
             Console.WriteLine("Elija los jugadores que usted desea que juegen segun la dificultad");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine(
-                "1:Player Usuario=>es el jugador de usted el k usted controla puede agragar mas si desea" + '\n' + "" +
-                "2:Player Facil=>jugador con pocoas tecnicas en el juego ,hace lo que puede" + '\n' + "3:Player Medio" +
-                "=>jugador con poca estrategia ,que siempre decide soltar la ficha de mas valor " + '\n' + "4:" +
-                "Player Dificil:Jugador con un poco mas de estrategia basada practicamente en sotar la ficha " +
-                "de mayor data");
+                "1:Player Usuario => Es el jugador de usted el k usted controla puede agragar mas si desea" + '\n' + "" +
+                "2:Player Facil => Jugador con pocoas tecnicas en el juego ,hace lo que puede" + '\n' + "3:Player Medio" +
+                " => Jugador con poca estrategia ,que siempre decide soltar la ficha de mas valor " + '\n' + "4:" +
+                "Player Dificil => Jugador con un poco mas de estrategia basada practicamente en sotar la ficha " +
+                "de mayor data.");
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("5:Player Invencible=>es un jugador desconocido del cual ,cuya estrategia nunca " +
-                              "se ha podido aberiguar,dice el que juega por intuicion");
+            Console.WriteLine("5:Player Invencible => Es un jugador desconocido del cual ,cuya estrategia nunca " +
+                              "se ha podido averiguar, dice el que juega por intuicion");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("-1:Para no agregar mas jugadores");
+            Console.WriteLine("-1: Para no agregar mas jugadores");
             int auxplayer = int.Parse(Console.ReadLine());
             while (true)
             {
+                
                 if (auxplayer == 1)
                 {
                     Console.WriteLine("Pongale el nombre que usted desee al jugador");
                     string nombre = Console.ReadLine();
                     player = new Player(mesa, nombre);
                     domino.AgregarJugador(player);
+                    Console.WriteLine("Agregue un Jugador:");
                     auxplayer = int.Parse(Console.ReadLine());
                 }
                 else if (auxplayer == 2)
@@ -299,6 +301,7 @@ namespace matcom_domino
                     string nombre = Console.ReadLine();
                     player = new PlayerRandom(mesa, nombre);
                     domino.AgregarJugador(player);
+                    Console.WriteLine("Agregue un Jugador:");
                     auxplayer = int.Parse(Console.ReadLine());
                 }
                 else if (auxplayer == 3)
@@ -307,6 +310,7 @@ namespace matcom_domino
                     string nombre = Console.ReadLine();
                     player = new PlayerBotaGorda(mesa, nombre);
                     domino.AgregarJugador(player);
+                    Console.WriteLine("Agregue un Jugador:");
                     auxplayer = int.Parse(Console.ReadLine());
                 }
                 else if (auxplayer == 4)
@@ -315,6 +319,7 @@ namespace matcom_domino
                     string nombre = Console.ReadLine();
                     player = new PlayerSobreviviente(mesa, nombre);
                     domino.AgregarJugador(player);
+                    Console.WriteLine("Agregue un Jugador:");
                     auxplayer = int.Parse(Console.ReadLine());
                 }
                 else if (auxplayer == 5)
@@ -323,6 +328,7 @@ namespace matcom_domino
                     string nombre = Console.ReadLine();
                     player = new PlayerTramposo(mesa, nombre);
                     domino.AgregarJugador(player);
+                    Console.WriteLine("Agregue un Jugador:");
                     auxplayer = int.Parse(Console.ReadLine());
                 }
                 else if (auxplayer == -1)
@@ -331,7 +337,7 @@ namespace matcom_domino
                 }
                 else
                 {
-                    Console.WriteLine("escriba un numero de los posibles");
+                    Console.WriteLine("Escriba un numero de los posibles");
                     auxplayer = int.Parse(Console.ReadLine());
                 }
             }
@@ -341,13 +347,14 @@ namespace matcom_domino
         private static void PlayerTokensNumbers(IDomino<int> domino)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Escriba la cantidad de fichas que kiere asignarle a cada jugador " + '\n' +
+            Console.WriteLine("Escriba la cantidad de fichas que quiere asignarle a cada jugador " + '\n' +
                               "NOTA: Recuerde" +
                               " que la cantidad de fichas a repartir por cada jugador tiene que ser menor o igual que {0} ya que " +
                               "esta es la divicion entre el total de fichas y el total de jugadores  ",
                 domino.ConjuntodeFichas.Count() / domino.Jugadores.Count());
             Console.WriteLine("ES IMPORNTE QUE RECUERDE SI ESTABLECIO EL TIPO DE REPARTICION PAR :" + '\n' +
                               "serian la mitad de las cantidad de fichas que existen");
+            Console.WriteLine("Se jugara con las fichas que se hallan podido repartir");
             Console.ForegroundColor = ConsoleColor.Yellow;
             int cant_repartir = int.Parse(Console.ReadLine());
             while (true)
@@ -355,7 +362,7 @@ namespace matcom_domino
                 if (cant_repartir > (domino.ConjuntodeFichas.Count() / domino.Jugadores.Count()) || cant_repartir <= 0)
                 {
                     Console.WriteLine(
-                        "ERROR,elija una cantidad menor igual a {0} y que no sea negativa, ni igual a 0,esto en caso de el repartidor" +
+                        "ERROR, elija una cantidad menor igual a {0} y que no sea negativa, ni igual a 0,esto en caso de el repartidor" +
                         "clasico," + '\n' + "en caso del par seria la mitad",
                         domino.ConjuntodeFichas.Count() / domino.Jugadores.Count());
                     cant_repartir = int.Parse(Console.ReadLine());
@@ -370,8 +377,9 @@ namespace matcom_domino
 
         private static void PrintWinner(IMesa<int> Table)
         {
-             Console.WriteLine(Table.Log[Table.Log.Count-1]);
-             Console.WriteLine(Table.Log[Table.Log.Count-2]);
+            var logs = new HashSet<string>(Table.Log);
+            Console.WriteLine(Table.Log[Table.Log.Count - 1]);
+            Console.WriteLine(Table.Log[Table.Log.Count - 2]);
         }
 
         public static void Main(string[] args)
