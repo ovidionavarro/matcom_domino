@@ -21,15 +21,14 @@ namespace matcom_domino.Interfaces
        
         public int FichaValue()
         {
-            return ValueFace(1) + ValueFace(2);
+            return GetFace(1) + GetFace(2);
         }
         
-        //public int []ficha=new int [2];
         private Tuple<int, int> ficha;
 
         public int GetFace(int a)
         {
-            //return ficha[a];
+            
             if (a == 1) return ficha.Item1;
             if (a == 2) return ficha.Item2;
             else
@@ -43,16 +42,7 @@ namespace matcom_domino.Interfaces
             return "["+this.ficha.Item1.ToString() + "*" + this.ficha.Item2.ToString()+"]";
         }
 
-        public int ValueFace(int a)
-        {
-            if (a == 1) return ficha.Item1;
-            if (a == 2) return ficha.Item2;
-            else
-            {
-                return 0;
-            }
-
-        }
+        
         
        
 

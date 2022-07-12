@@ -95,7 +95,7 @@ namespace matcom_domino.Interfaces
             int Ptos = 0;
             foreach (var ficha in player.ManoDeFichas)
             {
-                Ptos += ficha.ValueFace(1) + ficha.ValueFace(2);
+                Ptos += ficha.GetFace(1) + ficha.GetFace(2);
             }
 
             return Ptos;
