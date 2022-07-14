@@ -372,11 +372,13 @@
             }
         }
 
-        private static void PrintWinner(IMesa<int> Table)
+        private static void PrintLog(IMesa<int> Table)
         {
             var logs = new HashSet<string>(Table.Log);
-            Console.WriteLine(Table.Log[Table.Log.Count - 1]);
-            Console.WriteLine(Table.Log[Table.Log.Count - 2]);
+            foreach (var log in logs)
+            {
+                 Console.WriteLine(log);
+            }
         }
 
         public static void Main(string[] args)
@@ -393,7 +395,7 @@
             PlayerTokensNumbers(domino);
             Console.Clear();
             domino.StartGame();
-            PrintWinner(mesa);
+            PrintLog(mesa);
         }
     }
 }

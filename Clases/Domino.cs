@@ -43,7 +43,7 @@ namespace matcom_domino.Interfaces
         }
 
 
-        private void ShowLastLog()
+        protected void ShowLastLog()
         {
             List<string> logtoShow = new List<string>();
             int turn = 0;
@@ -56,11 +56,13 @@ namespace matcom_domino.Interfaces
                 if (turn==2)
                     break;
             }
-
+            
+            
             logtoShow.Reverse();
             Console.Clear();
             foreach (var log in logtoShow)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(log);
             }
         }
@@ -125,7 +127,9 @@ namespace matcom_domino.Interfaces
 
                     if (player.GetType() == new Player(Table, "yo").GetType())
                     {
+                        Console.WriteLine("Ultimas Jugadas");
                         ShowLastLog();
+                        Console.ForegroundColor = ConsoleColor.White;
                         //Console.Clear();
                         Console.WriteLine("La Mesa");
 
@@ -133,9 +137,9 @@ namespace matcom_domino.Interfaces
                         {
                             Console.Write(token + ", ");
                         }
-
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Ficha JUgable: " + Table.fichaJugable);
-
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("Tus Fichas:");
                         int tokenIndex = 1;
                         foreach (var token in player.ManoDeFichas)
@@ -216,20 +220,24 @@ namespace matcom_domino.Interfaces
                     player.in_turn = true;
                     if (player.GetType() == new Player(Table, "yo").GetType())
                     {
+                        Console.WriteLine("Ultimas Jugadas");
+                        ShowLastLog();
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("La Mesa");
 
                         foreach (var token in Table.CardinTable)
                         {
                             Console.Write(token + ", ");
                         }
-
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Ficha JUgable: " + Table.fichaJugable);
 
                         Console.WriteLine("Tus Fichas:");
-
+                        int tokenIndex = 0;
                         foreach (var token in player.ManoDeFichas)
                         {
-                            Console.Write(token + $":, ");
+                            Console.Write(token + $":{tokenIndex}, ");
+                            tokenIndex++;
                         }
 
                         string[] index_side = Console.ReadLine().Split();
