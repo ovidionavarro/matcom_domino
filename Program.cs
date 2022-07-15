@@ -340,7 +340,6 @@
             }
         }
 
-
         private static void PlayerTokensNumbers(IDomino<int> domino)
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -374,8 +373,8 @@
 
         private static void PrintLog(IMesa<int> Table)
         {
-            var logs = new HashSet<string>(Table.Log);
-            foreach (var log in logs)
+            
+            foreach (var log in Table.Log)
             {
                  Console.WriteLine(log);
             }

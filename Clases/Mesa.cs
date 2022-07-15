@@ -82,7 +82,6 @@ namespace matcom_domino.Interfaces
 
                 else
                 {
-                    Console.WriteLine("No se puede jugar por este lado, se jugara por donde se pueda");
                     RecibirJugada(ficha, 2);
                 }
             }
@@ -105,7 +104,6 @@ namespace matcom_domino.Interfaces
                 }
                 else
                 {
-                    Console.WriteLine("No se puede jugar por este lado, se jugara por donde se pueda");
                     RecibirJugada(ficha, 2);
                 }
             }

@@ -1,7 +1,5 @@
 namespace matcom_domino.Interfaces
 {
-    
-
     public class DominoClassic : IDomino<int>
     {
         public IRepartirFichas<int> _repartirFichas { get; }
@@ -47,17 +45,17 @@ namespace matcom_domino.Interfaces
         {
             List<string> logtoShow = new List<string>();
             int turn = 0;
-            for (int i = Table.Log.Count-1; i >= 0; i--)
+            for (int i = Table.Log.Count - 1; i >= 0; i--)
             {
                 logtoShow.Add(Table.Log[i]);
-                
+
                 if (Table.Log[i].Contains("Turno: "))
                     turn++;
-                if (turn==2)
+                if (turn == 2)
                     break;
             }
-            
-            
+
+
             logtoShow.Reverse();
             Console.Clear();
             foreach (var log in logtoShow)
@@ -137,9 +135,10 @@ namespace matcom_domino.Interfaces
                         {
                             Console.Write(token + ", ");
                         }
+
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Ficha JUgable: " + Table.fichaJugable);
-                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Tus Fichas:");
                         int tokenIndex = 1;
                         foreach (var token in player.ManoDeFichas)
@@ -151,6 +150,12 @@ namespace matcom_domino.Interfaces
                         Console.WriteLine();
                         // Aki se dice la ficha a jugar y el side -1 izq 1 dere
                         string[] index_side = Console.ReadLine().Split();
+                        while (index_side == null || index_side.Length > 2 || index_side.Length < 2)
+                        {
+                            Console.WriteLine("ERROR!!! FORMATO INVALIDO");
+                            Console.WriteLine("Inserte de esta forma: NumFicha  Lado");
+                            index_side = Console.ReadLine().Split();
+                        }
                         player.Play(player.ManoDeFichas[int.Parse(index_side[0]) - 1], int.Parse(index_side[1]));
                     }
                     else
@@ -161,8 +166,8 @@ namespace matcom_domino.Interfaces
                     if (this.EndGame())
                         break;
                     player.in_turn = false;
-                    
                 }
+
                 turn++;
             }
         }
@@ -188,7 +193,7 @@ namespace matcom_domino.Interfaces
             return false;
         }
 
-        public virtual void GameOrden() //Aki cambiar el orden de la lista
+        public virtual void GameOrden() 
         {
         }
 
@@ -229,9 +234,10 @@ namespace matcom_domino.Interfaces
                         {
                             Console.Write(token + ", ");
                         }
+
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Ficha JUgable: " + Table.fichaJugable);
-
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Tus Fichas:");
                         int tokenIndex = 0;
                         foreach (var token in player.ManoDeFichas)
@@ -241,23 +247,30 @@ namespace matcom_domino.Interfaces
                         }
 
                         string[] index_side = Console.ReadLine().Split();
-                        int token_index = int.Parse(index_side[0]) - 1;
-                        int side = int.Parse(index_side[1]);
+                        int token_index = 0;
+                        int side = 2;
+                        
+                        while (index_side == null || index_side.Length > 2 || index_side.Length < 2)
+                        {
+                            Console.WriteLine("ERROR!!! FORMATO INVALIDO");
+                            Console.WriteLine("Inserte de esta forma: NumFicha  Lado");
+                            index_side = Console.ReadLine().Split();
+                        }
+                        token_index = int.Parse(index_side[0]) - 1;
+                        side = int.Parse(index_side[1]);
 
                         player.Play(player.ManoDeFichas[token_index], side);
                         Robar();
-                        player.Pasarse = false;
                     }
                     else
                     {
                         player.SelectCard();
                         Robar();
-                        player.Pasarse = false;
                     }
 
                     if (EndGame())
                         break;
-
+                    player.Pasarse = false;
                     player.in_turn = false;
                 }
 
@@ -294,7 +307,6 @@ namespace matcom_domino.Interfaces
                         ConjuntodeFichas.RemoveAt(index);
                         Table.Log.Add($"EL Jugador {Jugadores[i].name} robo la ficha {ficha}");
                         Jugadores[i].Play(ficha);
-                        Console.WriteLine($"EL Jugador {Jugadores[i].name} robo la ficha {ficha}");
                     }
                     else
                     {
@@ -314,7 +326,6 @@ namespace matcom_domino.Interfaces
                             }
 
                             Jugadores[i].Play(ficha);
-                            Console.WriteLine($"EL Jugador {Jugadores[i].name} robo la ficha {ficha}");
                         }
                         else if (i + 1 < Jugadores.Count)
                         {
