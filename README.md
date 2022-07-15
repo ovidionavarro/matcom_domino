@@ -31,3 +31,4 @@ jugar:
 * -1 para jugar por la izquierda
 * 1 para jugar por la derecha
 * 0 para pasar turno
+* Si la ficha solo se puede jugar por un lado simplemente ingrese el numero de la ficha
