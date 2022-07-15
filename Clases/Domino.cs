@@ -147,16 +147,28 @@ namespace matcom_domino.Interfaces
                             tokenIndex++;
                         }
 
-                        Console.WriteLine();
                         // Aki se dice la ficha a jugar y el side -1 izq 1 dere
                         string[] index_side = Console.ReadLine().Split();
-                        while (index_side == null || index_side.Length > 2 || index_side.Length < 2)
+                        int token_index = 0;
+                        int side = 2;
+
+                        while (index_side == null || index_side.Length > 2)
                         {
                             Console.WriteLine("ERROR!!! FORMATO INVALIDO");
                             Console.WriteLine("Inserte de esta forma: NumFicha  Lado");
                             index_side = Console.ReadLine().Split();
                         }
-                        player.Play(player.ManoDeFichas[int.Parse(index_side[0]) - 1], int.Parse(index_side[1]));
+
+                        token_index = int.Parse(index_side[0]) - 1;
+                        if (index_side.Length == 1)
+                        {
+                            player.Play(player.ManoDeFichas[token_index], side);
+                        }
+                        else
+                        {
+                            side = int.Parse(index_side[1]);
+                            player.Play(player.ManoDeFichas[token_index], side);
+                        }
                     }
                     else
                     {
@@ -193,7 +205,7 @@ namespace matcom_domino.Interfaces
             return false;
         }
 
-        public virtual void GameOrden() 
+        public virtual void GameOrden()
         {
         }
 
@@ -249,13 +261,14 @@ namespace matcom_domino.Interfaces
                         string[] index_side = Console.ReadLine().Split();
                         int token_index = 0;
                         int side = 2;
-                        
+
                         while (index_side == null || index_side.Length > 2 || index_side.Length < 2)
                         {
                             Console.WriteLine("ERROR!!! FORMATO INVALIDO");
                             Console.WriteLine("Inserte de esta forma: NumFicha  Lado");
                             index_side = Console.ReadLine().Split();
                         }
+
                         token_index = int.Parse(index_side[0]) - 1;
                         side = int.Parse(index_side[1]);
 
